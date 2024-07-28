@@ -170,9 +170,9 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
                 GenreIds = mpRequest.GenreIds
             };
             // the files
-            foreach (IFormFile update in mpRequest.filesToUpload)
+            foreach (IFormFile file in mpRequest.filesToUpload)
             {
-                var resultModelImage = await _fileService.AddOrUpdateImageAsync(update, update.FileName);
+                var resultModelImage = await _fileService.AddOrUpdateImageAsync(file, file.FileName);
 
                 performance.Imagestring = resultModelImage.Data;
                 if (!resultModelImage.Success)
@@ -195,109 +195,42 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
 
         }
 
-
- 
         [Authorize(Policy = "MemberOfManagement")]
         [HttpPut]
-        public async Task<IActionResult> Update([FromForm] MultipartFormDataContent mpRequest)
+        public async Task<IActionResult> Update([FromForm] UpdateEventRequestMultipartDto mpRequest)
         {
 
             //  
-            var result = Request.ReadFormAsync();
-            if (!result.IsCompletedSuccessfully)
+            if (mpRequest == null)
             {
                 return BadRequest("Ongeldige aanvraag");
             }
-            var body = result.Result;
-            int id;
-            bool existId = int.TryParse(body["Id"], out id);
-            if (!existId)
-            {
-                return BadRequest($"Voorstelling met id {id} niet gevonden.");
-            }
-            var resultPerformanceById = await _eventService.GetByIdAsync(id);
-            if (resultPerformanceById.Success == false)
-            {
-                return BadRequest(resultPerformanceById.Errors);
-            }
-            var existingEntity = resultPerformanceById.Data.First();   // only the first of the list
-            // set variables
-            int companyId;
-            int locationId;
-            int succesRate;
-            double price;
-            DateTime eventDate;
-            List<int> genreIds = new List<int>();
-            List<string> progIds = new List<string>();
-            //
-            bool existsC_Id = int.TryParse(body["CompanyId"], out companyId);
-            if (!existsC_Id)
-            {
-                return BadRequest("Ongeldige uitvoerder.");
-            }
-            bool existsL_LId = int.TryParse(body["LocationId"], out locationId);
-            if (!existsL_LId)
-            {
-                return BadRequest("Ongeldige locatie.");
-            }
-            bool existsSR_Id = int.TryParse(body["SuccesRate"], out succesRate);
-            if (!existsSR_Id)
-            {
-                return BadRequest("Ongeldige succesgraad.");
-            }
-            bool existsPrice = double.TryParse(body["Price"], out price);
-            if (!existsPrice)
-            {
-                return BadRequest("Ongeldige prijs.");
-            }
-            if (body["Eventdate"].First() == null)
-            {
-                return BadRequest("Ongeldige datum van de voorstelling");
-            }
-            eventDate = DateTime.Parse(body["Eventdate"]);
-            StringValues progIdsString;
-            bool existsProgIds = body.TryGetValue("ProgrammatorIds", out progIdsString);
-            if (!existsProgIds)
-            {
-                return BadRequest("Ongeldige lijst van genres");
-            }
-            foreach (string progId in progIdsString)
-            {
-                progIds.Add(progId);
-            }
-
-            StringValues genreIdsStringValues;
-            bool exitsGenreIds = body.TryGetValue("GenreIds", out genreIdsStringValues);
-            if (!exitsGenreIds)
-            {
-                return BadRequest("Ongeldige lijst van genres");
-            }
-
-            foreach (string genreId in genreIdsStringValues)
-            {
-                genreIds.Add(int.Parse(genreId));
-            }
-            //  the image
-            IFormFile image = body.Files.FirstOrDefault();
-            var resultModelImage = await _fileService.AddOrUpdateImageAsync(image, image.FileName);
-            string imageString = resultModelImage.Data;
-
+            // the data ======================================================================
             var performanceToUpdate = new EventUpdateRequestModel
             {
-                Id = id,
-                Title = body["Title"],
-                CompanyId = companyId,
-                LocationId = locationId,
-                EventDate = eventDate,
-                Description = body["Description"],
-                Price = price,
-                ProgrammatorIds = progIds,
-                Imagestring = imageString,
-                SuccesRate = succesRate,
-                GenreIds = genreIds,
+                Id = mpRequest.Id,
+                Title = mpRequest.Title,
+                CompanyId = mpRequest.CompanyId,
+                LocationId = mpRequest.LocationId,
+                EventDate = mpRequest.EventDate,
+                Description = mpRequest.Description,
+                Price = mpRequest.Price,
+                SuccesRate = mpRequest.SuccesRate,
+                ProgrammatorIds = mpRequest.ProgrammatorIds,
+                GenreIds = mpRequest.GenreIds,
             };
-            
-            //update
+            // the files
+            foreach (IFormFile file in mpRequest.filesToUpload)
+            {
+                var resultModelImage = await _fileService.AddOrUpdateImageAsync(file, file.FileName);
+
+                performanceToUpdate.Imagestring = resultModelImage.Data;
+                if (!resultModelImage.Success)
+                {
+                    return BadRequest($"Fout bij het wegschrijven van de afbeelding {performanceToUpdate.Imagestring}.");
+                }
+            }
+            //updateservice
             var resultUpdate = await _eventService.UpdateAsync(performanceToUpdate);
             if (resultUpdate.Success)
             {
@@ -305,16 +238,13 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
                 {
                     Title = performanceToUpdate.Title,
                     Imagestring = $"{Request.Scheme}://{Request.Host}/images/events/{performanceToUpdate.Imagestring}",
-                    Price = performanceToUpdate.Price,
-                    //    Genres = product.GenreResponsDto.Genres.ToList(),
-
                 };
                 return CreatedAtAction(nameof(Get), new { performanceToUpdate.Title }, dto);
             }
             return BadRequest(resultUpdate.Errors);
         }
 
-        [Authorize(Policy = "MemberOfManagement")]  //  [Authorize(Roles = "Admin,Programmator")]
+        [Authorize(Policy = "MemberOfManagement")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
