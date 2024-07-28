@@ -1,0 +1,60 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pri.WebApi.DeSchakel.Api", "Pri.WebApi.DeSchakel.Api\Pri.WebApi.DeSchakel.Api.csproj", "{33C83D6D-5F55-42B6-B987-B004D14DBF09}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pri.WebApi.DeSchakel.Core", "Pri.WebApi.DeSchakel.Core\Pri.WebApi.DeSchakel.Core.csproj", "{302EB5CD-20D5-49CF-86FE-3F28338C1F7B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{B1E30A80-6C81-46A4-858B-6AB423DA1385}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{6BCCC95B-2B0F-4231-9606-900DEA9EA735}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{65E21F22-B765-49E9-9019-070EF00590D6}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeSchakel.Client.Mvc", "DeSchakel.Client.Mvc\DeSchakel.Client.Mvc.csproj", "{A0223C9E-A4F5-450A-A5A7-6BD19F7F097F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{DC174BF4-E8D7-4EF2-BF12-91154D2EF7E9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeSchakelApi.Consumer", "DeSchakelApi.Consumer\DeSchakelApi.Consumer.csproj", "{BC57BB3A-7494-42BA-9C8A-2366115FA3E8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{33C83D6D-5F55-42B6-B987-B004D14DBF09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33C83D6D-5F55-42B6-B987-B004D14DBF09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33C83D6D-5F55-42B6-B987-B004D14DBF09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33C83D6D-5F55-42B6-B987-B004D14DBF09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{302EB5CD-20D5-49CF-86FE-3F28338C1F7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{302EB5CD-20D5-49CF-86FE-3F28338C1F7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{302EB5CD-20D5-49CF-86FE-3F28338C1F7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{302EB5CD-20D5-49CF-86FE-3F28338C1F7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0223C9E-A4F5-450A-A5A7-6BD19F7F097F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0223C9E-A4F5-450A-A5A7-6BD19F7F097F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0223C9E-A4F5-450A-A5A7-6BD19F7F097F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0223C9E-A4F5-450A-A5A7-6BD19F7F097F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC57BB3A-7494-42BA-9C8A-2366115FA3E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC57BB3A-7494-42BA-9C8A-2366115FA3E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC57BB3A-7494-42BA-9C8A-2366115FA3E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC57BB3A-7494-42BA-9C8A-2366115FA3E8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{33C83D6D-5F55-42B6-B987-B004D14DBF09} = {B1E30A80-6C81-46A4-858B-6AB423DA1385}
+		{302EB5CD-20D5-49CF-86FE-3F28338C1F7B} = {B1E30A80-6C81-46A4-858B-6AB423DA1385}
+		{A0223C9E-A4F5-450A-A5A7-6BD19F7F097F} = {6BCCC95B-2B0F-4231-9606-900DEA9EA735}
+		{BC57BB3A-7494-42BA-9C8A-2366115FA3E8} = {DC174BF4-E8D7-4EF2-BF12-91154D2EF7E9}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D7B5D81C-3923-4DFF-96B9-FDCC29A3C086}
+	EndGlobalSection
+EndGlobal

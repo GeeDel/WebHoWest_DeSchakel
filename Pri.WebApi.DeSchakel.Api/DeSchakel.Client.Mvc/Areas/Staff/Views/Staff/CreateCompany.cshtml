@@ -1,0 +1,25 @@
+﻿@model StaffCompanyCreateViewModel
+
+
+<div class="row">
+    <div class="col col-lg-5 mx-auto border border-1 rounded rounded-1">
+
+        <form asp-area="Staff" asp-controller="Staff" asp-action="CreateCompany" method="post">
+
+            <div class="alert-danger" asp-validation-summary="ModelOnly"></div>
+
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control">
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="btn mt-5 mb-3">
+                <button type="submit" class="btn btn-primary me-5">Toevoegen</button>
+            </div>
+            <div>
+                <a class="btn-outline-primary" asp-controller="Staff" asp-action="Companies">Terug</a>
+            </div>
+        </form>
+    </div>
+</div>

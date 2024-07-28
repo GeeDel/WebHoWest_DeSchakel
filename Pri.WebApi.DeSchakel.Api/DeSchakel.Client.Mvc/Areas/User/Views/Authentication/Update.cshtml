@@ -1,0 +1,52 @@
+﻿@model UserAccountUpdateViewmodel
+
+
+
+<div class="row">
+    <div class="col col-4 mx-auto border border-2 rounded-2">
+        <div class="alert-danger" asp-validation-summary="ModelOnly"></div>
+        <div class="alert-info">
+            Aanpassen van de persoonlijke gegevens van @User.Claims.FirstOrDefault(u => u.Type == "Name")?.Value
+        </div>
+        <form asp-controller="Authentication" asp-action="Update" asp-route-id="@Model.Id" method="post">
+
+            <div class="form-group">
+                <label asp-for="Firstname"></label>
+                <input asp-for="Firstname" class="form-control">
+                <span asp-validation-for="Firstname" class="text-danger"></span>
+            </div>            <div class="form-group">
+    <label asp-for="Lastname"></label>
+    <input asp-for="Lastname" class="form-control">
+    <span asp-validation-for="Lastname" class="text-danger"></span>
+
+
+        <div class="form-group hidden">
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-control">
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+ 
+
+
+</div>
+            <div class="form-group">
+                <label asp-for="Zipcode"></label>
+                <input asp-for="Zipcode" class="form-control">
+                <span asp-validation-for="Zipcode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="City"></label>
+                <input asp-for="City" class="form-control">
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateOfBirth"></label>
+                <input asp-for="DateOfBirth" class="form-control">
+                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Aanpassen</button>
+            <a class="ms-3 btn btn-info"  asp-area="Home" asp-controller="Home" asp-action="Index">Terug</a>
+        </form>
+
+    </div>
+</div>

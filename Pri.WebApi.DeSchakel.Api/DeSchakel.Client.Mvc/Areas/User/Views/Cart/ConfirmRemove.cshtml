@@ -1,0 +1,17 @@
+﻿@model CartDeleteViewModel
+
+<h1>Verwijderen uit de winkelkar: bevestig</h1>
+<h3>
+    Verwijderen van @Model.Title?
+</h3>
+<form asp-area="User" asp-controller="Cart" asp-action="Delete" method="post">
+    <div class="alert-danger" asp-validation-summary="ModelOnly"></div>
+    <input class="hidden" asp-for="@Model.Title" />
+    <div class="form-group">
+        <input asp-for="Id" />
+    </div>
+    <button type="submit" class="btn btn-danger">Ja</button>
+    <a asp-controller="Cart" asp-action="Index" class="btn btn-info">Nee</a>
+</form>
+
+

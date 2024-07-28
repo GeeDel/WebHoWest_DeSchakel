@@ -1,0 +1,95 @@
+body, html {
+  font-size: 14px;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.content {
+    margin: 0 auto;
+    width: 700px;
+}
+
+#likeList {
+    position: fixed;
+    left: 0px;
+    top: 112px;
+    width: 120px;
+    height: 90%;
+    border-right: 1px solid gray;
+    background-color:white;
+}
+
+    #likeList header {
+        text-align: center;
+    }
+
+    #likeList .performance {
+        margin: 10px;
+        position: relative;
+    }
+
+    #likeList .link img {
+        border-radius: 10px;
+        width: 100px;
+        height: auto;
+    }
+
+#performanceList {
+    display: block;
+}
+
+    #performanceList .performance {
+        padding-top: 10px;
+        border-top: 1px solid lightgray;
+    }
+
+
+
+    #performanceList > header {
+        font-size: x-large;
+        text-align: center;
+        margin: 10px 0px;
+    }
+
+    #performanceList .performance header {
+        font-size: larger;
+        padding: 5px 0px 20px 0px;
+    }
+
+    #performanceList img {
+        float: left;
+        margin: 15px 25px 15px 15px;
+        box-shadow: 0px 0px 15px 10px rgba(0, 0, 0, 1);
+        height: 150px;
+        width: auto
+    }
+
+    #performanceList .likeUnlike {
+        float: right;
+        font-size: small;
+    }
+
+.hidden {
+    display: none;
+}

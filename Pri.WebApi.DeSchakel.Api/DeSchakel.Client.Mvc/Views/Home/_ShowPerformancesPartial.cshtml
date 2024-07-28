@@ -1,0 +1,79 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model EventListViewModel
+
+<div class="content">
+
+        <nav id="likeList">
+            <header>Terug naar</header>
+        </nav>
+    
+    <section id="performanceList">
+        <header>
+            Agenda
+            <div hight="55%">
+                <form class="d-flex">
+                    <a asp-area="" asp-controller="Home" asp-action="Index"
+                       class="btn btn-outline-dark" type="submit">Alle</a>
+                    @* aanroep naar viewcomponent*@  @await Component.InvokeAsync("GenreList", "Home")
+                </form>
+            </div>
+        </header>
+
+        @foreach (var performance in Model.Events)
+        {
+            <section id="@performance.Id" class="performance position-relative">
+                <div class="onthoud"></div>
+                <table>
+                    <tr>
+                        <th colspan="2" align="center">
+                            <h3>
+                                @performance.Title
+                                <a class="ms-5 badge text-decoration-none rounded-pill bg-primary"
+                                   asp-area="User" asp-controller="Cart" asp-action="Add" asp-route-id="@performance.Id">
+                                    Ticket
+                                </a>
+                                <div class="bladwijzerLink"></div>
+                            </h3>
+                            <h4>Op: @performance.EventDate.ToString("dd-MM-yyyy") om @performance.EventDate.ToString("HH:mm")</h4>
+                            <div>
+                                <h5>Van: @performance.CompanyName</h5>
+                            </div>
+                            <div>
+                                <h5>In: @performance.LocationName</h5>
+                            </div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td width="120" class="align-content-lg-start">
+                            <img src="@performance.Imagestring" alt="Afbeelding van @performance.Title" alt="@performance.Title"  height="150"
+                                 class="performanceImage" />
+                        </td>
+
+                        <td>
+                            <div class="description mb-2">@performance.Description</div>
+
+
+                            @if (performance.Genres.Count() != 0)
+                            {
+                                <div>
+                                    <h5>Genre</h5>
+
+                                    <ul>
+                                        @foreach (var genre in performance.Genres)
+                                        {
+                                            <li>@genre.Name</li>
+                                        }
+                                    </ul>
+                                </div>}
+                        </td>
+                    </tr>
+
+                </table>
+
+            </section>
+        }
+    </section>
+
+</div>

@@ -1,0 +1,12 @@
+﻿@model DeSchakel.Client.Mvc.Viewmodels.EventListViewModel
+
+<div hight="35%">
+    Onze voorstellingen <a asp-controller="Staff" asp-action="CreateEvent" asp-area="Staff" class="btn btn-info ms-3"> Nieuwe voorstelling </a>
+    <form class="d-flex mb-2">
+        <a asp-area="Staff" asp-controller="Staff" asp-action="Index"
+           class="btn btn-outline-dark" type="submit">Alle</a>
+        @* aanroep naar viewcomponent*@  @await Component.InvokeAsync("GenreList", "Staff")
+    </form>
+</div>
+
+<partial name="_StaffShowPerformancesPartial" model="@Model" />

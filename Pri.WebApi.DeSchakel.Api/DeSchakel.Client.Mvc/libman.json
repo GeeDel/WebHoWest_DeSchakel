@@ -1,0 +1,10 @@
+{
+  "version": "1.0",
+  "defaultProvider": "filesystem",
+  "libraries": [
+    {
+      "library": "C:\\Users\\Gebruiker\\source\\repos\\Bootstrap4vs\\Bootstrap4vs",
+      "destination": "wwwroot/lib/Bootstrap4vs/"
+    }
+  ]
+}

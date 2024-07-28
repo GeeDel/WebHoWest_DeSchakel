@@ -1,0 +1,72 @@
+﻿@model CartIndexViewModel
+<h1>Winkelwagen</h1>
+<div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <table class="table table-hover table-responsive">
+            @if (@Model.CartItems.Count() == 0)
+            {
+                <div class="alert-info">
+                    Geen films in je winkelwagen
+                </div>
+                <div>
+                    <a asp-controller="Home" asp-action="Index" asp-area="" class="mt-3 badge text-decoration-none rounded-pill bg-primary">Terug</a>
+                </div>
+            }
+            else
+            {
+                <table class="table table-hover table-responsive table-striped">
+                    <tr>
+                        <th>Nummer</th>
+                        <th>Film</th>
+                        <th>Eenheidsprijs</th>
+                        <th>Aantal</th>
+                        <th>Kost</th>
+                        <th></th>
+                    </tr>
+                    @foreach (var item in Model.CartItems)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.Title</td>
+                            <td>@item.Price.ToString("0.00")</td>
+                            <td>@item.Quantity</td>
+                            <td>€ @item.ItemsPrice.ToString("0.00")</td>
+
+                            <td>
+                                <a class="badge text-decoration-none rounded-pill bg-danger"
+                                   asp-area="User" asp-controller="Cart" asp-action="ConfirmRemove" asp-route-id="@item.Id">Verwijder</a>
+                            </td>
+                        </tr>
+                    }
+                    <tr class="bg-info">
+                        Totaalrijs van de films in de winkelkar: € @Model.Total
+                    </tr>
+                </table>
+                <div>
+                    <span>
+                        <a asp-controller="Home" asp-action="Index" asp-area="Home" class="mt-3 badge text-decoration-none rounded-pill bg-primary">Bestel</a>
+                    </span>
+                    <span>
+                        <a asp-controller="Home" asp-action="Index" asp-area="Home" class="mt-3 badge text-decoration-none rounded-pill bg-primary">Terug</a>
+                    </span>
+                </div>
+                <div>
+                </div>
+            }
+
+        </table>
+
+
+    }
+    else
+    {
+        <div class="alert-info mb-3">Je moet aangemeld zijn om te bestellen.</div>
+        <a asp-controller="Authentication" asp-action="Login" asp-area="User" class="mt-3  badge text-decoration-none rounded-pill bg-primary">Meld aan</a>
+        <a asp-controller="Home" asp-action="Index" asp-area="Home" class="mt-3 badge text-decoration-none rounded-pill bg-outlineprimary">Terug</a>
+
+    }
+</div>
+<div>
+    <a asp-controller="Home" asp-action="Index" asp-area="Home" class="mt-3 badge text-decoration-none rounded-pill bg-outlineprimary">Terug</a>
+</div>

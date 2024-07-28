@@ -1,0 +1,12 @@
+﻿@model EventListViewModel
+
+@if (Model.Events.Count() == 0)
+{
+    <div class="bg-info">Geen voostellingen gevonden.</div>
+}
+else
+{
+<div>
+    <partial name="_ShowPerformancesPartial">
+</div>
+}

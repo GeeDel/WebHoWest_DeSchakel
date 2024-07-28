@@ -1,0 +1,26 @@
+﻿@model StaffDeleteEventViewmodel
+
+<div class="row">
+    <div class="col coll-lg-8 mx-auto">
+        <div class="alert alert-primary" role="alert">
+            Weet je zeker dat je de volgende voorstelling wil verwijderen?<h5>@Model.Title</h5>
+        <form asp-area="Staff" asp-controller="Staff" asp-action="DeleteEvent" method="post" asp-route-id="@Model.Id">
+                                                                              @*
+
+
+        <div class="form-group">
+             <input asp-for="Id" class="form-control">
+         </div>
+                                                                              *@ 
+            <div class="alert-danger" asp-validation-summary="ModelOnly"></div>
+              <button type="submit" class="btn btn-danger">Verwijder</button>
+              <div class="ms-3">
+                  <a asp-area="Staff" asp-controller="Staff" asp-action="Index" class="btn btn-info"> Terug </a>
+              </div>
+         </form> 
+
+
+            </div>
+        </div>
+    </div>
+

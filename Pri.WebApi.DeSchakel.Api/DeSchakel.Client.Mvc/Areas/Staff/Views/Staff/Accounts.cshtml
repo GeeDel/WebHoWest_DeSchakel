@@ -1,0 +1,60 @@
+﻿@model StaffAccountsListViewModel
+
+
+<div class="row">
+    <div class="col mx-auto">
+        <table class="table table-hover table-responsive">
+            <thead>
+                <h4>Lijst van de accounts</h4>
+                <div>
+                    <a asp-controller="Staff" asp-action="CreateAccount" asp-area="Staff" class="btn btn-info mb-5"> Nieuwe account </a>
+                </div>
+            </thead>
+            @foreach (var acc in @Model.Accounts)
+            {
+                <tr>
+                    <td width="250">
+                        @acc.Firstname @acc.Lastname
+                        <div>@acc.Email</div>
+                        <div>@acc.Zipcode @acc.City</div>
+                    </td>
+                    <td>
+                        <a asp-area="Staff" asp-controller="Staff" asp-action="UpdateAccount" asp-route-id="@acc.Id"
+                           class="btn btn-outline-info mt-5 border border-2 border-light">Wijzig</a>
+                    </td>
+                    <td>
+                        <a asp-area="Staff" asp-action="UpdatePassword" asp-controller="Staff" asp-route-id="@acc.Id"
+                           class="btn btn btn-outline-info mt-5 border border-2">Paswoord</a>
+                          
+                    </td>
+                    <td>
+                        @*
+        <form asp-controller="Staff" asp-action="DeleteAccount" asp-route-id="@acc.Id" method="post">
+           <button type="submit" class="btn btn btn-outline-danger mt-5 border border-2"
+            onclick="return confirm('Verwijderen van @acc.Firstname @acc.Lastname. Ben je zeker?')">
+               Verwijder</button>
+        </form>
+
+                        *@  
+                        <form asp-controller="Staff" asp-action="DeleteAccount" asp-route-id="@acc.Id" method="post">
+
+
+                                  <span id="confirmDeleteSpan_@acc.Id" style="display:none">
+                                      <span>Ben je zeker om te verwijderen?</span>
+                                      <button type="submit" class="btn btn btn-outline-danger">Ja
+                                      </button>
+                                      <a class="btn btn-info"
+                                         onclick="confirmDelete('@acc.Id',false)">Nee</a>
+                                  </span>
+                                 <span id="deleteSpan_@acc.Id">
+                                     <a  class="btn btn-danger  mt-5 border border-2"
+                                        onclick="confirmDelete('@acc.Id', true)">Verwijder</a>
+                                 </span>
+
+                        </form>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

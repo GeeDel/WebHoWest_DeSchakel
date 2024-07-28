@@ -1,0 +1,9 @@
+﻿
+@model GenreListViewmodel
+            @foreach(var genre in Model.Genres)
+            { 
+                <a asp-area="@Model.SetArea" asp-controller="@Model.SetArea" asp-action="SetGenre" asp-route-id="@genre.Id"
+                   class="btn btn-outline-dark"  type="submit">
+                @genre.Name
+            </a>
+            }

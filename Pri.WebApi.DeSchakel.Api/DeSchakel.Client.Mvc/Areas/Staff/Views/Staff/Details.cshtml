@@ -1,0 +1,51 @@
+﻿@model DeSchakel.Client.Mvc.Viewmodels.EventItemViewModel
+
+@{ViewData["Title"] = Model.Title;
+}
+
+<div class="row">
+
+    <div class="col align-content-center">
+        <div class="card" style="width: 18rem;">
+            <!--tips: add .text-center,.text-right to the .card to change card text alignment-->
+            <img src="@Model.Imagestring" class="card-img-top" alt="@Model.Title.">
+            <div class="card-body">
+                <h5 class="card-title">@Model.Title</h5>
+                <h6 class="card-subtitle mb-2 text-muted">@Model.EventDate.ToString("dd-MM-yyyy HH-mm")</h6>
+                <p class="card-text">@Model.Description.</p>
+                <p class="card-text">Uitoerder: @Model.CompanyName.</p>
+                <p class="card-text">Locatie  : @Model.LocationName.</p>
+
+            </div>
+            @if (@Model.Genres.Count() != 0)
+            {
+                <div>
+                    <h6>Genre</h6>
+
+                    <ul>
+                        @foreach (var genre in Model.Genres)
+                        {
+                            <li>@genre.Name</li>
+                        }
+                    </ul>
+                </div>
+            }
+            @if (@Model.Programmators != null)
+            {
+                <div>
+                    <h6>Programmatoren</h6>
+
+                    <ul>
+                        @foreach (var programmator in Model.Programmators)
+                        {
+                            <li>@programmator.Firstname @programmator.Lastname</li>
+                        }
+                    </ul>
+                </div>}
+        </div>
+
+        <div class="btn mt-5 mb-3">
+            <a class="btn-outline-primary" asp-area="Staff" asp-controller="Staff" asp-action="Index">Terug</a>
+        </div>
+    </div>
+</div>

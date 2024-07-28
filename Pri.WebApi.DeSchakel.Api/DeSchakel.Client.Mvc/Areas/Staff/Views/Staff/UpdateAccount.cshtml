@@ -1,0 +1,48 @@
+﻿@model StaffAccountUpdateViewmodel
+
+
+
+<div class="row">
+    <div class="col col-4 mx-auto border border-2 rounded-2">
+        <div class="alert-danger" asp-validation-summary="ModelOnly"></div>
+        <form asp-controller="Staff" asp-action="UpdateAccount" asp-route-id="@Model.Id" method="post">
+                        <div class="form-group">
+                         <label asp-for="Email">@Model.Email</label>>
+                         <input asp-for="Email" style="display:none" />
+                        </div>
+                        <div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Firstname"></label>
+                            <input asp-for="Firstname" class="form-control">
+                            <span asp-validation-for="Firstname" class="text-danger"></span>
+                        </div>            <div class="form-group">
+                            <label asp-for="Lastname"></label>
+                            <input asp-for="Lastname" class="form-control">
+                            <span asp-validation-for="Lastname" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Zipcode"></label>
+                            <input asp-for="Zipcode" class="form-control">
+                            <span asp-validation-for="Zipcode" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="City"></label>
+                            <input asp-for="City" class="form-control">
+                            <span asp-validation-for="City" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="DateOfBirth"></label>
+                            <input asp-for="DateOfBirth" class="form-control">
+                            <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="hidden" asp-for="RoleIds"></label>
+                            <select asp-for="RoleIds" asp-items="@Model.Roles" class="form-control"></select>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-5">Aanpassen</button>
+                        <a class="ms-3 mt-5 btn btn-info" asp-area="Staff" asp-controller="Staff" asp-action="Accounts">Terug</a>
+</form>
+       
+    </div>
+</div>

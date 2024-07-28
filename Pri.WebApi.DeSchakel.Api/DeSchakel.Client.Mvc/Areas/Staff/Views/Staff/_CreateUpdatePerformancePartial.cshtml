@@ -1,0 +1,66 @@
+﻿@model StaffEventCreateViewmodel
+
+
+<div class="alert-danger" asp-validation-summary="ModelOnly">
+</div>
+<div class="form-group">
+    <label asp-for="Title">Titel</label>
+    <input asp-for="Title" class="form-control">
+    <span asp-validation-for="Title" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Images">Afbeelding</label>
+    <input asp-for="Images" class="form-control border border-info" />
+    <span asp-validation-for="Images" class="text-danger"></span>
+</div>
+<h6>Datum van de voorstelling</h6>
+<div class="form-group">
+    @*  <label asp-for="EventDate">Datum van de voorstelling</label>  *@
+    <input asp-for="EventDate" class="form-control">
+    <span asp-validation-for="EventDate" class="text-danger"></span>
+</div>
+<h6>Vraagprijs</h6>
+<div class="form-group">
+    @*    <label asp-for="Price"></label>      *@
+    <input asp-for="Price" class="form-control">
+    <span asp-validation-for="Price" class="text-danger"></span>
+</div>
+<h6>Uitvoerder</h6>
+<div class="form-group">
+    <label class="hidden" asp-for="CompanyId"></label>
+    <select asp-for="CompanyId" asp-items="@Model.Companies" class="form-control"></select>
+</div>
+<h6>Locatie</h6>
+<div class="form-group">
+    <label class="hidden" asp-for="LocationId"></label>
+    <select asp-for="LocationId" asp-items="@Model.Locations" class="form-control"></select>
+</div>
+<h6>Beschrijving</h6>
+<div class="form-group">
+    @*   <label asp-for="Description">Beschrijving</label>   *@
+    <textarea asp-for="Description" class="form-control" width="200" height="200"></textarea>
+    <span asp-validation-for="Description" class="text-danger"></span>
+</div>
+<h6>Programmator</h6>
+<div class="form-group">
+    <label class="hidden" asp-for="ProgrammatorIds"></label>
+    <select asp-for="ProgrammatorIds" asp-items="@Model.Programmators" class="form-control"></select>
+</div>
+<h6>Genre</h6>
+<div class="form-group mt-2">
+   <div asp-for="GenreIds" class="mt-1"></div>
+    @for (int i = 0; i < Model.Genres.Count(); i++)
+    {
+        <input type="checkbox" asp-for="@Model.Genres[i].IsSelected" class="form-check-input" />
+
+        <label asp-for="@Model.Genres[i].IsSelected"> @Model.Genres[i].Text   </label>
+        <input class="hidden" asp-for="@Model.Genres[i].Value" />
+        <input class="hidden" asp-for="@Model.Genres[i].Text" />
+    }
+
+</div>
+
+
+
+
+

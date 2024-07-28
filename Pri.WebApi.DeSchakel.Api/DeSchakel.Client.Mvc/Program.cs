@@ -1,0 +1,115 @@
+using DeSchakel.Client.Mvc.Services;
+using DeSchakel.Client.Mvc.Services.Interfaces;
+using DeSchakelApi.Consumer.Companies;
+using DeSchakelApi.Consumer.Events;
+using DeSchakelApi.Consumer.Genres;
+using DeSchakelApi.Consumer.Locations;
+using DeSchakelApi.Consumer.Navigations;
+using DeSchakelApi.Consumer.Roles;
+using DeSchakelApi.Consumer.Users;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+
+builder.Services.AddControllersWithViews();
+builder.Services.AddHttpClient();
+builder.Services.AddScoped<IEventApiService, EventApiService>();
+builder.Services.AddScoped<ICompanyApiService, CompanyApiService>();
+builder.Services.AddScoped<ILocationApiService, LocationApiService>();
+builder.Services.AddScoped<IGenreApiService, GenreApiService>();
+builder.Services.AddScoped<INavigationService, NavigationService>();
+builder.Services.AddScoped<IUserLoginApiService, UserLoginApiService>();
+builder.Services.AddScoped<IAccountsApiService, AccountsApiService>();
+builder.Services.AddScoped<IRoleApiService, RoleApiService>();
+builder.Services.AddScoped<IFileService,FileService>();
+builder.Services.AddScoped<IFormBuilder,FormBuilder>();
+// session
+builder.Services.AddSession(options =>
+{
+    options.Cookie.SameSite = SameSiteMode.Strict;
+    options.Cookie.HttpOnly = true;
+});
+// policies
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+{
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(35);
+    options.SlidingExpiration = true;
+    options.LoginPath = "/User/Authentication/Login";
+    options.AccessDeniedPath = "/User/Authentication/AccessDenied";
+});
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Admin", policy =>
+    {
+        policy.RequireClaim(ClaimTypes.Role, new List<string> { "admin", "Admin" });
+    });
+    options.AddPolicy("Programmator", policy =>
+    {
+        policy.RequireClaim(ClaimTypes.Role, new List<string> { "programmator", "Programmator" });
+    });
+    options.AddPolicy("Reception", policy =>
+    {
+        policy.RequireClaim(ClaimTypes.Role, new List<string> { "onthaal", "Onthaal" });
+    });
+    options.AddPolicy("Visitor", policy =>
+    {
+        policy.RequireClaim(ClaimTypes.Role, new List<string> { "bezoeker", "Bezoeker" });
+    });
+    options.AddPolicy("MemberOfStaff", policy =>
+        policy.RequireAssertion(context =>
+        {
+            return context.User.IsInRole("Programmator") || context.User.IsInRole("Onthaal")
+                        || context.User.IsInRole("Admin");
+        }
+     ));
+    options.AddPolicy("MemberOfManagement", policy =>
+    policy.RequireAssertion(context =>
+    {
+        return context.User.IsInRole("Programmator") || context.User.IsInRole("Admin");
+    }
+  ));
+
+});
+//
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Home/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
+}
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseSession();
+
+app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+
+app.MapControllerRoute(
+    name: "staff",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}",
+    defaults: new { area = "Staff" }
+);
+
+app.MapControllerRoute(
+    name: "user",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}",
+    defaults: new { area = "User" }
+);
+
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.Run();

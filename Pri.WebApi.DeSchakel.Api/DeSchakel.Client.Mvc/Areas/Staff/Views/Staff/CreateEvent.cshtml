@@ -1,0 +1,18 @@
+﻿
+@model StaffEventCreateViewmodel
+
+<div class="row">
+    <div class="col col-lg-5 mx-auto border border-1 rounded rounded-1">
+    
+        <form method="post" asp-controller="Staff" asp-action="CreateEvent"  enctype="multipart/form-data" multiple>
+
+            <!-- hier volgt de code die nu in partial is openomen-->
+            <!-- tot hier kan vervangen worden door partial-->
+            <partial name="_CreateUpdatePerformancePartial" model="@Model" />
+            <div class="btn mt-5 mb-3">
+                <button type="submit" class="btn btn-primary">Toevoegen</button>
+                <a class="btn-outline-primary" asp-area="Staff" asp-controller="Staff" asp-action="Index">Terug</a>
+            </div>
+        </form>
+    </div>
+</div>
