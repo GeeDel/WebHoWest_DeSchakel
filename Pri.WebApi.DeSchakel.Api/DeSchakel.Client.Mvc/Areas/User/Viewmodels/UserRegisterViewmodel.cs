@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DeSchakel.Client.Mvc.Areas.Staff.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
 namespace DeSchakel.Client.Mvc.Areas.User.Viewmodels
@@ -40,8 +41,24 @@ namespace DeSchakel.Client.Mvc.Areas.User.Viewmodels
         [Required(ErrorMessage = "Geef een geboortedatum.")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-mm-yyyy}")]
+        /*
+ https://stackoverflow.com/questions/17321948/is-there-a-rangeattribute-for-datetime/17322252#17322252
+*/
+        [CustomEventDateAttribute(ErrorMessage = "Geen datum in de toekomst en leeftijd minstens 18 jaar")]
         public DateTime DateOfBirth { get; set; }
         [HiddenInput]
         public List<string> Roles { get; set; }
+    }
+
+       /*
+     * https://stackoverflow.com/questions/17321948/is-there-a-rangeattribute-for-datetime/17322252#17322252
+    */
+    public class CustomEventDateAttribute : RangeAttribute
+    {
+        public CustomEventDateAttribute()
+          : base(typeof(DateTime),
+                  DateTime.Now.ToString(),
+                  DateTime.Now.AddYears(-18).ToString())
+        { }
     }
 }

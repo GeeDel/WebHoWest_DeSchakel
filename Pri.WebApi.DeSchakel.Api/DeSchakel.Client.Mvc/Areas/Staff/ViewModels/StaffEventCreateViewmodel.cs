@@ -12,12 +12,17 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.ViewModels
         public string Title { get; set; }
         [Required(ErrorMessage = "De datum moet een waarde hebben.")]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyyTHH:mm}")]
+        /*
+         https://stackoverflow.com/questions/17321948/is-there-a-rangeattribute-for-datetime/17322252#17322252
+        */
+        [CustomEventDateAttribute(ErrorMessage = "Een datum vanaf morgen en maximum één jaar in de toekomst")]
         [Display(Name = "Datum van de voorstelling")] 
         public DateTime EventDate { get; set; }
         [StringLength(450)]
         [Required(ErrorMessage = "De beschrijving moet een waarde hebben.")]
         public string Description { get; set; }
         [Required(ErrorMessage = "De prijs is verplicht.")]
+        [Range(0,999, ErrorMessage = "Prijs boven 0 en onder 1000 euro")]
         public double Price { get; set; }
         public int SuccesRate { get; set; }
         [Display(Name = "Laad een afbeelding op")]
@@ -40,5 +45,17 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.ViewModels
         public IEnumerable<SelectListItem> Programmators { get; set; }
         public List<string> ProgrammatorIds { get; set; }
 
+    }
+
+    /*
+     * https://stackoverflow.com/questions/17321948/is-there-a-rangeattribute-for-datetime/17322252#17322252
+    */
+    public class CustomEventDateAttribute : RangeAttribute
+    {
+        public CustomEventDateAttribute()
+          : base(typeof(DateTime),
+                  DateTime.Now.AddDays(1).ToString(),
+                  DateTime.Now.AddDays(365).ToString())
+        { }
     }
 }
