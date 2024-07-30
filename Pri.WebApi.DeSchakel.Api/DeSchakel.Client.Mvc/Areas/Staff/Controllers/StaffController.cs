@@ -76,7 +76,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
             eventsViewModel.Events = eventFromApi.Select(e => new EventItemViewModel
             {
                 Id = e.Id,
-                Title = e.Title.Length >15 ? e.Title.Substring(1,15) : $"{e.Title}",
+                Title = e.Title.Length >30 ? e.Title.Substring(0,30) : $"{e.Title} {new String(' ', 30 - e.Title.Length)}",
                 EventDate = e.EventDate,
                 Description = e.Description,
                 Imagestring = e.Imagestring,
