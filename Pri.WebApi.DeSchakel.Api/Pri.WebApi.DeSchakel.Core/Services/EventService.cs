@@ -249,6 +249,12 @@ namespace Pri.WebApi.DeSchakel.Core.Services
                 return resultModel;
             }
             // Controles
+            if (await DoesEventNameExistsAsync(eventUpdateRequestModel.Title))
+            {
+                resultModel.Errors.Add($"Er bestaat al een voorstelling met de titel {eventUpdateRequestModel.Title}");
+
+                return resultModel;
+            }
             if (!await _companyService.DoesCompanyIdExistAsync(eventUpdateRequestModel.CompanyId))
             {
                 resultModel.Errors.Add($"Kan de voorstelling niet toevoegen: id van het gezelschap {eventUpdateRequestModel.CompanyId} bestaat niet.");
