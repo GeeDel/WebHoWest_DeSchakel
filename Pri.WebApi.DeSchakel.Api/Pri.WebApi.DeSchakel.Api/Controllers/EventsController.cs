@@ -170,14 +170,25 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
                 GenreIds = mpRequest.GenreIds
             };
             // the files
-            foreach (IFormFile file in mpRequest.filesToUpload)
-            {
-                var resultModelImage = await _fileService.AddOrUpdateImageAsync(file, file.FileName);
+            const string AcceptedContetenttype = "image/audio/video/";
+            ResultModel<string> resultModelImage = new();
 
-                performance.Imagestring = resultModelImage.Data;
+           foreach (IFormFile file in mpRequest.filesToUpload)
+            {
+                string fileContenttype = file.ContentType.Substring(0, 6);
+                if (!String.IsNullOrEmpty(fileContenttype) && AcceptedContetenttype.Contains(fileContenttype))
+                {
+                  resultModelImage = await _fileService.AddOrUpdateImageAsync(file, file.FileName);
+                  performance.Imagestring = resultModelImage.Data;
+                }
+                else
+                {
+                    resultModelImage.Errors.Add($"Het type bestand {file.FileName} wordt niet aanvaard.");
+                }
+
                 if (!resultModelImage.Success)
                 {
-                    return BadRequest($"Fout bij het wegschrijven van de afbeelding {performance.Imagestring}.");
+                    resultModelImage.Errors.Add($"Fout bij het wegschrijven van de afbeelding {performance.Imagestring}.");
                 }
             }
 
@@ -187,7 +198,8 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
                 var dto = new EventResponseDto
                 {
                     Title = performance.Title,
-                    Imagestring = $"{Request.Scheme}://{Request.Host}/images/events/{performance.Imagestring}"
+                    Imagestring = $"{Request.Scheme}://{Request.Host}/images/events/{performance.Imagestring}",
+                    Errors = resultModelImage.Errors
                 };
                 return CreatedAtAction(nameof(Get), new { performance.Title }, dto);
             }
@@ -220,14 +232,25 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
                 GenreIds = mpRequest.GenreIds,
             };
             // the files
+            const string AcceptedContetenttype = "image/audio/video/";
+            ResultModel<string> resultModelImage = new();
+
             foreach (IFormFile file in mpRequest.filesToUpload)
             {
-                var resultModelImage = await _fileService.AddOrUpdateImageAsync(file, file.FileName);
 
-                performanceToUpdate.Imagestring = resultModelImage.Data;
+                string fileContenttype = file.ContentType.Substring(0, 6);
+                if (!String.IsNullOrEmpty(fileContenttype) && AcceptedContetenttype.Contains(fileContenttype))
+                {
+                    resultModelImage = await _fileService.AddOrUpdateImageAsync(file, file.FileName);
+                    performanceToUpdate.Imagestring = resultModelImage.Data;
+                }
+                else
+                {
+                    resultModelImage.Errors.Add($"Het type bestand {file.FileName} wordt niet aanvaard.");
+                }
                 if (!resultModelImage.Success)
                 {
-                    return BadRequest($"Fout bij het wegschrijven van de afbeelding {performanceToUpdate.Imagestring}.");
+                    resultModelImage.Errors.Add($"Fout bij het wegschrijven van de afbeelding {performanceToUpdate.Imagestring}.");
                 }
             }
             //updateservice
@@ -238,6 +261,8 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
                 {
                     Title = performanceToUpdate.Title,
                     Imagestring = $"{Request.Scheme}://{Request.Host}/images/events/{performanceToUpdate.Imagestring}",
+                    Errors = resultModelImage.Errors
+
                 };
                 return CreatedAtAction(nameof(Get), new { performanceToUpdate.Title }, dto);
             }
@@ -300,6 +325,7 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
                 })
               
             }).ToList();
+
             return data;
         }
     }

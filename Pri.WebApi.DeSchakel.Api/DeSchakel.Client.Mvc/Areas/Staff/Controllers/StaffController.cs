@@ -400,7 +400,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
                 performanceToUpdateMp.Add(streamContent, "filesToUpload", fileName); 
 
             }
-            // the Image
+            //
             result = await _eventApiService.Update(performanceToUpdateMp, Request.Cookies["jwtToken"].ToString());
             fileStream.Dispose();
 
@@ -416,7 +416,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [Authorize(Roles = "Admin,Programmator")]
+        [Authorize(Policy = "MemberOfManagement")]
         [HttpPost]
         public async Task<IActionResult> ConfirmDeleteEvent(int id)
         {
