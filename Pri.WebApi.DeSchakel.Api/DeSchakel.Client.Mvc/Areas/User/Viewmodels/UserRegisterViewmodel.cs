@@ -42,8 +42,8 @@ namespace DeSchakel.Client.Mvc.Areas.User.Viewmodels
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-mm-yyyy}")]
         /*
- https://stackoverflow.com/questions/17321948/is-there-a-rangeattribute-for-datetime/17322252#17322252
-*/
+        https://stackoverflow.com/questions/17321948/is-there-a-rangeattribute-for-datetime/17322252#17322252
+        */
         [CustomEventDateAttribute(ErrorMessage = "Geen datum in de toekomst en leeftijd minstens 18 jaar")]
         public DateTime DateOfBirth { get; set; }
         [HiddenInput]

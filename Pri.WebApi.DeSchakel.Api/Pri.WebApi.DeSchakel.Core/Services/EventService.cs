@@ -251,7 +251,7 @@ namespace Pri.WebApi.DeSchakel.Core.Services
             // Controles
             if (await DoesEventNameExistsAsync(eventUpdateRequestModel.Title))
             {
-                resultModel.Errors.Add($"Er bestaat al een voorstelling met de titel {eventUpdateRequestModel.Title}");
+                resultModel.Errors.Add($"Er bestaat een andere voorstelling met de titel {eventUpdateRequestModel.Title}");
 
                 return resultModel;
             }

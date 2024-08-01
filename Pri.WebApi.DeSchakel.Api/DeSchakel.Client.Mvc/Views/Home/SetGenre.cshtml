@@ -3,6 +3,9 @@
 @if (Model.Events.Count() == 0)
 {
     <div class="bg-info">Geen voostellingen gevonden.</div>
+    <div class="mt-4">
+        <a href="@Context.Request.Headers.Referer" class="btn btn-primary">Terug</a>
+    </div>
 }
 else
 {
