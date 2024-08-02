@@ -20,7 +20,7 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
     
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountsController : ControllerBase
+    public class AuthenticationController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
@@ -28,7 +28,7 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
         private readonly IAccountsService _accountsService;
         private readonly IRolesService _rolesService;
 
-        public AccountsController(UserManager<ApplicationUser> userManager,
+        public AuthenticationController(UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IConfiguration configuration,
             IAccountsService usersService,
@@ -42,7 +42,7 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("login")]
+        [HttpPost("/api/auth/login")]
         public async Task<ActionResult> Login([FromBody] LoginUserRequestDto login)
         {
             var applicationUser = await _userManager.FindByEmailAsync(login.Email);
@@ -64,7 +64,7 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
 
 
         [AllowAnonymous]
-        [HttpPost]
+        [HttpPost("/api/auth/register")]
         public async Task<IActionResult> Register([FromBody]RegisterUserRequestDto registerUserRequestDto)
         {
             var result = new ResultModel<List<string>>();
