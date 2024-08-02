@@ -57,8 +57,8 @@ namespace DeSchakel.Client.Mvc.Areas.User.Viewmodels
     {
         public CustomEventDateAttribute()
           : base(typeof(DateTime),
-                  DateTime.Now.ToString(),
-                  DateTime.Now.AddYears(-18).ToString())
+                  DateTime.Now.AddYears(-18).ToString(),
+                  DateTime.Now.ToString())
         { }
     }
 }

@@ -5,6 +5,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Data\Seeding\Images\**" />
+    <EmbeddedResource Remove="Data\Seeding\Images\**" />
+    <None Remove="Data\Seeding\Images\**" />
+  </ItemGroup>
   <ItemGroup>
 
 	  <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
@@ -19,9 +25,6 @@
 
 	  <!--  <FrameworkReference Include="Microsoft.AspNetCore.Api" />  -->
 
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Data\Seeding\Images\" />
   </ItemGroup>
 
 

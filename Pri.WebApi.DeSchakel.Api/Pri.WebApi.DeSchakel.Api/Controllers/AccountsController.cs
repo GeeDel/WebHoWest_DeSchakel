@@ -113,7 +113,8 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
             await _userManager.AddClaimAsync(applicationUser,
                 new Claim("Name", $"{applicationUser.Firstname} {applicationUser.Lastname}"));
             var who = User.Claims.FirstOrDefault(n => n.Equals( "Name"));
-
+            await _userManager.AddClaimAsync(applicationUser, new Claim("registration-date", DateTime.UtcNow.ToString("yyyy-MM-dd")));
+            await _userManager.AddClaimAsync(applicationUser, new Claim("zipcode", registerUserRequestDto.Zipcode));
 
             return CreatedAtAction(nameof(GetById), new { id = applicationUser.Id }, registerUserRequestDto);
         }

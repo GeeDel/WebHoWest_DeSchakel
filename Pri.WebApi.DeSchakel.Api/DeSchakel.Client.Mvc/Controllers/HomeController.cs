@@ -5,6 +5,8 @@ using DeSchakelApi.Consumer.Models;
 using DeSchakelApi.Consumer.Models.Events;
 using DeSchakel.Client.Mvc.Viewmodels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+
 using System.Diagnostics;
 using DeSchakelApi.Consumer.Locations;
 using DeSchakelApi.Consumer.Users;
@@ -89,6 +91,12 @@ namespace DeSchakel.Client.Mvc.Controllers
             );
 
             return View(eventsViewModel);
+        }
+
+        [Authorize(Policy = "OnlyLoyalMembers")]
+        public async Task<IActionResult> NewAbo()
+        {
+            return Ok("Hier zien jong-aboneess hn voordelen");
         }
 
         public IActionResult Privacy()

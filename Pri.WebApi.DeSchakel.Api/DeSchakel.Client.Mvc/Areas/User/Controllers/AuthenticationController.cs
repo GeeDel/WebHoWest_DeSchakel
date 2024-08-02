@@ -63,9 +63,6 @@ namespace DeSchakel.Client.Mvc.Areas.User.Controllers
             // get cookie
             var identity = new ClaimsPrincipal(new ClaimsIdentity(token.Claims,
                 CookieAuthenticationDefaults.AuthenticationScheme));
-            // better solution to save email in identity ?????
-            //     HttpContext.Session.SetString("Who",userToLogin.Email);
-
             var authProperties = new AuthenticationProperties
             {
                 IsPersistent = true,
@@ -126,12 +123,11 @@ namespace DeSchakel.Client.Mvc.Areas.User.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(UserRegisterViewmodel userRegisterViewmodel)
         {
-            //          var user = await _userApiService.GetByEmailAsync(userRegisterViewmodel.Username);
             var result = await _accountsService.GetByEmailAsync(userRegisterViewmodel.Username);
 
 
-          //  if (user != null)
-          if(result.Success)
+            //  if (user != null)
+            if(result.Success)
             {
                 ModelState.AddModelError("", "Gebruikerprofiel is al aangemaakt.");
             }

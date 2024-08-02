@@ -8,6 +8,7 @@ using DeSchakelApi.Consumer.Navigations;
 using DeSchakelApi.Consumer.Roles;
 using DeSchakelApi.Consumer.Users;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Globalization;
 using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -70,7 +71,21 @@ builder.Services.AddAuthorization(options =>
     {
         return context.User.IsInRole("Programmator") || context.User.IsInRole("Admin");
     }
-  ));
+    ));
+    options.AddPolicy("NewAbos", policy =>
+        policy.RequireAssertion(context =>
+        {
+            var newAboClaimValue = context.User.Claims
+                            .SingleOrDefault(c => c.Type == "registration-date")?.Value;
+            if (DateTime.TryParseExact(newAboClaimValue, "yyyy-MM-dd", 
+                CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal, out var registrationDuration))
+            {
+            return registrationDuration.AddYears(+1) > registrationDuration && registrationDuration.AddYears(+2) > registrationDuration;
+
+            }
+            return false;
+        }
+    ));
 
 });
 //

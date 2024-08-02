@@ -414,6 +414,8 @@ namespace Pri.WebApi.DeSchakel.Core.Data.Seeding
                 new NavigationItem {Id=3, Area="Staff", Position= 2, Action="Companies", Controller="Staff", Name="Gezelschappen"},
                 new NavigationItem {Id=4, Area="Staff", Position= 3, Action="Locations", Controller="Staff", Name="Locaties"},
                 new NavigationItem {Id=5, Area="Staff", Position= 4, Action="Genres", Controller="Staff", Name="Genres"},
+                new NavigationItem {Id=6, Area="Home", Position= 2, Action="NewAbo", Controller="Home", Name="Nieuw"},
+
               };
             //
             // HasData metods
