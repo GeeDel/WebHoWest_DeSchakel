@@ -12,7 +12,8 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="Home" asp-controller="Home" asp-action="Index">
-                <img src ="~/Pri.WebApi.DeSchakel.Api\wwwroot\images\organisation\deschakel.jpg" alt="De Schakel" /></a>
+                    <img src="~/images/DeSchakel.jpg" height="75" />
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -30,10 +31,10 @@
                                    asp-area="User" asp-controller="Authentication" asp-action="Logout">Meld af</a>
                             }
                             @*
-        <a class="position-absolute start-100 translate-middle badge rounded-pill bg-danger"
-          asp-area="" asp-controller="Cart" asp-action="Index">
-           @(Context.Session.GetInt32("NumberOfItems")?? 0)
-           <span class="visually-hidden">Bewaar ik!</span>
+                    <a class="position-absolute start-100 translate-middle badge rounded-pill bg-danger"
+                      asp-area="" asp-controller="Cart" asp-action="Index">
+                       @(Context.Session.GetInt32("NumberOfItems")?? 0)
+                       <span class="visually-hidden">Bewaar ik!</span>
 
                             *@
 
