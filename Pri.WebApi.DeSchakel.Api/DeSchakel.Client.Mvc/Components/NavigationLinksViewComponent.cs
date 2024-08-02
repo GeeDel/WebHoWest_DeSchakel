@@ -30,6 +30,7 @@ namespace DeSchakel.Client.Mvc.Components
             var result = actionLinks.Result.Select(a => new ActionLink
             { Action = a.Action,
             Controller = a.Controller,
+            Area = area,
             Name = a.Name,
             Position = a.Position});
                 var navigationLinksViewModel = new NavigationLinksViewModel

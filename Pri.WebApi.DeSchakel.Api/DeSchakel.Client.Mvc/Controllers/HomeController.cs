@@ -93,7 +93,7 @@ namespace DeSchakel.Client.Mvc.Controllers
             return View(eventsViewModel);
         }
 
-        [Authorize(Policy = "OnlyLoyalMembers")]
+        [Authorize(Policy = "NewAbos")]
         public async Task<IActionResult> NewAbo()
         {
             return Ok("Hier zien jong-aboneess hn voordelen");

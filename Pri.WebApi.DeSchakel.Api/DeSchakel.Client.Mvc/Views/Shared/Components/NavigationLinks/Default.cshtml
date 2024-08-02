@@ -2,6 +2,6 @@
 
 @foreach (var link in Model.ActionLinks)
 {<li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="@link.Controller" asp-action="@link.Action">@link.Name</a>
+        <a class="nav-link text-dark" asp-area="@link.Area" asp-controller="@link.Controller" asp-action="@link.Action">@link.Name</a>
     </li>
 }
