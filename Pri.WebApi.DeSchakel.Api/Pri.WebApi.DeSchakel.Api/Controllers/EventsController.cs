@@ -33,7 +33,6 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
         private readonly ICompanyService _companiesService;
         private readonly IAccountsService _accountsService;
         private readonly ApplicationDbContext _applicationDbcontext;
-   //     private readonly HttpContext _httpContext;
 
         public EventsController(IEventService eventService, IGenreService genreService,
             IFileService fileService, ApplicationDbContext applicationDbcontext,
@@ -47,7 +46,6 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
             _locationsService = locationsService;
             _companiesService = companiesService;
             _accountsService = accountsService;
-     //       _httpContext = httpContext;
         }
 
 

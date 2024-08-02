@@ -106,9 +106,14 @@ builder.Services.AddAuthorization(options =>
             const string ZipcodesFromWaregem = "B8790B8791B8792B8793";
             var zipCodeValue = context.User.Claims
                             .SingleOrDefault(c => c.Type == "zipcode")?.Value;
-
-            bool b = ZipcodesFromWaregem.Contains(zipCodeValue);
-            return b;
+            if (String.IsNullOrEmpty(zipCodeValue))
+            {
+                return false;
+            }
+            else
+            {
+                return ZipcodesFromWaregem.Contains(zipCodeValue);
+            }
         }
     ));
 });

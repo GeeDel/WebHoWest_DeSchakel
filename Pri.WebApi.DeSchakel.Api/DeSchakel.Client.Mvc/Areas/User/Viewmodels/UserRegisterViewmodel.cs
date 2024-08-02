@@ -8,7 +8,7 @@ namespace DeSchakel.Client.Mvc.Areas.User.Viewmodels
     {
         [Display(Name = "Emailadres")]
         [DataType(DataType.EmailAddress,
-    ErrorMessage = "Graag een geldig emailadres gebruiken.")]
+              ErrorMessage = "Graag een geldig emailadres gebruiken.")]
         [Required(ErrorMessage = "Gebruikersnaam mag niet leeg zijn.")]
         public string Username { get; set; }
         [Display(Name = "Voornaam")]
@@ -44,7 +44,7 @@ namespace DeSchakel.Client.Mvc.Areas.User.Viewmodels
         /*
         https://stackoverflow.com/questions/17321948/is-there-a-rangeattribute-for-datetime/17322252#17322252
         */
-        [CustomEventDateAttribute(ErrorMessage = "Geen datum in de toekomst en leeftijd minstens 18 jaar")]
+        [CustomEventDateAttribute(ErrorMessage = "Leeftijd minstens 18 jaar en niet verder dan 130 jaar in het verleden.")]
         public DateTime DateOfBirth { get; set; }
         [HiddenInput]
         public List<string> Roles { get; set; }
@@ -57,8 +57,8 @@ namespace DeSchakel.Client.Mvc.Areas.User.Viewmodels
     {
         public CustomEventDateAttribute()
           : base(typeof(DateTime),
-                  DateTime.Now.AddYears(-18).ToString(),
-                  DateTime.Now.ToString())
+                  DateTime.Now.AddYears(-130).ToString(),
+                  DateTime.Now.AddYears(-18).ToString())
         { }
     }
 }

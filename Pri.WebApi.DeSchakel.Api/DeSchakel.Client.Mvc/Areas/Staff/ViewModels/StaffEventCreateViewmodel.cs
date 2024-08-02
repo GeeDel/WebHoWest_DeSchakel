@@ -25,7 +25,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.ViewModels
         [Range(0,999, ErrorMessage = "Prijs boven 0 en onder 1000 euro")]
         public double Price { get; set; }
         public int SuccesRate { get; set; }
-        [Display(Name = "Laad een afbeelding op")]
+        [Display(Name = "Laad  een afbeelding op (max 1), optioneel één video en één geluidsfragment")]
         public IEnumerable<IFormFile> Images { get; set; }
         public string Imagestring { get; set; }
         // Company
