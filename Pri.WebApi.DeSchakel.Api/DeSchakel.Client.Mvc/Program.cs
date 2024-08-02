@@ -43,22 +43,6 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 });
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("Admin", policy =>
-    {
-        policy.RequireClaim(ClaimTypes.Role, new List<string> { "admin", "Admin" });
-    });
-    options.AddPolicy("Programmator", policy =>
-    {
-        policy.RequireClaim(ClaimTypes.Role, new List<string> { "programmator", "Programmator" });
-    });
-    options.AddPolicy("Reception", policy =>
-    {
-        policy.RequireClaim(ClaimTypes.Role, new List<string> { "onthaal", "Onthaal" });
-    });
-    options.AddPolicy("Visitor", policy =>
-    {
-        policy.RequireClaim(ClaimTypes.Role, new List<string> { "bezoeker", "Bezoeker" });
-    });
     options.AddPolicy("MemberOfStaff", policy =>
         policy.RequireAssertion(context =>
         {
@@ -77,13 +61,24 @@ builder.Services.AddAuthorization(options =>
         {
             var newAboClaimValue = context.User.Claims
                             .SingleOrDefault(c => c.Type == "registration-date")?.Value;
-            if (DateTime.TryParseExact(newAboClaimValue, "yyyy-MM-dd", 
-                CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal, out var registrationDuration))
+            if (DateTime.TryParseExact(newAboClaimValue, "yyyy-MM-dd",
+                CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal, out var registrationDate))
             {
-            return registrationDuration.AddYears(+1) > registrationDuration && registrationDuration.AddYears(+2) > registrationDuration;
+                return registrationDate.AddYears(+1) > DateTime.Now && DateTime.Now < registrationDate.AddYears(+2);
 
             }
             return false;
+    }
+    ));
+    options.AddPolicy("FromWaregem", policy =>
+        policy.RequireAssertion(context =>
+        {
+        const string ZipcodesFromWaregem = "B8790B8791B8792B8793";
+        var zipCodeValue = context.User.Claims
+                        .SingleOrDefault(c => c.Type == "zipcode")?.Value;
+
+        bool b =  ZipcodesFromWaregem.Contains(zipCodeValue);
+        return b;
         }
     ));
 

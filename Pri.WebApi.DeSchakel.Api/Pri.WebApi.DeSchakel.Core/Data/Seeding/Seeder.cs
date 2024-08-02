@@ -403,19 +403,18 @@ namespace Pri.WebApi.DeSchakel.Core.Data.Seeding
                     Quantity = 1,
                     VisitorId = "00000000-0000-0000-0000-000000000001",
                 }
-};
+             };
 
 
             var actionLinks = new[]
-{
-
+            {
                 new NavigationItem {Id=1, Area="Home", Position= 1, Action="Privacy", Controller="Home", Name="Bescherming"},
                 new NavigationItem {Id=2, Area="Staff", Position= 1, Action="Index", Controller="Staff", Name="Voorstellingen"},
                 new NavigationItem {Id=3, Area="Staff", Position= 2, Action="Companies", Controller="Staff", Name="Gezelschappen"},
                 new NavigationItem {Id=4, Area="Staff", Position= 3, Action="Locations", Controller="Staff", Name="Locaties"},
                 new NavigationItem {Id=5, Area="Staff", Position= 4, Action="Genres", Controller="Staff", Name="Genres"},
                 new NavigationItem {Id=6, Area="Home", Position= 2, Action="NewAbo", Controller="Home", Name="Nieuw"},
-
+                new NavigationItem {Id=7, Area="Home", Position= 3, Action="Voucher", Controller="Home", Name="Waregembon"},
               };
             //
             // HasData metods
@@ -501,19 +500,28 @@ namespace Pri.WebApi.DeSchakel.Core.Data.Seeding
                     UserId = "00000000-0000-0000-0000-000000000006",
                     ClaimType = "Name",
                     ClaimValue = "Filiep Verhelst"
+                },
+                new IdentityUserClaim<string>
+                {
+                    Id = 7,
+                    UserId = "00000000-0000-0000-0000-000000000006",
+                    ClaimType = "registration-date",
+                    ClaimValue = "2018-12-15"
+                },
+                new IdentityUserClaim<string>
+                {
+                    Id = 8,
+                    UserId = "00000000-0000-0000-0000-000000000006",
+                    ClaimType = "zipcode",
+                    ClaimValue = "8793"
                 }
             );
-
-
             modelBuilder.Entity<NavigationItem>().HasData(actionLinks);
             modelBuilder.Entity<Location>().HasData(locations);
             modelBuilder.Entity<Genre>().HasData(genres);
             modelBuilder.Entity<Company>().HasData(companies);
             modelBuilder.Entity<Event>().HasData(events);
             modelBuilder.Entity<Ticket>().HasData(tickets);
-
-            //
-
             // manytomany
             modelBuilder.Entity($"{nameof(Event)}{nameof(Genre)}").HasData(eventGenre);
             modelBuilder.Entity($"{nameof(ApplicationUser)}{nameof(Event)}").HasData(EventApplicationUsers);

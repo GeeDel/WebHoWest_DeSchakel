@@ -94,9 +94,16 @@ namespace DeSchakel.Client.Mvc.Controllers
         }
 
         [Authorize(Policy = "NewAbos")]
-        public async Task<IActionResult> NewAbo()
+        public IActionResult NewAbo()
         {
-            return Ok("Hier zien jong-aboneess hn voordelen");
+            return Ok("Hier zien jong-aboneess hun voordelen");
+        }
+
+        [Authorize(Policy = "FromWaregem")]
+        public IActionResult Voucher()
+        {
+            return Ok("Hier kunnen Waregemnaars een voucher voor één voorstelling bestellen.");
+
         }
 
         public IActionResult Privacy()

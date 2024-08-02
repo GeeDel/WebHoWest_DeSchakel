@@ -27,7 +27,6 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
             _rolesService = rolesService;
         }
 
-    //    [Authorize (Policy = "MemberOfManagement")]
         [HttpGet]
         public IQueryable<RoleRequestDto> Get()
         {

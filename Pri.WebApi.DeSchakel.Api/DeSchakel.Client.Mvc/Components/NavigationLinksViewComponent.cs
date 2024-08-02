@@ -33,11 +33,11 @@ namespace DeSchakel.Client.Mvc.Components
             Area = area,
             Name = a.Name,
             Position = a.Position});
-                var navigationLinksViewModel = new NavigationLinksViewModel
+            var navigationLinksViewModel = new NavigationLinksViewModel
             {
                      ActionLinks =  result
-                 };
+            };
             return View(navigationLinksViewModel);
-                }
+        }
     }
 }
