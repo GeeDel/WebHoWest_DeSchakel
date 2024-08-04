@@ -16,8 +16,8 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.ViewModels
          https://stackoverflow.com/questions/17321948/is-there-a-rangeattribute-for-datetime/17322252#17322252
         */
         [CustomEventDateAttribute(ErrorMessage = "Een datum vanaf morgen en maximum één jaar in de toekomst")]
-        [Display(Name = "Datum van de voorstelling")] 
-        public DateTime EventDate { get; set; }
+        [Display(Name = "Datum van de voorstelling")]
+        public DateTime EventDate { get; set; } = DateTime.Now.AddDays(+1);
         [StringLength(450)]
         [Required(ErrorMessage = "De beschrijving moet een waarde hebben.")]
         public string Description { get; set; }

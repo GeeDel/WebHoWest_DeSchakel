@@ -45,13 +45,13 @@ namespace DeSchakel.Client.Mvc.Areas.User.Viewmodels
         https://stackoverflow.com/questions/17321948/is-there-a-rangeattribute-for-datetime/17322252#17322252
         */
         [CustomEventDateAttribute(ErrorMessage = "Leeftijd minstens 18 jaar en niet verder dan 130 jaar in het verleden.")]
-        public DateTime DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; set; } = DateTime.Now.AddYears(-18);
         [HiddenInput]
         public List<string> Roles { get; set; }
     }
 
        /*
-     * https://stackoverflow.com/questions/17321948/is-there-a-rangeattribute-for-datetime/17322252#17322252
+      https://stackoverflow.com/questions/17321948/is-there-a-rangeattribute-for-datetime/17322252#17322252
     */
     public class CustomEventDateAttribute : RangeAttribute
     {
