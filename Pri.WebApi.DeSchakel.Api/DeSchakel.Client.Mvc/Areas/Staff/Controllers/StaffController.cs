@@ -310,6 +310,20 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
 
                 ModelState.AddModelError("Update",result.Errors.First());
             }
+            if (staffEventUpdateViewModel.Images == null)
+            {
+                ModelState.AddModelError("", "Je moet een afbeelding kiezen.");
+
+            }
+            else
+            {
+                /*   ModelState.AddModelError("", "De afbeelding moet van het type jpeg zijn.");
+                           var extension = Path.GetExtension(staffEventCreateViewmodel.Image.FileName).ToLowerInvariant();
+                          // if (string.IsNullOrEmpty(extension) ||
+                          //        (extension != ".jpg" && extension != ".jpeg"))
+                          //     ModelState.AddModelError("", "De afbeelding moet van het type jpeg zijn.");
+                */
+            }
             var performanceToUpdate = result.Data;
             var performanceTitle = await _eventApiService.GetByTitleAsync(staffEventUpdateViewModel.Title);
             // exist in database
@@ -398,7 +412,6 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
                 streamContent.Headers.ContentType = new MediaTypeHeaderValue(contentType);
 
                 performanceToUpdateMp.Add(streamContent, "filesToUpload", fileName); 
-
             }
             //
             result = await _eventApiService.Update(performanceToUpdateMp, Request.Cookies["jwtToken"].ToString());
@@ -597,7 +610,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
             return View();
         }
 
-        [Authorize(Policy = "Admin")]
+        [Authorize(Roles=("Admin"))]
         public async Task<IActionResult> Accounts()
         {
             var usersFromApi = await _accountsService.GetAsync();
@@ -634,7 +647,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
 
 
 
-        [Authorize(Policy ="Admin")]
+        [Authorize(Roles ="Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateAccount(StaffAccountCreateViewmodel staffAccountCreateViewmodel)
@@ -685,7 +698,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
             return RedirectToAction("Accounts", "Staff", new { Area = "Staff" });
         }
 
-        [Authorize(Policy = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> UpdateAccount(string id)
         {
@@ -779,7 +792,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
 
         }
 
-        [Authorize(Policy = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteAccount(string id)
@@ -802,7 +815,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
 
         }
 
-        [Authorize(Policy = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> UpdatePassword(string id)
         {

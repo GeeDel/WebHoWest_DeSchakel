@@ -74,8 +74,8 @@ namespace DeSchakel.Client.Mvc.Areas.User.Controllers
             {
                 HttpOnly = true,
                 Secure = true,
-                SameSite = SameSiteMode.Unspecified,
-                Expires = DateTime.UtcNow.AddDays(99),
+                SameSite = SameSiteMode.Strict,
+                Expires = DateTime.UtcNow.AddHours(2),
             };
             // save cookie
             Response.Cookies.Append("jwtToken", result.Token, cookieOptions);
@@ -100,12 +100,7 @@ namespace DeSchakel.Client.Mvc.Areas.User.Controllers
             {
                 HttpContext.Session.SetInt32("NumberOfItems", 0);
             }
-            if (HttpContext.Session.Keys.Contains("Who"))
-            {
-                HttpContext.Response.Cookies.Delete("Who");
-
-            }
-            await HttpContext.SignOutAsync();
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "Home", new { Area = "Home" });
         }
 
@@ -158,8 +153,7 @@ namespace DeSchakel.Client.Mvc.Areas.User.Controllers
 
         public async Task<IActionResult> Update ()
         {
-            string email =  User.Claims.SingleOrDefault(e => e.Type == "email")?.Value; ;
-                //HttpContext.Session.GetString("Who");   // Request.Cookies["Who"]; 
+            string email =  User.Claims.SingleOrDefault(e => e.Type == "email")?.Value;
             var result = await _accountsService.GetByEmailAsync(email);
             if (!result.Success)
             {
@@ -220,16 +214,12 @@ namespace DeSchakel.Client.Mvc.Areas.User.Controllers
                 HttpOnly = true,
                 Secure = true,
                 SameSite = SameSiteMode.Strict,
-                Expires = DateTime.UtcNow.AddDays(99),
+                Expires = DateTime.UtcNow.AddDays(1),
             };
             if ( userAccountUpdateViewmodel.Email.Equals(resultAccount.Data.Email))
             {
             }
-
-            Response.Cookies.Delete("Who");
-           Response.Cookies.Append("Who", $"{userAccountUpdateViewmodel.Email}", cookieOptions);
-
-            return RedirectToAction("Index", "Home", new { Area = "Home" });
+           return RedirectToAction("Index", "Home", new { Area = "Home" });
         }
     }
 }

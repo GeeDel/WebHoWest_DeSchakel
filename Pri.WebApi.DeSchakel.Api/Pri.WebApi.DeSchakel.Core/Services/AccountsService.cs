@@ -49,14 +49,17 @@ namespace Pri.WebApi.DeSchakel.Core.Services
 
         public IQueryable<ApplicationUser> GetAll()
         {
-            return  _applicationDbcontext.Users;
+            return  _applicationDbcontext.Users
+                .OrderBy(f=>f.Lastname);
         }
 
  
         public async Task<ResultModel<IEnumerable<ApplicationUser>>> ListAllAsync()
         {
             return new ResultModel<IEnumerable<ApplicationUser>>
-            { Data = await _applicationDbcontext.Users.ToListAsync() };
+            { Data = await _applicationDbcontext.Users
+            .OrderBy(f => f.Lastname)
+            .ToListAsync() };
                 
         }
 
@@ -80,66 +83,6 @@ namespace Pri.WebApi.DeSchakel.Core.Services
         public Task<ResultModel<ApplicationUser>> UpdateAsync(ApplicationUser entity)
         {
             throw new NotImplementedException();
-        }
-
-
-        
-        public async Task<ResultModel<List<string>>> GetUserToken(LoginUserRequestModel login)
-        {
-
-            var result = await _signInManager.PasswordSignInAsync(login.Username, login.Password, isPersistent: false, lockoutOnFailure: false);
-
-
-            if (!result.Succeeded)
-            {
-                return new ResultModel<List<string>>
-                {
-                    Errors = new List<string> { "Gebruiker is niet gevondent " }
-                };
-            }
-
-            var applicationUser = await _userManager.FindByEmailAsync(login.Username);
-            JwtSecurityToken token = await GenerateTokenAsync(applicationUser);
-            //defined
-            string serializedToken = new JwtSecurityTokenHandler().WriteToken(token); //serialize the token
-     
-            var ResponseDtoToken = new ResultModel<List<string>>()
-            {
-                Data = new List<string> { serializedToken }
-            };
-            return ResponseDtoToken;  
-        }
-        
-
-        private async Task<JwtSecurityToken> GenerateTokenAsync(ApplicationUser user)
-        {
-            var claims = new List<Claim>();
-
-            // Loading the user Claims
-            var userClaims = await _userManager.GetClaimsAsync(user);
-
-            claims.AddRange(userClaims);
-
-            // Loading the rolenamess and put them in a claim of a Role ClaimType
-            var roleClaims = await _userManager.GetRolesAsync(user);
-            foreach (var roleClaim in roleClaims)
-            {
-                claims.Add(new Claim(ClaimTypes.Role, roleClaim));
-            }
-
-            var expirationDays = _configuration.GetValue<int>("JWTConfiguration:TokenExpirationDays");
-            var siginingKey = Encoding.UTF8.GetBytes(_configuration.GetValue<string>("JWTConfiguration:SigningKey"));
-            var token = new JwtSecurityToken
-            (
-                issuer: _configuration.GetValue<string>("JWTConfiguration:Issuer"),
-                audience: _configuration.GetValue<string>("JWTConfiguration:Audience"),
-                claims: claims,
-                expires: DateTime.UtcNow.Add(TimeSpan.FromDays(expirationDays)),
-                notBefore: DateTime.UtcNow,
-                signingCredentials: new SigningCredentials(new SymmetricSecurityKey(siginingKey), SecurityAlgorithms.HmacSha256)
-            );
-
-            return token;
         }
 
 
