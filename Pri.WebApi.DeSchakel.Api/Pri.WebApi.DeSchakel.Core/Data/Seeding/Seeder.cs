@@ -469,48 +469,90 @@ namespace Pri.WebApi.DeSchakel.Core.Data.Seeding
                 new IdentityUserClaim<string>
                 {
                     Id = 2,
+                    UserId = "00000000-0000-0000-0000-000000000001",
+                    ClaimType = "email",
+                    ClaimValue = "admin@cc.be"
+                },
+                new IdentityUserClaim<string>
+                {
+                    Id = 3,
                     UserId = "00000000-0000-0000-0000-000000000002",
                     ClaimType = "Name",
                     ClaimValue = "Maaike Tubex"
                 },
                 new IdentityUserClaim<string>
                 {
-                    Id = 3,
+                    Id = 4,
+                    UserId = "00000000-0000-0000-0000-000000000002",
+                    ClaimType = "email",
+                    ClaimValue = "maaike@cc.be"
+                },
+                new IdentityUserClaim<string>
+                {
+                    Id = 5,
                     UserId = "00000000-0000-0000-0000-000000000003",
                     ClaimType = "Name",
                     ClaimValue = "Joost Van den Kerkhove"
                 },
                 new IdentityUserClaim<string>
                 {
-                    Id = 4,
+                    Id = 6,
+                    UserId = "00000000-0000-0000-0000-000000000003",
+                    ClaimType = "email",
+                    ClaimValue = "joost@cc.be"
+                },
+                new IdentityUserClaim<string>
+                {
+                    Id = 7,
                     UserId = "00000000-0000-0000-0000-000000000004",
                     ClaimType = "Name",
                     ClaimValue = "Veerle Hollants"
                 },
                 new IdentityUserClaim<string>
                 {
-                    Id = 5,
+                    Id = 8,
+                    UserId = "00000000-0000-0000-0000-000000000004",
+                    ClaimType = "email",
+                    ClaimValue = "veerle@cc.be"
+                },
+                new IdentityUserClaim<string>
+                {
+                    Id = 9,
                     UserId = "00000000-0000-0000-0000-000000000005",
                     ClaimType = "Name",
                     ClaimValue = "Paulien Desmet"
                 },
                 new IdentityUserClaim<string>
                 {
-                    Id = 6,
+                    Id = 10,
+                    UserId = "00000000-0000-0000-0000-000000000005",
+                    ClaimType = "email",
+                    ClaimValue = "paulien@cc.be"
+                },
+                new IdentityUserClaim<string>
+                {
+                    Id = 11,
                     UserId = "00000000-0000-0000-0000-000000000006",
                     ClaimType = "Name",
                     ClaimValue = "Filiep Verhelst"
                 },
                 new IdentityUserClaim<string>
                 {
-                    Id = 7,
+                    Id = 12,
+                    UserId = "00000000-0000-0000-0000-000000000006",
+                    ClaimType = "email",
+                    ClaimValue = "f.v@telenet.be"
+                },
+                new IdentityUserClaim<string>
+                {
+                    Id = 13,
                     UserId = "00000000-0000-0000-0000-000000000006",
                     ClaimType = "registration-date",
                     ClaimValue = "2018-12-15"
                 },
                 new IdentityUserClaim<string>
                 {
-                    Id = 8,
+                    Id = 14,
                     UserId = "00000000-0000-0000-0000-000000000006",
                     ClaimType = "zipcode",
                     ClaimValue = "8793"

@@ -14,9 +14,9 @@ namespace DeSchakelApi.Consumer
         public const string Companies = Base + "/companies/";
         public const string Genres = Base + "/genres/";
         public const string ActionLinks = Base + "/ActionLinks/";
-        public const string Accounts = Base + "/accounts/";
-        public const string Auth = Base + "/accounts/login";
-        public const string Email = Auth + "ByEmail";
+        public const string Accounts = Base + "/authentication/";
+        public const string Auth = Base + "/auth/";
+        public const string Email = Accounts + "ByEmail";
         public const string Roles = Base + "/roles/";
     }
 }

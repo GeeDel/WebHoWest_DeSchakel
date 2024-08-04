@@ -36,12 +36,13 @@
                                 </a>
                                 <div class="bladwijzerLink"></div>
                             </h3>
-                            <h4>Op: @performance.EventDate.ToString("dd-MM-yyyy") om @performance.EventDate.ToString("HH:mm")</h4>
                             <div>
                                 <h5>Van: @performance.CompanyName</h5>
                             </div>
+                            <h4>Op: @performance.EventDate.ToString("dd-MM-yyyy") om @performance.EventDate.ToString("HH:mm")</h4>
+
                             <div>
-                                <h5 class="alert-danger">Waar: @performance.LocationName</h5>
+                                <h5 class="alert-danger">@performance.LocationName</h5>
                             </div>
                         </th>
                     </tr>
@@ -61,7 +62,7 @@
 
                                         @foreach (var genre in performance.Genres)
                                         {
-                                            <span margin-right="20px" font-size="0.8em"> &#9826; @genre.Name</span>
+                                            <span margin-right="20px" font-size="0.6em"> &#9826; @genre.Name</span>
                                         }
                                     </h5>
 
@@ -70,40 +71,28 @@
                     </tr>
                     <tr>
                         <td width="80%" class="align-content-lg-start">
+                            <div>
+                                <button class="btn btn-primary"
+                                        data-toggle="collapse show" data-target="#@(performance.Id)_media">
+                                    Media
+                                </button>
+                                <button data-toggle="collapse" data-target="#@(performance.Id)_video">Video</button>    -->
 
-                            <!-- Nav tabs -->
-                            <!-- https://getbootstrap.com/docs/5.0/components/navs-tabs/  -->
-                            <ul class="nav nav-pills" id="myTab" @performance.Id role="tablist">
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#@(performance.Title)_home" type="button" role="tab" aria-controls="home" aria-selected="true">Voorstelling</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#@(performance.Title)_profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Video</button>
-                                </li>
-                            </ul>
-
-                            <!-- Tab panes -->
-                            <div class="tab-content">
-                                <div class="tab-pane fade show active " id="@(performance.Title)_home" role="tabpanel" aria-labelledby="home-tab">
-                                    <img src="@performance.Imagestring" alt="Afbeelding van @performance.Title" alt="@performance.Title" height="320"
+                                <div id="@(performance.Id)_media" class="collapse show">
+                                    <img src="@performance.Imagestring" alt="Afbeelding van @performance.Title" height="320"
                                          class="performanceImage" />
                                     <audio controls>
-                                        Formaat wordt niet ondersteund.
                                     </audio>
+                                    Geen audio beschikbaar.
                                 </div>
-                                <div class="tab-pane" id="@(performance.Title)_profile" role="tabpanel" aria-labelledby="profile-tab">
-                                    <video width="320" height="240" controls>
-                                        <source src="movie.mp4" type="video/mp4">
-                                        <source src="movie.ogg" type="video/ogg">
-                                        Your browser does not support the video tag.
-                                    </video>  
+                                <div id="@(performance.Id)_video" class="collapse">
+                                    <img src="@performance.Imagestring" alt="Afbeelding van @performance.Title" height="320"
+                                         class="performanceImage" />
                                 </div>
-
-
                             </div>
+
                         </td>
                     </tr>
-
                 </table>
 
             </section>

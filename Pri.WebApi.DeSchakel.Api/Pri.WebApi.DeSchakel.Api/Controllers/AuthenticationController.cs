@@ -106,13 +106,12 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
             foreach (string role in registerUserRequestDto.Roles)
             {
                 var managerResult = await _userManager.AddToRoleAsync(applicationUser, role);
-                Console.WriteLine(managerResult);
             }
             
             //
             await _userManager.AddClaimAsync(applicationUser,
                 new Claim("Name", $"{applicationUser.Firstname} {applicationUser.Lastname}"));
-            var who = User.Claims.FirstOrDefault(n => n.Equals( "Name"));
+            await _userManager.AddClaimAsync(applicationUser, new Claim("email", applicationUser.Email));
             await _userManager.AddClaimAsync(applicationUser, new Claim("registration-date", DateTime.UtcNow.ToString("yyyy-MM-dd")));
             await _userManager.AddClaimAsync(applicationUser, new Claim("zipcode", registerUserRequestDto.Zipcode));
 

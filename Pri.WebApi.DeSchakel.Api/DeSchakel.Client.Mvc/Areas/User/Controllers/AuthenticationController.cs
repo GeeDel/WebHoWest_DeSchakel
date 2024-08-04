@@ -79,9 +79,6 @@ namespace DeSchakel.Client.Mvc.Areas.User.Controllers
             };
             // save cookie
             Response.Cookies.Append("jwtToken", result.Token, cookieOptions);
-            HttpContext.Session.SetString("Who", userToLogin.Email);
-            //      Response.Cookies.Append("Who", userToLogin.Email, cookieOptions);
-
 
             if (!string.IsNullOrEmpty(loginViewModel.ReturnUrl))
             {
@@ -148,7 +145,8 @@ namespace DeSchakel.Client.Mvc.Areas.User.Controllers
             };
             try
             {
-                await _accountsService.Register(userToRegister);           
+                //await _accountsService.Register(userToRegister);
+                await _userApiService.Register(userToRegister);
             }
             catch (Exception ex)
             {
@@ -160,7 +158,8 @@ namespace DeSchakel.Client.Mvc.Areas.User.Controllers
 
         public async Task<IActionResult> Update ()
         {
-            string email =  HttpContext.Session.GetString("Who");   // Request.Cookies["Who"]; 
+            string email =  User.Claims.SingleOrDefault(e => e.Type == "email")?.Value; ;
+                //HttpContext.Session.GetString("Who");   // Request.Cookies["Who"]; 
             var result = await _accountsService.GetByEmailAsync(email);
             if (!result.Success)
             {

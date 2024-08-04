@@ -1,4 +1,5 @@
-﻿using DeSchakelApi.Consumer.Models.Events;
+﻿using DeSchakelApi.Consumer.Models.Accounts;
+using DeSchakelApi.Consumer.Models.Events;
 using DeSchakelApi.Consumer.Users.Models;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace DeSchakelApi.Consumer.Users
         {
             try
             { 
-                var response = await _DeSchakelhttpClient.PostAsJsonAsync("", userToLogin);
+                var response = await _DeSchakelhttpClient.PostAsJsonAsync("login/", userToLogin);
                 if (response.IsSuccessStatusCode)
                 {
                 UserLoginResponseApiModel userToken = await response.Content.ReadFromJsonAsync<UserLoginResponseApiModel>();
@@ -42,6 +43,20 @@ namespace DeSchakelApi.Consumer.Users
 
         }
 
+
+        public async Task<ResultModel<AccountRegisterResponseApiModel>> Register(AccountRegisterResponseApiModel userToRegister)
+        {
+
+            ResultModel<AccountRegisterResponseApiModel> resultModel = new ResultModel<AccountRegisterResponseApiModel>();
+
+            var result = await _DeSchakelhttpClient.PostAsJsonAsync<AccountRegisterResponseApiModel>("register/", userToRegister);
+            if (!result.IsSuccessStatusCode)
+            {
+                // inform the user
+                resultModel.Errors = new List<string> { $"Fout-code: {result.StatusCode}" };
+            }
+            return resultModel;
+        }
 
 
         public async Task<UserResponseApiModel> GetByEmailAsync(string email)
