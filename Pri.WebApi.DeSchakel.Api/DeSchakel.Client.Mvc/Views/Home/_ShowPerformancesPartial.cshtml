@@ -72,7 +72,7 @@
                     <tr>
                         <td width="80%" class="align-content-lg-start">
                             <div id="@(performance.Id)_media">
-                                @if (performance.Videostring.Substring(performance.Videostring.Length - 1, 1) != "/")
+                                @if (!String.IsNullOrEmpty(performance.Videostring))
                                 {
                                     <video width="320" height="240" controls>
                                         <source src="@performance.Videostring" type="video/mp4">
@@ -85,7 +85,7 @@
                                 {
                                     <img src="@performance.Imagestring" alt="Afbeelding van @performance.Title" height="320"
                                          class="performanceImage" />
-                                    @if (performance.Audiostring.Substring(performance.Audiostring.Length - 1, 1) != "/")
+                                    @if (!String.IsNullOrEmpty(performance.Audiostring))
                                     {
                                         <audio controls>
                                             <source src="@performance.Audiostring" type="audio/mp3">

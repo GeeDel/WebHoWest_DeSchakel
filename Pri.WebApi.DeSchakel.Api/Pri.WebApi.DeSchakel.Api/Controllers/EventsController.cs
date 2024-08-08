@@ -285,7 +285,6 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
         private IEnumerable<EventResponseDto> SetResponseDto(ResultModel<IEnumerable<Event>> result)
         {
             var data = result.Data.Select(e =>
-
             new EventResponseDto
             {
                 Id = e.Id,
@@ -293,9 +292,10 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
                 Description = e.Description,
                 EventDate = e.EventDate,
                 Price = e.Price,
-                Imagestring = $"{Request.Scheme}://{Request.Host}/media/performances/{e.Imagestring}",
-                Audiostring = $"{Request.Scheme}://{Request.Host}/media/performances/{e.Audiostring}",
-                Videostring = $"{Request.Scheme}://{Request.Host}/media/performances/{e.Videostring}",
+                Imagestring = e.Imagestring == null ? $"{Request.Scheme}://{Request.Host}/media/performances/default.jpg"
+                                : $"{Request.Scheme}://{Request.Host}/media/performances/{e.Imagestring}",
+                Audiostring = e.Audiostring == null ? null : $"{Request.Scheme}://{Request.Host}/media/performances/{e.Audiostring}",
+                Videostring = e.Videostring == null ? null : $"{Request.Scheme}://{Request.Host}/media/performances/{e.Videostring}",
                 Genres = e.Genres.Select(g => new GenreResponseDto
                 {
                     Id = g.Id,

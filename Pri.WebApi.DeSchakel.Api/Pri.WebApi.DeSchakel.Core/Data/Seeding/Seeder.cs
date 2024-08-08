@@ -271,7 +271,7 @@ namespace Pri.WebApi.DeSchakel.Core.Data.Seeding
                         SuccesRate = 90,
                         LocationId = 1,
                         Imagestring = "jan_de_smet_de_grote_luxe.jpg",
-                        Audiostring = "Jan De Smet En De Grote Luxe -Mr. Ghost (goes to town.mp3",
+                        Audiostring = "Jan De Smet En De Grote Luxe -Mr. Ghost.mp3",
                         Videostring = "Let's Talk Dirty in Hawaiian-The Bonnie Blues.mp4"
                     },
                     new Event

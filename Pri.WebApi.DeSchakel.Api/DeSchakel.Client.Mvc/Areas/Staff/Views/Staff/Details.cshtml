@@ -46,11 +46,19 @@
             <div>
                 <h6>Bestanden</h6>
                 <ul>
-                    <li><a href="@Model.Imagestring" target="_blank">@Model.Imagestring</a></li>
-                    <li><a href="@Model.Audiostring" target="_blank">@Model.Audiostring</a></li>
-                    <li><a href="@Model.Videostring" target="_blank">@Model.Videostring</a></li>
+                    @if (!String.IsNullOrEmpty(Model.Imagestring))
+                    {
+                        <li><a href="@Model.Imagestring" target="_blank">@Model.Imagestring</a></li>
+                    }
+                    @if (!String.IsNullOrEmpty(Model.Audiostring))
+                    {
+                        <li><a href="@Model.Audiostring" target="_blank">@Model.Audiostring</a></li>
+}
+                    @if (!String.IsNullOrEmpty(Model.Videostring))
+                    {
+                        <li><a href="@Model.Videostring" target="_blank">@Model.Videostring</a></li> }
 
-                </ul>
+                    </ul>
             </div>
 
         </div>
