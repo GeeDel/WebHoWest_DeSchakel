@@ -56,13 +56,15 @@ namespace DeSchakel.Client.Mvc.Controllers
                 EventDate = e.EventDate,
                 Description = e.Description,
                 Imagestring = e.Imagestring,
+                Audiostring = e.Audiostring,
+                Videostring = e.Videostring,
                 LocationName = e.Location.Name,
                 CompanyName = e.Company.Name,
                 Genres = e.Genres,
             }
-            );
-            eventsViewModel.Events.OrderBy(d => d.EventDate);
-            if(User.Identity.IsAuthenticated)
+            )
+            .OrderBy(d => d.EventDate);
+            if (User.Identity.IsAuthenticated)
             {
                 eventsViewModel.LoggedInUser = User.Identity.Name;
             }

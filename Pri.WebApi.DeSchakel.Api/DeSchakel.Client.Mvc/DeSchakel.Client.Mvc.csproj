@@ -8,16 +8,18 @@
 
   <ItemGroup>
     <Compile Remove="Areas\User\Data\**" />
+    <Compile Remove="images\**" />
     <Content Remove="Areas\User\Data\**" />
+    <Content Remove="images\**" />
     <EmbeddedResource Remove="Areas\User\Data\**" />
+    <EmbeddedResource Remove="images\**" />
     <None Remove="Areas\User\Data\**" />
+    <None Remove="images\**" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Areas\Staff\Data\" />
-    <Folder Include="images\events\" />
     <Folder Include="Models\Events\" />
-    <Folder Include="wwwroot\images\events\" />
   </ItemGroup>
 
   <ItemGroup>

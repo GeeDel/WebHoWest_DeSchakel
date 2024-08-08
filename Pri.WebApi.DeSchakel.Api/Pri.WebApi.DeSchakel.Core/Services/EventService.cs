@@ -116,6 +116,7 @@ namespace Pri.WebApi.DeSchakel.Core.Services
 
         public async Task<ResultModel<IEnumerable<Event>>> ListAllAsync()
         {
+
             var events = await _applicationDbcontext.Events
                 .Include(l => l.Location)
                 .Include(g => g.Genres)

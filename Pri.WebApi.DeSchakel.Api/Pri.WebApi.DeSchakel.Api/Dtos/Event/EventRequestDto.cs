@@ -22,8 +22,10 @@ namespace Pri.WebApi.DeSchakel.Api.Dtos.Event
         public double Price { get; set; }
         public int SuccesRate { get; set; }
         public string Imagestring { get; set; }
+        public string Audiostring { get; set; }
+        public string Videostring { get; set; }
         // one Company
-//        [Required(ErrorMessage = "Invoer voor {0} is vereist")]
+        //        [Required(ErrorMessage = "Invoer voor {0} is vereist")]
         public int CompanyId { get; set; }
         // one location
 //        [Required(ErrorMessage = "Invoer voor {0} is vereist")]

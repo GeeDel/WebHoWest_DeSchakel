@@ -15,6 +15,8 @@ namespace Pri.WebApi.DeSchakel.Core.Entities
         public double Price { get; set; }
         public int SuccesRate { get; set; }
         public string Imagestring { get; set; }
+        public string Audiostring {  get; set; }
+        public string Videostring { get; set; }
         // one Company
         public Company Company { get; set; }
         public int CompanyId { get; set; }

@@ -25,6 +25,8 @@ namespace Pri.WebApi.DeSchakel.Api.Dtos.Event
         //
         public string Title { get; set; }
         public string Imagestring { get; set; }
+        public string Audiostring { get; set; }
+        public string Videostring { get; set; }
         public List<string> Errors { get; set; }
     }
 }

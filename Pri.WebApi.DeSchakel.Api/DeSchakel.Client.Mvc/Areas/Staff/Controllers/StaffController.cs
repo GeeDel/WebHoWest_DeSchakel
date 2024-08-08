@@ -123,6 +123,8 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
                 EventDate = searchedEvent.EventDate,
                 Description = searchedEvent.Description,
                 Imagestring = searchedEvent.Imagestring,
+                Audiostring = searchedEvent.Audiostring,
+                Videostring = searchedEvent.Videostring,
                 LocationName = searchedEvent.Location.Name,
                 CompanyName = searchedEvent.Company.Name,
                 Genres = searchedEvent.Genres,

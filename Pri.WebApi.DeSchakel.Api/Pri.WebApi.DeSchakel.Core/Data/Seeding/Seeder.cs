@@ -265,13 +265,14 @@ namespace Pri.WebApi.DeSchakel.Core.Data.Seeding
                         Id= 3,
                         Title = "Jan De Smet en de Grote Luxe",
                         CompanyId = 1,
-                        EventDate = new DateTime(2024,04,20,20,0,0),
+                        EventDate = new DateTime(2024,01,20,20,0,0),
                         Description = "Zanger, muzikant en conservator van het ontroerend muzikaal erfgoed Jan De Smet werd zeventig. In 2024 viert hij die verjaardag met ons in de Schouwburg en het is een Grote Luxe (vandaar de titel!) om hem te mogen ontvangen met een schare uitgelezen muzikanten en zangeressen die een zeer eclectisch muzikaal programma beheersen.",
                         Price = 23.00,
                         SuccesRate = 90,
                         LocationId = 1,
-                        Imagestring = "jan_de_wilde_de_grote_luxe.jpg",
-
+                        Imagestring = "jan_de_smet_de_grote_luxe.jpg",
+                        Audiostring = "Jan De Smet En De Grote Luxe -Mr. Ghost (goes to town.mp3",
+                        Videostring = "Let's Talk Dirty in Hawaiian-The Bonnie Blues.mp4"
                     },
                     new Event
                     {
@@ -317,13 +318,13 @@ namespace Pri.WebApi.DeSchakel.Core.Data.Seeding
                         Id= 7,
                         Title = "Selah Sue (try-out)",
                         CompanyId = 3,
-                        EventDate = new DateTime(2024,05,16,20,0,0),
+                        EventDate = new DateTime(2024,01,16,20,0,0),
                         Description = "Met festivals gepland in Frankrijk, Spanje, Nederland en Bulgarije, wil Selah Sue helemaal klaar zijn voor haar tour. Dus besluit ze met haar band een tijdje in onze clubzaal te bivakkeren. Tot onze grote vreugde sluit ze die repetitieperiode af met een exclusief try-out concert.",
                         Price = 35.00,
                         SuccesRate = 100,
                         LocationId = 2,
                         Imagestring = "selah_sue.jpg",
-
+                        Audiostring = "Selah Sue-This World.mp3",
                     }, //      ProgrammatorId = progUserId2
                     new Event
                     {

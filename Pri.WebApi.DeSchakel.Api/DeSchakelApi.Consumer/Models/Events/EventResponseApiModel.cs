@@ -18,6 +18,8 @@ namespace DeSchakelApi.Consumer.Models.Events
         public double Price { get; set; }
         public IFormFile Image { get; set; }
         public string Imagestring { get; set; }
+        public string Audiostring { get; set; }
+        public string Videostring { get; set; }
         public int SuccesRate { get; set; }
 
         // one Company

@@ -196,7 +196,6 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
                 var dto = new EventResponseDto
                 {
                     Title = performance.Title,
-                    Imagestring = $"{Request.Scheme}://{Request.Host}/images/events/{performance.Imagestring}",
                     Errors = resultModelImage.Errors
                 };
                 return CreatedAtAction(nameof(Get), new { performance.Title }, dto);
@@ -258,7 +257,6 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
                 var dto = new EventResponseDto
                 {
                     Title = performanceToUpdate.Title,
-                    Imagestring = $"{Request.Scheme}://{Request.Host}/images/events/{performanceToUpdate.Imagestring}",
                     Errors = resultModelImage.Errors
 
                 };
@@ -295,7 +293,9 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
                 Description = e.Description,
                 EventDate = e.EventDate,
                 Price = e.Price,
-                Imagestring = $"{Request.Scheme}://{Request.Host}/images/events/{e.Imagestring}",
+                Imagestring = $"{Request.Scheme}://{Request.Host}/media/performances/{e.Imagestring}",
+                Audiostring = $"{Request.Scheme}://{Request.Host}/media/performances/{e.Audiostring}",
+                Videostring = $"{Request.Scheme}://{Request.Host}/media/performances/{e.Videostring}",
                 Genres = e.Genres.Select(g => new GenreResponseDto
                 {
                     Id = g.Id,

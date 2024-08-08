@@ -71,26 +71,31 @@
                     </tr>
                     <tr>
                         <td width="80%" class="align-content-lg-start">
-                            <div>
-                                <button class="btn btn-primary"
-                                        data-toggle="collapse show" data-target="#@(performance.Id)_media">
-                                    Media
-                                </button>
-                                <button data-toggle="collapse" data-target="#@(performance.Id)_video">Video</button>    -->
-
-                                <div id="@(performance.Id)_media" class="collapse show">
+                            <div id="@(performance.Id)_media">
+                                @if (performance.Videostring.Substring(performance.Videostring.Length - 1, 1) != "/")
+                                {
+                                    <video width="320" height="240" controls>
+                                        <source src="@performance.Videostring" type="video/mp4">
+                                        <source src="@performance.Videostring" type="video/webm">
+                                        <source src="@performance.Videostring" type="video/ogg">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                }
+                                else
+                                {
                                     <img src="@performance.Imagestring" alt="Afbeelding van @performance.Title" height="320"
                                          class="performanceImage" />
-                                    <audio controls>
-                                    </audio>
-                                    Geen audio beschikbaar.
-                                </div>
-                                <div id="@(performance.Id)_video" class="collapse">
-                                    <img src="@performance.Imagestring" alt="Afbeelding van @performance.Title" height="320"
-                                         class="performanceImage" />
-                                </div>
+                                    @if (performance.Audiostring.Substring(performance.Audiostring.Length - 1, 1) != "/")
+                                    {
+                                        <audio controls>
+                                            <source src="@performance.Audiostring" type="audio/mp3">
+                                            <source src="@performance.Audiostring" type="audio/ogg">
+                                            <source src="@performance.Audiostring" type="audio.vorbis">
+                                            Your browser does not support the video tag.
+                                        </audio>
+                                    }
+                                }
                             </div>
-
                         </td>
                     </tr>
                 </table>

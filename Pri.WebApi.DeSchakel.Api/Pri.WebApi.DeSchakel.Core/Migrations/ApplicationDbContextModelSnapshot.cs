@@ -191,28 +191,28 @@ namespace Pri.WebApi.DeSchakel.Core.Migrations
                         new
                         {
                             Id = "00000000-0000-0000-0000-000000000001",
-                            ConcurrencyStamp = "eb02d950-c415-4978-958a-96aec64827ea",
+                            ConcurrencyStamp = "f68bc41c-1905-42a4-bf15-49c2a1cf70fd",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "00000000-0000-0000-0000-000000000002",
-                            ConcurrencyStamp = "606b2b19-23db-4f1f-9b33-a5238ece4b5d",
+                            ConcurrencyStamp = "fe3fcb23-4159-444d-816f-3c644c4e1f24",
                             Name = "Programmator",
                             NormalizedName = "PROGRAMMATOR"
                         },
                         new
                         {
                             Id = "00000000-0000-0000-0000-000000000003",
-                            ConcurrencyStamp = "0970227e-32b6-463f-845a-257ca1185eea",
+                            ConcurrencyStamp = "6346d62a-c6e9-4742-8746-50e7df638fb1",
                             Name = "Onthaal",
                             NormalizedName = "ONTHAAL"
                         },
                         new
                         {
                             Id = "00000000-0000-0000-0000-000000000004",
-                            ConcurrencyStamp = "0e9694f7-09a2-432d-9149-7d4c45d7da0a",
+                            ConcurrencyStamp = "70bb34e2-1aa0-4a56-9998-a7459cea399a",
                             Name = "Bezoeker",
                             NormalizedName = "BEZOEKER"
                         });
@@ -266,6 +266,106 @@ namespace Pri.WebApi.DeSchakel.Core.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("AspNetUserClaims", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ClaimType = "Name",
+                            ClaimValue = "Geert Deloof",
+                            UserId = "00000000-0000-0000-0000-000000000001"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ClaimType = "email",
+                            ClaimValue = "admin@cc.be",
+                            UserId = "00000000-0000-0000-0000-000000000001"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ClaimType = "Name",
+                            ClaimValue = "Maaike Tubex",
+                            UserId = "00000000-0000-0000-0000-000000000002"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ClaimType = "email",
+                            ClaimValue = "maaike@cc.be",
+                            UserId = "00000000-0000-0000-0000-000000000002"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ClaimType = "Name",
+                            ClaimValue = "Joost Van den Kerkhove",
+                            UserId = "00000000-0000-0000-0000-000000000003"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            ClaimType = "email",
+                            ClaimValue = "joost@cc.be",
+                            UserId = "00000000-0000-0000-0000-000000000003"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            ClaimType = "Name",
+                            ClaimValue = "Veerle Hollants",
+                            UserId = "00000000-0000-0000-0000-000000000004"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            ClaimType = "email",
+                            ClaimValue = "veerle@cc.be",
+                            UserId = "00000000-0000-0000-0000-000000000004"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            ClaimType = "Name",
+                            ClaimValue = "Paulien Desmet",
+                            UserId = "00000000-0000-0000-0000-000000000005"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            ClaimType = "email",
+                            ClaimValue = "paulien@cc.be",
+                            UserId = "00000000-0000-0000-0000-000000000005"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            ClaimType = "Name",
+                            ClaimValue = "Filiep Verhelst",
+                            UserId = "00000000-0000-0000-0000-000000000006"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            ClaimType = "email",
+                            ClaimValue = "f.v@telenet.be",
+                            UserId = "00000000-0000-0000-0000-000000000006"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            ClaimType = "registration-date",
+                            ClaimValue = "2018-12-15",
+                            UserId = "00000000-0000-0000-0000-000000000006"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            ClaimType = "zipcode",
+                            ClaimValue = "8793",
+                            UserId = "00000000-0000-0000-0000-000000000006"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -450,7 +550,7 @@ namespace Pri.WebApi.DeSchakel.Core.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@CC.BE",
                             NormalizedUserName = "ADMIN@CC.BE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFCDOAv3U5WbM6ZvRBK1cz49qopm95WcuxusZ/yFZK836WaYCf69tYUbCy0g8dm5WQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAsae1IyM2/MtvnkvVQCeBvIw9XvAPUdcw4QaRwCgZ5+igKtoh2GYhAhhinUMA+L/Q==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "VVPCRDAS3MJWQD5CSW2GWPRADBXEZINA",
                             TwoFactorEnabled = false,
@@ -471,7 +571,7 @@ namespace Pri.WebApi.DeSchakel.Core.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "MAAIKE@CC.BE",
                             NormalizedUserName = "MAAIKE@CC.BE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEM8oK78XkAU9oFEz3kTJiSxb6LHNIfhOVyYMkRsYkqzVEx5gLxovIIEAt0ioJlZdQA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIthZ144ZUjEm5GGOYxLnFjwsPp6MriEmey9f7LYZa6T5j61Bqt+Huq/Mg35dVpnZA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "XVPCRDAS3MJWQD5CSW2GWPRADBXEZINA",
                             TwoFactorEnabled = false,
@@ -492,7 +592,7 @@ namespace Pri.WebApi.DeSchakel.Core.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "JOOST@CC.BE",
                             NormalizedUserName = "JOOST@CC.BE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGvzeCJJlfvnHsPJeG7EYzzMF/dk/L66vqO/RpN3ckSZt9m7cB0oyna3bpfnqvmZLA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPKDUjtKU6h/if9X3EK+zIaxyKtDS4k2aWmgoKE5dxPYH+UqsO78ODqdcKNkcqM0WQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "ZVPCRDAS3MJWQD5CSW2GWPRADBXEZINA",
                             TwoFactorEnabled = false,
@@ -513,7 +613,7 @@ namespace Pri.WebApi.DeSchakel.Core.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "VEERLE@CC.BE",
                             NormalizedUserName = "VEERLE@CC.BE",
-                            PasswordHash = "AQAAAAEAACcQAAAAENUy5d0qA60I4uwsakInYPVchN31UaWov7GfKWNxLZpj9VpsvlEx2tLRItH4cjFVaw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEUFZLpaRDImHqEJnbfa7IpkrsqzJtyo9PwpnzNOZwW/qL1awxqSCAQD/ZzeqnueAQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "ZVPCRDAS3MJWQD5CSW2GWPRADBXEZINA",
                             TwoFactorEnabled = false,
@@ -534,7 +634,7 @@ namespace Pri.WebApi.DeSchakel.Core.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "PAULIEN@CC.BE",
                             NormalizedUserName = "PAULIEN@CC.BE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEmbHws8bH2hsqCu/sQNPrKWT7/k4q7+AXgOvY5d3avF3ScBsafcpasYwY894ZjHfQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMQLv4UmuRfHLV1Ai4ZnKVmPfiF48jSrywDJ7JnTCaxzCxq2Z9asEw5QiI1FS4jP+w==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "XVPCRDAS3MJWQD5CSW2GWPRADBXEZINA",
                             TwoFactorEnabled = false,
@@ -555,7 +655,7 @@ namespace Pri.WebApi.DeSchakel.Core.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "F.V@TELENET.BE",
                             NormalizedUserName = "F.V@TELENET.BE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJ5saySg477E8kjawuiflIlbk/sttOlATAid9pc/awcGeN44G4FzyZsrzD19qqkgUg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEO2Ar8EUCjRUpNYJF4JN2FfxWI83mnI/Z/qc2PIO++O6r9D3PasW+GoU2rkwGfSYmA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "BVPCRDAS3MJWQD5CSW2GWPRADBXEZINA",
                             TwoFactorEnabled = false,
@@ -631,6 +731,9 @@ namespace Pri.WebApi.DeSchakel.Core.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("Audiostring")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("CompanyId")
                         .HasColumnType("int");
 
@@ -653,6 +756,9 @@ namespace Pri.WebApi.DeSchakel.Core.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Videostring")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -691,14 +797,16 @@ namespace Pri.WebApi.DeSchakel.Core.Migrations
                         new
                         {
                             Id = 3,
+                            Audiostring = "Jan De Smet En De Grote Luxe -Mr. Ghost (goes to town.mp3",
                             CompanyId = 1,
                             Description = "Zanger, muzikant en conservator van het ontroerend muzikaal erfgoed Jan De Smet werd zeventig. In 2024 viert hij die verjaardag met ons in de Schouwburg en het is een Grote Luxe (vandaar de titel!) om hem te mogen ontvangen met een schare uitgelezen muzikanten en zangeressen die een zeer eclectisch muzikaal programma beheersen.",
-                            EventDate = new DateTime(2024, 4, 20, 20, 0, 0, 0, DateTimeKind.Unspecified),
-                            Imagestring = "jan_de_wilde_de_grote_luxe.jpg",
+                            EventDate = new DateTime(2024, 1, 20, 20, 0, 0, 0, DateTimeKind.Unspecified),
+                            Imagestring = "jan_de_smet_de_grote_luxe.jpg",
                             LocationId = 1,
                             Price = 23.0,
                             SuccesRate = 90,
-                            Title = "Jan De Smet en de Grote Luxe"
+                            Title = "Jan De Smet en de Grote Luxe",
+                            Videostring = "Let's Talk Dirty in Hawaiian-The Bonnie Blues.mp4"
                         },
                         new
                         {
@@ -739,9 +847,10 @@ namespace Pri.WebApi.DeSchakel.Core.Migrations
                         new
                         {
                             Id = 7,
+                            Audiostring = "Selah Sue-This World.mp3",
                             CompanyId = 3,
                             Description = "Met festivals gepland in Frankrijk, Spanje, Nederland en Bulgarije, wil Selah Sue helemaal klaar zijn voor haar tour. Dus besluit ze met haar band een tijdje in onze clubzaal te bivakkeren. Tot onze grote vreugde sluit ze die repetitieperiode af met een exclusief try-out concert.",
-                            EventDate = new DateTime(2024, 5, 16, 20, 0, 0, 0, DateTimeKind.Unspecified),
+                            EventDate = new DateTime(2024, 1, 16, 20, 0, 0, 0, DateTimeKind.Unspecified),
                             Imagestring = "selah_sue.jpg",
                             LocationId = 2,
                             Price = 35.0,
@@ -901,64 +1010,64 @@ namespace Pri.WebApi.DeSchakel.Core.Migrations
                         new
                         {
                             Id = 1,
-                            Action = "Index",
-                            Area = "",
+                            Action = "Privacy",
+                            Area = "Home",
                             Controller = "Home",
-                            Name = "Films",
+                            Name = "Bescherming",
                             Position = 1
                         },
                         new
                         {
                             Id = 2,
-                            Action = "LogIn",
-                            Area = "",
-                            Controller = "User",
-                            Name = "Aanmelden",
-                            Position = 2
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Action = "Register",
-                            Area = "",
-                            Controller = "User",
-                            Name = "Aanmaken",
-                            Position = 3
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Action = "Privacy",
-                            Area = "",
-                            Controller = "Home",
-                            Name = "Bescherming",
-                            Position = 4
-                        },
-                        new
-                        {
-                            Id = 5,
                             Action = "Index",
-                            Area = "Admin",
-                            Controller = "Movies",
-                            Name = "Films",
+                            Area = "Staff",
+                            Controller = "Staff",
+                            Name = "Voorstellingen",
                             Position = 1
                         },
                         new
                         {
+                            Id = 3,
+                            Action = "Companies",
+                            Area = "Staff",
+                            Controller = "Staff",
+                            Name = "Gezelschappen",
+                            Position = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Action = "Locations",
+                            Area = "Staff",
+                            Controller = "Staff",
+                            Name = "Locaties",
+                            Position = 3
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Action = "Genres",
+                            Area = "Staff",
+                            Controller = "Staff",
+                            Name = "Genres",
+                            Position = 4
+                        },
+                        new
+                        {
                             Id = 6,
-                            Action = "IndexActors",
-                            Area = "Admin",
-                            Controller = "Admin",
-                            Name = "Acteurs",
+                            Action = "NewAbo",
+                            Area = "Home",
+                            Controller = "Home",
+                            Name = "Nieuw",
                             Position = 2
                         },
                         new
                         {
                             Id = 7,
-                            Action = "IndexDirectors",
-                            Area = "Admin",
-                            Controller = "Admin",
-                            Name = "Regisseurs",
+                            Action = "Voucher",
+                            Area = "Home",
+                            Controller = "Home",
+                            Name = "Waregembon",
                             Position = 3
                         });
                 });

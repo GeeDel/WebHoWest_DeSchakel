@@ -29,7 +29,7 @@ namespace Pri.WebApi.DeSchakel.Core.Services
             }
 
             var pathOnDisk = Path.Combine(_hostEnvironment.ContentRootPath, "wwwroot",
-                      "images", "events");
+                      "media", "performances");
 
             if (!Directory.Exists(pathOnDisk))
             {

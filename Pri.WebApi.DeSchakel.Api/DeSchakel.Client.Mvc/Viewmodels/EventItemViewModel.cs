@@ -10,6 +10,8 @@ namespace DeSchakel.Client.Mvc.Viewmodels
         public DateTime EventDate { get; set; }
         public string Description { get; set; }
         public string Imagestring { get; set; }
+        public string Audiostring { get; set; }
+        public string Videostring { get; set; } 
         public string LocationName { get; set; }
         public int LocationId { get; set; }
         public string CompanyName { get; set; }
