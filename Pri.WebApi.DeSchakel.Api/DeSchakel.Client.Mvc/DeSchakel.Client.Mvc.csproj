@@ -20,6 +20,7 @@
   <ItemGroup>
     <Folder Include="Areas\Staff\Data\" />
     <Folder Include="Models\Events\" />
+    <Folder Include="wwwroot\images\events\" />
   </ItemGroup>
 
   <ItemGroup>
