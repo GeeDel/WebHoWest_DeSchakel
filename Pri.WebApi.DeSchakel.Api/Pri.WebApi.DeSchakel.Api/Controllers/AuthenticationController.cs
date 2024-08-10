@@ -144,7 +144,6 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
                 notBefore: DateTime.UtcNow,
                 signingCredentials: new SigningCredentials(new SymmetricSecurityKey(siginingKey), SecurityAlgorithms.HmacSha256)
             );
-
             return token;
         }
 

@@ -12,9 +12,6 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.ViewModels
         public string Title { get; set; }
         [Required(ErrorMessage = "De datum moet een waarde hebben.")]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyyTHH:mm}")]
-        /*
-         https://stackoverflow.com/questions/17321948/is-there-a-rangeattribute-for-datetime/17322252#17322252
-        */
         [CustomEventDateAttribute(ErrorMessage = "Een datum vanaf morgen en maximum één jaar in de toekomst")]
         [Display(Name = "Datum van de voorstelling")]
         public DateTime EventDate { get; set; } = DateTime.Now.AddDays(+1);
@@ -25,7 +22,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.ViewModels
         [Range(0,999, ErrorMessage = "Prijs boven 0 en onder 1000 euro")]
         public double Price { get; set; }
         public int SuccesRate { get; set; }
-        [Display(Name = "Laad  een afbeelding op (max 1), optioneel één video en één geluidsfragment")]
+        [Display(Name = "Laad een afbeelding op (max 1), \n\n optioneel één video en één geluidsfragment")]
         public IEnumerable<IFormFile> Images { get; set; }
         public string Imagestring { get; set; }
         // Company

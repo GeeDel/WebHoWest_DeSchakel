@@ -297,7 +297,7 @@ namespace Pri.WebApi.DeSchakel.Core.Data.Seeding
                         Price = 17.00,
                         SuccesRate = 40,
                         LocationId = 2,
-                        Imagestring = "sile_huysmans_out-of-the-blue.jpg",
+                        Imagestring = "silke_huysmans_out-of-the-blue.jpg",
 
                     },
                     new Event

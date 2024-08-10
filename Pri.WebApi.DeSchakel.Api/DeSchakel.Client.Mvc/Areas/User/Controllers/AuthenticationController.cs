@@ -11,7 +11,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using NuGet.Protocol.Plugins;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net.Http.Headers;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Web.Helpers;
 
@@ -25,9 +28,8 @@ namespace DeSchakel.Client.Mvc.Areas.User.Controllers
         private readonly IAuthenticationService _authenticationService;
         private readonly IAccountsApiService _accountsService;
 
-
         public AuthenticationController(IUserLoginApiService userApiService, IAuthenticationService authenticationService, 
-            IAccountsApiService accountsService)
+            IAccountsApiService accountsService, IHttpClientFactory httpClientFactory, HttpClient deSchakelhttpClient)
         {
             _userApiService = userApiService;
             _authenticationService = authenticationService;
@@ -40,7 +42,6 @@ namespace DeSchakel.Client.Mvc.Areas.User.Controllers
             return View(vm);
         }
 
-        public IActionResult AccessDenied() { return View(); }
 
         [HttpPost]
         public async Task<IActionResult>Login(LoginViewModel loginViewModel)
@@ -87,6 +88,7 @@ namespace DeSchakel.Client.Mvc.Areas.User.Controllers
             return RedirectToAction ("Index", "Home", new {Area = "Home"}) ;
         }
 
+        public IActionResult AccessDenied() { return View(); }
 
         public async Task<IActionResult> Logout()
         {
@@ -140,7 +142,6 @@ namespace DeSchakel.Client.Mvc.Areas.User.Controllers
             };
             try
             {
-                //await _accountsService.Register(userToRegister);
                 await _userApiService.Register(userToRegister);
             }
             catch (Exception ex)

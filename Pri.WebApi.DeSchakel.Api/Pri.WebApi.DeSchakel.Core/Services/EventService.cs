@@ -254,7 +254,7 @@ namespace Pri.WebApi.DeSchakel.Core.Services
             {
                 resultModel.Errors.Add($"Er bestaat een andere voorstelling met de titel {eventUpdateRequestModel.Title}");
 
-                return resultModel;
+              //  return resultModel;
             }
             if (!await _companyService.DoesCompanyIdExistAsync(eventUpdateRequestModel.CompanyId))
             {

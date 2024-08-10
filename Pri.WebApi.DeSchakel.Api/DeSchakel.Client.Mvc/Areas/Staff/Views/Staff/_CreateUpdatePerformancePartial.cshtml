@@ -9,8 +9,8 @@
     <span asp-validation-for="Title" class="text-danger"></span>
 </div>
 <div class="form-group">
-    <label asp-for="Images">Afbeelding</label>
-    <input asp-for="Images" class="form-control border border-info" />
+    <label asp-for="Images" class="text-info"></label>
+    <input asp-for="Images" class="form-control border border-info" multiple />
     <span asp-validation-for="Images" class="text-danger"></span>
 </div>
 <h6>Datum van de voorstelling</h6>
@@ -38,7 +38,8 @@
 <h6>Beschrijving</h6>
 <div class="form-group">
     @*   <label asp-for="Description">Beschrijving</label>   *@
-    <textarea asp-for="Description" class="form-control" width="200" height="200"></textarea>
+    <textarea asp-for="Description" class="form-control" width="200" height="200" 
+              placeholder="Voeg de beschrijving in"></textarea>
     <span asp-validation-for="Description" class="text-danger"></span>
 </div>
 <h6>Programmator</h6>

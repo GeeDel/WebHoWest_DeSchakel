@@ -4,7 +4,7 @@
 <div class="row">
     <div class="col col-lg-5 mx-auto border border-1 rounded rounded-1">
 
-        <form method="post" asp-controller="Staff" asp-action="UpdateEvent" enctype="multipart/form-data">
+        <form method="post" asp-controller="Staff" asp-action="UpdateEvent" enctype="multipart/form-data" multiple>
             <!-- hier volgt de code die nu in partial is openomen-->
             <!-- tot hier kan vervangen worden door partial-->
             <partial name="_CreateUpdatePerformancePartial" model="@Model" />

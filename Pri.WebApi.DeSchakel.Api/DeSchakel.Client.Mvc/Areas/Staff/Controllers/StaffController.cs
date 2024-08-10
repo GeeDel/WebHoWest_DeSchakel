@@ -16,6 +16,7 @@ using DeSchakelApi.Consumer.Models.Roles;
 using DeSchakelApi.Consumer.Roles;
 using DeSchakelApi.Consumer.Users;
 using Humanizer;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +29,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Data;
 using System.Data.OleDb;
 using System.Drawing;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net.Http.Headers;   //  temporary for ContentDispositionHeaderValue
@@ -309,13 +311,11 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
             var result = await _eventApiService.GetByIdAsync(staffEventUpdateViewModel.Id);
             if (!result.Success)
             {
-
                 ModelState.AddModelError("Update",result.Errors.First());
             }
             if (staffEventUpdateViewModel.Images == null)
             {
-                ModelState.AddModelError("", "Je moet een afbeelding kiezen.");
-
+                ModelState.AddModelError("", "Je moet een afbeelding of een video kiezen.");
             }
             else
             {
@@ -333,8 +333,6 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
             {
                 ModelState.AddModelError("Update", "Een voorstelling met deze titel is al geregistreerd.");
             }
-
-
             if (!ModelState.IsValid)
             {
                 staffEventUpdateViewModel.Companies = await _formBuilder.GetCompaniesSelectListItems();
@@ -382,7 +380,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
                 { new StringContent(staffEventUpdateViewModel.LocationId.ToString()),"LocationId" },
                 { new StringContent(staffEventUpdateViewModel.SuccesRate.ToString()), "SuccesRate" },
                 { new StringContent(staffEventUpdateViewModel.Price.ToString()), "Price" },
-        };
+            };
             // the lists
             foreach (var programmator in staffEventUpdateViewModel.ProgrammatorIds)
             {
@@ -392,28 +390,32 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
             {
                 performanceToUpdateMp.Add(new StringContent(genreId.ToString()), "GenreIds");
             }
-
-
             // the Images
-            var filePath = await _fileService.GetPathToImages();
             Stream fileStream = null;
-
+            //
+            const string AcceptedMediatypes = "image/audio/video/";
+            ResultModel<List<string>> resultFileModel = new ResultModel<List<String>>();
             foreach (IFormFile formFile in staffEventUpdateViewModel.Images)
             {
-                var fileName = await _fileService.Store(formFile);
-                var pathToFile = Path.Combine(filePath, fileName);
-                fileStream = new FileStream(pathToFile, FileMode.Open);
-                var streamContent = new StreamContent(fileStream);
-                const string DefaultContentType = "application/octet-stream";
+                string fileMediatype = formFile.ContentType.Substring(0, 6);
 
-                var provider = new FileExtensionContentTypeProvider();
-                if (!provider.TryGetContentType(pathToFile, out string contentType))
+                //   var fileName = await _fileService.Store(formFile);
+          //      var pathToFile = Path.Combine(formFile., formFile.FileName);
+                if (!String.IsNullOrEmpty(fileMediatype) && AcceptedMediatypes.Contains(fileMediatype))
                 {
-                    contentType = DefaultContentType;
-                }
-                streamContent.Headers.ContentType = new MediaTypeHeaderValue(contentType);
+                    var filePath = Path.GetTempFileName();    //await _fileService.GetPathToImages();
 
-                performanceToUpdateMp.Add(streamContent, "filesToUpload", fileName); 
+                    string pathToformFile = System.IO.Path.GetFullPath(filePath);
+
+                    fileStream = new FileStream(filePath,FileMode.Open);
+                    var streamContent = new StreamContent(fileStream);
+                    streamContent.Headers.ContentType = new MediaTypeHeaderValue(formFile.ContentType);
+                    performanceToUpdateMp.Add(streamContent, "filesToUpload", formFile.FileName); 
+                }
+                else
+                {
+                    resultFileModel.Errors.Add($"Het bestand {formFile.FileName} wordt niet aanvaard.");
+                }
             }
             //
             result = await _eventApiService.Update(performanceToUpdateMp, Request.Cookies["jwtToken"].ToString());

@@ -2,6 +2,7 @@
 using DeSchakelApi.Consumer.Models.Companies;
 using DeSchakelApi.Consumer.Models.Events;
 using DeSchakelApi.Consumer.Models.Navigation;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -77,21 +78,6 @@ namespace DeSchakelApi.Consumer.Events
 
         public async Task<ResultModel<MultipartFormDataContent>> CreateMultipart(MultipartFormDataContent mpPerformance, string token)
         {
-
-
-            /* temporary: move toe EventController in Api : read the multipartformadatacontent 
-            var responseContent = await mpPerformance.ReadAsStringAsync();
-            var r = responseContent.Split("\r\n");
-            foreach (var stringContent in mpPerformance)
-            {
-                var name = stringContent.Headers.ContentDisposition.Name;
-                var value = await stringContent.ReadAsStringAsync();
-                var k = stringContent.ToString();
-                var t = stringContent.GetType();
-
-            }
-
-            end temporary */
 
             _DeSchakelhttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             _DeSchakelhttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
