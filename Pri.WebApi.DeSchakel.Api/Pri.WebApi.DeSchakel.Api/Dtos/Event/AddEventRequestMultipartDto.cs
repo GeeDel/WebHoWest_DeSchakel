@@ -11,7 +11,6 @@ namespace Pri.WebApi.DeSchakel.Api.Dtos.Event
         public string Description { get; set; }
         public double Price { get; set; }
         public int SuccesRate { get; set; }
-        public string Imagestring { get; set; }
         // one Company
         public int CompanyId { get; set; }
         // one location

@@ -52,7 +52,7 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
         [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> Get()
-        
+
         {
 
             var result = await _eventService.ListAllAsync();
@@ -61,8 +61,8 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
                 var eventDtos = SetResponseDto(result);
                 return Ok(eventDtos);
             }
-            return BadRequest(result.Errors); 
-        
+            return BadRequest(result.Errors);
+
         }
 
         [AllowAnonymous]
@@ -91,12 +91,12 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
             else
             {
                 return null;
-                   
+
             }
         }
 
         [HttpGet("SearchTitle/{search}")]
-        public async Task<IActionResult> SearchByTitle( string search)
+        public async Task<IActionResult> SearchByTitle(string search)
         {
             var result = await _eventService.SearchAsync(search);
             if (result.Success)
@@ -145,9 +145,9 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
             return BadRequest(result.Errors);
         }
 
-        [Authorize(Policy = "MemberOfManagement")] 
-        [HttpPost ]
-        public async Task<IActionResult> Add([FromForm] AddEventRequestMultipartDto mpRequest)    
+        [Authorize(Policy = "MemberOfManagement")]
+        [HttpPost]
+        public async Task<IActionResult> Add([FromForm] AddEventRequestMultipartDto mpRequest)
         {
             if (mpRequest == null)
             {
@@ -197,23 +197,42 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
             const string AcceptedContetenttype = "image/audio/video/";
             ResultModel<string> resultModelImage = new();
 
-           foreach (IFormFile file in mpRequest.filesToUpload)
+            foreach (IFormFile file in mpRequest.filesToUpload)
             {
                 string fileContenttype = file.ContentType.Substring(0, 6);
                 if (!String.IsNullOrEmpty(fileContenttype) && AcceptedContetenttype.Contains(fileContenttype))
                 {
-                  resultModelImage = await _fileService.AddOrUpdateImageAsync(file, file.FileName);
-                  performance.Imagestring = resultModelImage.Data;
+                    resultModelImage = await _fileService.AddOrUpdateImageAsync(file, file.FileName);
+                    if (!resultModelImage.Success)
+                    {
+                        resultModelImage.Errors.Add($"Fout bij het wegschrijven van de afbeelding {performance.Imagestring}.");
+                    }
+                    else
+                    {                
+
+                        if (fileContenttype == "image/")
+                        {
+                            performance.Imagestring = resultModelImage.Data;
+                        }
+                        else if (fileContenttype == "audio/")
+                        {
+                            performance.Audiostring = resultModelImage.Data;
+
+                        }
+                        else if (fileContenttype == "video/")
+                        {
+                            performance.Videostring = resultModelImage.Data;
+
+                        }
+                    }
+
                 }
                 else
                 {
                     resultModelImage.Errors.Add($"Het type bestand {file.FileName} wordt niet aanvaard.");
                 }
 
-                if (!resultModelImage.Success)
-                {
-                    resultModelImage.Errors.Add($"Fout bij het wegschrijven van de afbeelding {performance.Imagestring}.");
-                }
+
             }
 
             var resultAddAsync = await _eventService.AddAsync(performance);
@@ -347,10 +366,10 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
                     DateOfBirth = p.DateOfBirth,
                     Email = p.UserName
                 })
-              
+
             }).ToList();
 
             return data;
         }
     }
-    }
+}

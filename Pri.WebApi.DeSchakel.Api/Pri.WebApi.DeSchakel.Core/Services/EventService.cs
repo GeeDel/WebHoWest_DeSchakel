@@ -214,6 +214,8 @@ namespace Pri.WebApi.DeSchakel.Core.Services
                 Description = eventRequestModel?.Description,
                 Price = eventRequestModel.Price,
                 Imagestring = eventRequestModel?.Imagestring,
+                Audiostring = eventRequestModel?.Audiostring,
+                Videostring = eventRequestModel?.Videostring,
                 SuccesRate = eventRequestModel.SuccesRate,
                 Genres = resultGenres.Data.
                           Where(g => eventRequestModel.GenreIds.Contains(g.Id)).ToList(),
@@ -286,6 +288,8 @@ namespace Pri.WebApi.DeSchakel.Core.Services
             performanceToUpdate.Description = eventUpdateRequestModel?.Description;
             performanceToUpdate.Price = eventUpdateRequestModel.Price;
             performanceToUpdate.Imagestring = eventUpdateRequestModel?.Imagestring;
+            performanceToUpdate.Audiostring = eventUpdateRequestModel?.Audiostring;
+            performanceToUpdate.Videostring = eventUpdateRequestModel?.Videostring;
             performanceToUpdate.SuccesRate = eventUpdateRequestModel.SuccesRate;
             performanceToUpdate.Genres = resultGenres.Data.
                 Where(g => eventUpdateRequestModel.GenreIds.Contains(g.Id)).ToList();

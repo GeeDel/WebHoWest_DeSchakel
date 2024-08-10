@@ -18,6 +18,8 @@ namespace Pri.WebApi.DeSchakel.Core.Services.Models
         public int SuccesRate { get; set; }
         public IFormFile Image { get; set; }
         public string Imagestring { get; set; }
+        public string Audiostring { get; set; }
+        public string Videostring { get; set; }
         public int CompanyId { get; set; }
         public int LocationId { get; set; }
         // many genres
