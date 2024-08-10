@@ -30,6 +30,7 @@ using System.Data;
 using System.Data.OleDb;
 using System.Drawing;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net.Http.Headers;   //  temporary for ContentDispositionHeaderValue
@@ -243,31 +244,41 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
             }
 
             // the Images
-            var filePath = Path.GetTempFileName();  // var filePath = await _fileService.GetPathToImages();
             Stream fileStream = null;
-
+            ResultModel<List<string>> resultFileModel = new ResultModel<List<String>>();
+            List<string> temporyFiles = new List<string>();
+            const string AcceptedMediatypes = "image/audio/video/";
+            var fileFolder = await _fileService.GetPathToImages();
             foreach (IFormFile formFile in staffEventCreateViewmodel.Images)
             {
-               var fileName = await _fileService.Store(formFile);
-                var pathToFile = Path.Combine(filePath, formFile.FileName);
-                fileStream = new FileStream(pathToFile, FileMode.Open);
-                var streamContent = new StreamContent(fileStream);
-                const string DefaultContentType = "application/octet-stream";
+                string fileMediatype = formFile.ContentType.Substring(0, 6);
 
-                var provider = new FileExtensionContentTypeProvider();
-                if (!provider.TryGetContentType(pathToFile, out string contentType))
+                if (!String.IsNullOrEmpty(fileMediatype) && AcceptedMediatypes.Contains(fileMediatype))
                 {
-                    contentType = DefaultContentType;
+                    var tmpFileName = await _fileService.Store(formFile);
+                    string pathToformFile = Path.Combine(fileFolder, tmpFileName);
+                    fileStream = new FileStream(pathToformFile, FileMode.Open);
+                    var streamContent = new StreamContent(fileStream);
+                    streamContent.Headers.ContentType = new MediaTypeHeaderValue(formFile.ContentType);
+                    performanceMp.Add(streamContent, "filesToUpload", formFile.FileName);
+                    temporyFiles.Add(tmpFileName);
                 }
-                streamContent.Headers.ContentType = new MediaTypeHeaderValue(contentType);
-
-                performanceMp.Add(streamContent, "filesToUpload", formFile.FileName);
+                else
+                {
+                    resultFileModel.Errors.Add($"Het bestand {formFile.FileName} wordt niet aanvaard.");
+                }
             }
+            //
 
             var result = await _eventApiService.CreateMultipart(performanceMp, Request.Cookies["jwtToken"].ToString());
             //
             fileStream.Dispose();
             performanceMp.Dispose();
+            //
+            foreach (var tmp in temporyFiles)
+            {
+                _fileService.Delete(tmp);
+            }
             //     
             if (!result.Success)
             {
@@ -430,8 +441,6 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
             }
             // the Images
             Stream fileStream = null;
-
-            //
             ResultModel<List<string>> resultFileModel = new ResultModel<List<String>>();
             List<string> temporyFiles = new List<string>();
             const string AcceptedMediatypes = "image/audio/video/";
