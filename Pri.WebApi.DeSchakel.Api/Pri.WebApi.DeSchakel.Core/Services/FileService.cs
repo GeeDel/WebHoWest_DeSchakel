@@ -21,11 +21,11 @@ namespace Pri.WebApi.DeSchakel.Core.Services
         }
 
         public async Task<ResultModel<string>> AddOrUpdateImageAsync
-           (IFormFile image, string fileName)
+           (IFormFile image, string filename)
         {
-            if (String.IsNullOrEmpty(fileName))
+            if (String.IsNullOrEmpty(filename))
             {
-                fileName = $"{Guid.NewGuid()}_{Path.GetExtension(image.FileName)}";
+                filename = $"{Guid.NewGuid()}_{Path.GetExtension(image.FileName)}";
             }
 
             var pathOnDisk = Path.Combine(_hostEnvironment.ContentRootPath, "wwwroot",
@@ -35,8 +35,8 @@ namespace Pri.WebApi.DeSchakel.Core.Services
             {
                 Directory.CreateDirectory(pathOnDisk);
             }
-            string newFilename = "nieuw_bestand.jpg"; // new 10-08-2024 $"{Guid.NewGuid}_{fileName}";
-            var completePathWithFilename = Path.Combine(pathOnDisk,newFilename);
+            string serverFilename = $"{Guid.NewGuid}_{filename}";
+            var completePathWithFilename = Path.Combine(pathOnDisk, serverFilename);
 
 
             using (FileStream fileStream = new(completePathWithFilename, FileMode.Create))
@@ -46,7 +46,7 @@ namespace Pri.WebApi.DeSchakel.Core.Services
                     await image.CopyToAsync(fileStream);
                     return new ResultModel<string>
                     {
-                        Data = completePathWithFilename
+                        Data = serverFilename,
                     };
                 }
                 catch (FileNotFoundException exception)

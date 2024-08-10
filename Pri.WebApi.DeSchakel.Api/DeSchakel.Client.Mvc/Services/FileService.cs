@@ -46,16 +46,6 @@ namespace DeSchakel.Client.Mvc.Services
             // 1.create unique filename
             var filename = $"{Guid.NewGuid}_{file.FileName}";
             // 2. create path to filename
-            // uit api  var pathOnDisk = Path.Combine(_hostEnvironment.ContentRootPath, "wwwroot", "img", "food");
-
-            //    var pathToImagesApi = Path.Combine(_hostEnvironment.ContentRootPath, "wwwroot", "images", "events");
-/* working version with CreateEvent form StaffController
-            var apiPathToImage = Path.Combine(_hostEnvironment.ContentRootPath =
-               "C:\\Users\\Gebruiker\\source\\repos\\2024\\WorkingPI\\st-ee-h-s4-pri-GeertDeloof-w\\Pri.WebApi.DeSchakel.Api\\Pri.WebApi.DeSchakel.Api\\wwwroot\\images\\events\\");
-*/
-            /*   
-        // vroegere code : Path.Combine(_webHostEnvironment.WebRootPath, "images/events");
-            */
             var apiPathToImage = Path.Combine(_webHostEnvironment.WebRootPath, "images/events");
             if (!Directory.Exists(apiPathToImage))
             {
@@ -73,7 +63,7 @@ namespace DeSchakel.Client.Mvc.Services
 
         public bool Delete(string fileName)
         {
-            string pathToImage = Path.Combine(_webHostEnvironment.WebRootPath, "images", fileName);
+            string pathToImage = Path.Combine(_webHostEnvironment.WebRootPath, "images/events/", fileName);
             try
             {
                 System.IO.File.Delete(pathToImage);

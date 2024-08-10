@@ -153,6 +153,32 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
             {
                 return BadRequest("Ongeldige aanvraag");
             }
+            // chech for files
+            if (mpRequest.filesToUpload.Count() == 0)
+            {
+                ModelState.AddModelError("", "Je moet een afbeelding of een video kiezen.");
+            }
+            else
+            {
+                bool hasImageOpVideo = mpRequest.filesToUpload.Any(f => f.ContentType.Contains("image/")) ||
+                 mpRequest.filesToUpload.Any(f => f.ContentType.Contains("video/"));
+                if (mpRequest.filesToUpload == null
+                      || !hasImageOpVideo)
+                {
+                    ModelState.AddModelError("", "Je moet een afbeelding of een video kiezen.");
+                }
+                var numberOfImageFiles = mpRequest.filesToUpload.Where(i => i.ContentType.Contains("image/")).Count();
+                var numberOfAudioFiles = mpRequest.filesToUpload.Where(i => i.ContentType.Contains("audio/")).Count();
+                var numberOfVideoFiles = mpRequest.filesToUpload.Where(i => i.ContentType.Contains("video/")).Count();
+                if (numberOfImageFiles > 1 || numberOfAudioFiles > 1 || numberOfVideoFiles > 1)
+                {
+                    ModelState.AddModelError("", "Maximum 1 afbeelding, video- of audiobestand.");
+                }
+                if (mpRequest.filesToUpload.Count() > (numberOfImageFiles + numberOfAudioFiles + numberOfVideoFiles))
+                {
+                    ModelState.AddModelError("", "Alleen afbeelding, video- of audiobestand.");
+                }
+            }
             // the data ======================================================================
             var performance = new EventRequestModel
             {

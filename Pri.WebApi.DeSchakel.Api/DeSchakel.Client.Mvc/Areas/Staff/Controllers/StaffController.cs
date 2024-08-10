@@ -430,25 +430,25 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
             }
             // the Images
             Stream fileStream = null;
+
             //
-            const string AcceptedMediatypes = "image/audio/video/";
             ResultModel<List<string>> resultFileModel = new ResultModel<List<String>>();
+            List<string> temporyFiles = new List<string>();
+            const string AcceptedMediatypes = "image/audio/video/";
+            var fileFolder = await _fileService.GetPathToImages();
             foreach (IFormFile formFile in staffEventUpdateViewModel.Images)
             {
                 string fileMediatype = formFile.ContentType.Substring(0, 6);
 
-                //   var fileName = await _fileService.Store(formFile);
-          //      var pathToFile = Path.Combine(formFile., formFile.FileName);
                 if (!String.IsNullOrEmpty(fileMediatype) && AcceptedMediatypes.Contains(fileMediatype))
-                {
-                    var filePath = Path.GetTempFileName();    //await _fileService.GetPathToImages();
-
-                    string pathToformFile = System.IO.Path.GetFullPath(filePath);
-
-                    fileStream = new FileStream(filePath,FileMode.Open);
+                { 
+                    var tmpFileName = await _fileService.Store(formFile);
+                    string pathToformFile = Path.Combine(fileFolder, tmpFileName);
+                    fileStream = new FileStream(pathToformFile, FileMode.Open);
                     var streamContent = new StreamContent(fileStream);
                     streamContent.Headers.ContentType = new MediaTypeHeaderValue(formFile.ContentType);
-                    performanceToUpdateMp.Add(streamContent, "filesToUpload", formFile.FileName); 
+                    performanceToUpdateMp.Add(streamContent, "filesToUpload", formFile.FileName);
+                    temporyFiles.Add(tmpFileName);
                 }
                 else
                 {
@@ -458,6 +458,10 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
             //
             result = await _eventApiService.Update(performanceToUpdateMp, Request.Cookies["jwtToken"].ToString());
             fileStream.Dispose();
+            foreach(var tmp in temporyFiles)
+            {
+                _fileService.Delete(tmp);
+            }
 
             if (!result.Success)
             {
