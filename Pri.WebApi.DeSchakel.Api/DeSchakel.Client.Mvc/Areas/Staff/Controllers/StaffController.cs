@@ -163,15 +163,15 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
             {
                 ModelState.AddModelError("Create", "Een voorstelling met deze titel is al geregistreerd.");
             }
-            if(staffEventCreateViewmodel.ProgrammatorIds.Count() == 0)
+            if(staffEventCreateViewmodel.ProgrammatorIds == null)
             {
                 ModelState.AddModelError("Create", "Selecteer minstens één programmator.");
             }
-            if (staffEventCreateViewmodel.GenreIds.Count() == 0)
+            if (staffEventCreateViewmodel.Genres == null)
             {
                 ModelState.AddModelError("Create", "Je moet minstens één genre aangeven.");
             }
-            if (staffEventCreateViewmodel.Images.Count() == 0)
+            if (staffEventCreateViewmodel.Images == null)
             {
                 ModelState.AddModelError("Create", "Je moet een afbeelding of een video kiezen.");
             }
@@ -342,19 +342,19 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
             var result = await _eventApiService.GetByIdAsync(staffEventUpdateViewModel.Id);
             if (!result.Success)
             {
-                ModelState.AddModelError("Update",result.Errors.First());
+                ModelState.AddModelError("",result.Errors.First());
             }
-            if (staffEventUpdateViewModel.ProgrammatorIds.Count() == 0)
+            if (staffEventUpdateViewModel.ProgrammatorIds == null)
             {
-                ModelState.AddModelError("Update", "Selecteer minstens één programmator.");
+                ModelState.AddModelError("", "Selecteer minstens één programmator.");
             }
-            if (staffEventUpdateViewModel.GenreIds.Count() == 0)
+            if (!staffEventUpdateViewModel.Genres.Any(g => g.IsSelected))
             {
-                ModelState.AddModelError("Update", "Je moet minstens één genre aangeven.");
+                ModelState.AddModelError("", "Je moet minstens één genre aangeven.");
             }
-            if (staffEventUpdateViewModel.Images.Count() == 0 ) 
+            if (staffEventUpdateViewModel.Images == null ) 
             {
-                ModelState.AddModelError("Update", "Je moet een afbeelding of een video kiezen.");
+                ModelState.AddModelError("", "Je moet een afbeelding of een video kiezen.");
             }
             else
             {
@@ -363,17 +363,17 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
                 if (staffEventUpdateViewModel.Images == null
                       || !hasImageOpVideo)
                 {
-                    ModelState.AddModelError("Update", "Je moet een afbeelding of een video kiezen.");
+                    ModelState.AddModelError("", "Je moet een afbeelding of een video kiezen.");
                 }
                 var numberOfImageFiles = staffEventUpdateViewModel.Images.Where(i => i.ContentType.Contains("image/")).Count();
                 var numberOfAudioFiles = staffEventUpdateViewModel.Images.Where(i => i.ContentType.Contains("audio/")).Count();
                 var numberOfVideoFiles = staffEventUpdateViewModel.Images.Where(i => i.ContentType.Contains("video/")).Count();
                 if(numberOfImageFiles > 1 || numberOfAudioFiles > 1 || numberOfVideoFiles > 1 )
                 {
-                    ModelState.AddModelError("Update", "Maximum 1 afbeelding, video- of audiobestand.");
+                    ModelState.AddModelError("", "Maximum 1 afbeelding, video- of audiobestand.");
                 }
                 if (staffEventUpdateViewModel.Images.Count() > (numberOfImageFiles + numberOfAudioFiles + numberOfVideoFiles)){
-                    ModelState.AddModelError("Update", "Alleen afbeelding, video- of audiobestand.");
+                    ModelState.AddModelError("", "Alleen afbeelding, video- of audiobestand.");
                 }
             }
             var performanceToUpdate = result.Data;
@@ -381,7 +381,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
             // exist in database
             if (performanceTitle != null && !staffEventUpdateViewModel.Id.Equals(performanceToUpdate.Id))
             {
-                ModelState.AddModelError("Update", "Een voorstelling met deze titel is al geregistreerd.");
+                ModelState.AddModelError("", "Een voorstelling met deze titel is al geregistreerd.");
             }
             if (!ModelState.IsValid)
             {
