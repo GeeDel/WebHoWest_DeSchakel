@@ -8,11 +8,11 @@ using DeSchakelApi.Consumer.Navigations;
 using DeSchakelApi.Consumer.Roles;
 using DeSchakelApi.Consumer.Users;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using System.Globalization;
 using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
-
 // Add services to the container.
 
 builder.Services.AddControllersWithViews();
@@ -27,6 +27,11 @@ builder.Services.AddScoped<IAccountsApiService, AccountsApiService>();
 builder.Services.AddScoped<IRoleApiService, RoleApiService>();
 builder.Services.AddScoped<IFileService,FileService>();
 builder.Services.AddScoped<IFormBuilder,FormBuilder>();
+// services - increase max size for upload -  to increase the maximum request size to approximately 8.59 GB
+builder.Services.Configure<KestrelServerOptions>(options =>
+{
+    options.Limits.MaxRequestBodySize = int.MaxValue;
+});
 // session
 builder.Services.AddSession(options =>
 {

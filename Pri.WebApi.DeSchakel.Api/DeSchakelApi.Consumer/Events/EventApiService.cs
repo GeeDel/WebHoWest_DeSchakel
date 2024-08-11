@@ -114,7 +114,6 @@ namespace DeSchakelApi.Consumer.Events
             _DeSchakelhttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             ResultModel<EventResponseApiModel> resultModel = new ResultModel<EventResponseApiModel>();
-            //   var response = await _DeSchakelhttpClient.PutAsJsonAsync("", performanceToUpdate);
             var response = await _DeSchakelhttpClient.PutAsync("", performanceToUpdate);
             if (!response.IsSuccessStatusCode)
             {

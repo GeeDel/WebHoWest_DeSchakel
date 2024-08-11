@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -64,10 +65,13 @@ builder.Services.AddAuthentication(option =>
 
     };
 });
+// services - increase max size for upload -  to increase the maximum request size to approximately 8.59 GB
+builder.Services.Configure<KestrelServerOptions>(options =>
+{
+    options.Limits.MaxRequestBodySize = long.MaxValue;
+});
 //
 builder.Services.AddControllers();
-
-
 // policies
 builder.Services.AddAuthorization(options =>
 {
