@@ -252,12 +252,19 @@ namespace Pri.WebApi.DeSchakel.Core.Services
                 return resultModel;
             }
             // Controles
-            if (await DoesEventNameExistsAsync(eventUpdateRequestModel.Title))
+            bool titleExists = await DoesEventNameExistsAsync(eventUpdateRequestModel.Title);
+            if (titleExists)
             {
-                resultModel.Errors.Add($"Er bestaat een andere voorstelling met de titel {eventUpdateRequestModel.Title}");
+                var resultTitle = await GetByTitleAsync(eventUpdateRequestModel.Title);
+                int searchedId = resultTitle.Data.First().Id;
+                if (searchedId != eventUpdateRequestModel.Id)
+                {                
+                    resultModel.Errors.Add($"Er bestaat een andere voorstelling met de titel {eventUpdateRequestModel.Title}");
+                }
 
-              //  return resultModel;
             }
+
+
             if (!await _companyService.DoesCompanyIdExistAsync(eventUpdateRequestModel.CompanyId))
             {
                 resultModel.Errors.Add($"Kan de voorstelling niet toevoegen: id van het gezelschap {eventUpdateRequestModel.CompanyId} bestaat niet.");

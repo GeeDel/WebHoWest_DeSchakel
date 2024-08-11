@@ -161,11 +161,19 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
             // exist in database
             if (resultTitle.Success)  // title exists
             {
-                ModelState.AddModelError("", "Een voorstelling met deze titel is al geregistreerd.");
+                ModelState.AddModelError("Create", "Een voorstelling met deze titel is al geregistreerd.");
+            }
+            if(staffEventCreateViewmodel.ProgrammatorIds.Count() == 0)
+            {
+                ModelState.AddModelError("Create", "Selecteer minstens één programmator.");
+            }
+            if (staffEventCreateViewmodel.GenreIds.Count() == 0)
+            {
+                ModelState.AddModelError("Create", "Je moet minstens één genre aangeven.");
             }
             if (staffEventCreateViewmodel.Images.Count() == 0)
             {
-                ModelState.AddModelError("", "Je moet een afbeelding of een video kiezen.");
+                ModelState.AddModelError("Create", "Je moet een afbeelding of een video kiezen.");
             }
             else
             {
@@ -174,25 +182,19 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
                 if (staffEventCreateViewmodel.Images == null
                       || !hasImageOpVideo)
                 {
-                    ModelState.AddModelError("", "Je moet een afbeelding of een video kiezen.");
+                    ModelState.AddModelError("Create", "Je moet een afbeelding of een video kiezen.");
                 }
                 var numberOfImageFiles = staffEventCreateViewmodel.Images.Where(i => i.ContentType.Contains("image/")).Count();
                 var numberOfAudioFiles = staffEventCreateViewmodel.Images.Where(i => i.ContentType.Contains("audio/")).Count();
                 var numberOfVideoFiles = staffEventCreateViewmodel.Images.Where(i => i.ContentType.Contains("video/")).Count();
                 if (numberOfImageFiles > 1 || numberOfAudioFiles > 1 || numberOfVideoFiles > 1)
                 {
-                    ModelState.AddModelError("", "Maximum 1 afbeelding, video- of audiobestand.");
+                    ModelState.AddModelError("Create", "Maximum 1 afbeelding, video- of audiobestand.");
                 }
                 if (staffEventCreateViewmodel.Images.Count() > (numberOfImageFiles + numberOfAudioFiles + numberOfVideoFiles))
                 {
-                    ModelState.AddModelError("", "Alleen afbeelding, video- of audiobestand.");
+                    ModelState.AddModelError("Create", "Alleen afbeeldings-, video- of audiobestand.");
                 }
-            /*   ModelState.AddModelError("", "De afbeelding moet van het type jpeg zijn.");
-                       var extension = Path.GetExtension(staffEventCreateViewmodel.Image.FileName).ToLowerInvariant();
-                      // if (string.IsNullOrEmpty(extension) ||
-                      //        (extension != ".jpg" && extension != ".jpeg"))
-                      //     ModelState.AddModelError("", "De afbeelding moet van het type jpeg zijn.");
-            */
         }
 
             if (!ModelState.IsValid)
@@ -282,7 +284,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
             //     
             if (!result.Success)
             {
-                ModelState.AddModelError("", $"Volgende fout deed zich voor bij het wegschrijven in de database: \n {result.Errors}.");
+                ModelState.AddModelError("Create", $"Volgende fout deed zich voor bij het wegschrijven in de database: \n {result.Errors}.");
                 staffEventCreateViewmodel.Companies = await _formBuilder.GetCompaniesSelectListItems();
                 staffEventCreateViewmodel.Locations = await _formBuilder.GetLocationsSelectListItems();
                 staffEventCreateViewmodel.Programmators = await _formBuilder.GetProgrammatorsSelectList(Request.Cookies["jwtToken"].ToString());
@@ -342,9 +344,17 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
             {
                 ModelState.AddModelError("Update",result.Errors.First());
             }
+            if (staffEventUpdateViewModel.ProgrammatorIds.Count() == 0)
+            {
+                ModelState.AddModelError("Update", "Selecteer minstens één programmator.");
+            }
+            if (staffEventUpdateViewModel.GenreIds.Count() == 0)
+            {
+                ModelState.AddModelError("Update", "Je moet minstens één genre aangeven.");
+            }
             if (staffEventUpdateViewModel.Images.Count() == 0 ) 
             {
-                ModelState.AddModelError("", "Je moet een afbeelding of een video kiezen.");
+                ModelState.AddModelError("Update", "Je moet een afbeelding of een video kiezen.");
             }
             else
             {
@@ -353,28 +363,19 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
                 if (staffEventUpdateViewModel.Images == null
                       || !hasImageOpVideo)
                 {
-                    ModelState.AddModelError("", "Je moet een afbeelding of een video kiezen.");
+                    ModelState.AddModelError("Update", "Je moet een afbeelding of een video kiezen.");
                 }
                 var numberOfImageFiles = staffEventUpdateViewModel.Images.Where(i => i.ContentType.Contains("image/")).Count();
                 var numberOfAudioFiles = staffEventUpdateViewModel.Images.Where(i => i.ContentType.Contains("audio/")).Count();
                 var numberOfVideoFiles = staffEventUpdateViewModel.Images.Where(i => i.ContentType.Contains("video/")).Count();
                 if(numberOfImageFiles > 1 || numberOfAudioFiles > 1 || numberOfVideoFiles > 1 )
                 {
-                    ModelState.AddModelError("", "Maximum 1 afbeelding, video- of audiobestand.");
+                    ModelState.AddModelError("Update", "Maximum 1 afbeelding, video- of audiobestand.");
                 }
                 if (staffEventUpdateViewModel.Images.Count() > (numberOfImageFiles + numberOfAudioFiles + numberOfVideoFiles)){
-                    ModelState.AddModelError("", "Alleen afbeelding, video- of audiobestand.");
+                    ModelState.AddModelError("Update", "Alleen afbeelding, video- of audiobestand.");
                 }
             }
-
-            /*   ModelState.AddModelError("", "De afbeelding moet van het type jpeg z
-             *   ijn.");
-                       var extension = Path.GetExtension(staffEventCreateViewmodel.Image.FileName).ToLowerInvariant();
-                      // if (string.IsNullOrEmpty(extension) ||
-                      //        (extension != ".jpg" && extension != ".jpeg"))
-                      //     ModelState.AddModelError("", "De afbeelding moet van het type jpeg zijn.");
-            */
-
             var performanceToUpdate = result.Data;
             var performanceTitle = await _eventApiService.GetByTitleAsync(staffEventUpdateViewModel.Title);
             // exist in database
