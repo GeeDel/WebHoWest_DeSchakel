@@ -467,6 +467,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
             //
             result = await _eventApiService.Update(performanceToUpdateMp, Request.Cookies["jwtToken"].ToString());
             fileStream.Dispose();
+            performanceToUpdateMp.Dispose();
             foreach(var tmp in temporyFiles)
             {
                 _fileService.Delete(tmp);

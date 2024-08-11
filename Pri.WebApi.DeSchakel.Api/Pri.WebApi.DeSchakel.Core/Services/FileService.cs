@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
 using Pri.WebApi.DeSchakel.Core.Services.Interfaces;
 using Pri.WebApi.DeSchakel.Core.Services.Models;
@@ -57,6 +58,22 @@ namespace Pri.WebApi.DeSchakel.Core.Services
                     };
                 }
             }
+        }
+
+        public bool Delete(string fileName)
+        {
+            string pathToImage = Path.Combine(_hostEnvironment.ContentRootPath, "wwwroot",
+                      "media", "performances", fileName);
+            try
+            {
+                System.IO.File.Delete(pathToImage);
+            }
+            catch (FileNotFoundException fileNotFoundException)
+            {
+                Console.WriteLine(fileNotFoundException.Message);
+                return false;
+            }
+            return true;
         }
     }
 }

@@ -284,15 +284,33 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
                 if (!String.IsNullOrEmpty(fileContenttype) && AcceptedContetenttype.Contains(fileContenttype))
                 {
                     resultModelImage = await _fileService.AddOrUpdateImageAsync(file, file.FileName);
-                    performanceToUpdate.Imagestring = resultModelImage.Data;
+                    if (!resultModelImage.Success)
+                    {
+                        resultModelImage.Errors.Add($"Fout bij het wegschrijven van de afbeelding {performanceToUpdate.Imagestring}.");
+                    }
+                    else
+                    {
+
+                        if (fileContenttype == "image/")
+                        {
+                            performanceToUpdate.Imagestring = resultModelImage.Data;
+                        }
+                        else if (fileContenttype == "audio/")
+                        {
+                            performanceToUpdate.Audiostring = resultModelImage.Data;
+
+                        }
+                        else if (fileContenttype == "video/")
+                        {
+                            performanceToUpdate.Videostring = resultModelImage.Data;
+
+                        }
+                    }
+
                 }
                 else
                 {
                     resultModelImage.Errors.Add($"Het type bestand {file.FileName} wordt niet aanvaard.");
-                }
-                if (!resultModelImage.Success)
-                {
-                    resultModelImage.Errors.Add($"Fout bij het wegschrijven van de afbeelding {performanceToUpdate.Imagestring}.");
                 }
             }
             //updateservice
@@ -323,7 +341,12 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
             {
                 return BadRequest(existingProductResult.Errors);
             }
-            var result = await _eventService.DeleteAsync(existingProductResult.Data.First());  // only the first entity of the list
+            var performanceToDelete = existingProductResult.Data.First();
+            var result = await _eventService.DeleteAsync(performanceToDelete);  // only the first entity of the list
+            bool deleted = false;
+            if (performanceToDelete.Imagestring != null) deleted = _fileService.Delete(performanceToDelete.Imagestring);
+            if (performanceToDelete.Audiostring != null) deleted = _fileService.Delete(performanceToDelete.Audiostring);
+            if (performanceToDelete.Videostring != null) deleted = _fileService.Delete(performanceToDelete.Videostring);
             return Ok($"Voorstelling verwijderd:  {existingProductResult.Data.First().Title}");
         }
 

@@ -11,5 +11,6 @@ namespace Pri.WebApi.DeSchakel.Core.Services.Interfaces
     public interface IFileService
     {
         Task<ResultModel<string>> AddOrUpdateImageAsync(IFormFile image, string fileName = "");
+        public bool Delete(string fileName);
     }
 }
