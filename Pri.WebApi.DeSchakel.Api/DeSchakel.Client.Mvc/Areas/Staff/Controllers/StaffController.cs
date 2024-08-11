@@ -167,7 +167,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
             {
                 ModelState.AddModelError("Create", "Selecteer minstens één programmator.");
             }
-            if (staffEventCreateViewmodel.Genres == null)
+            if (!staffEventCreateViewmodel.Genres.Any(g => g.IsSelected))
             {
                 ModelState.AddModelError("Create", "Je moet minstens één genre aangeven.");
             }
