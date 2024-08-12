@@ -17,6 +17,7 @@ using System.Net.Http.Headers;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Web.Helpers;
+using System.Runtime.Intrinsics.Arm;
 
 namespace DeSchakel.Client.Mvc.Areas.User.Controllers
 {
@@ -69,18 +70,7 @@ namespace DeSchakel.Client.Mvc.Areas.User.Controllers
                 IsPersistent = true,
             };
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, identity, authProperties);
-            // place cookie
-            // cookie can only be read by javascript and only https (=secure)
-            var cookieOptions = new CookieOptions
-            {
-                HttpOnly = true,
-                Secure = true,
-                SameSite = SameSiteMode.Strict,
-                Expires = DateTime.UtcNow.AddHours(2),
-            };
-            // save cookie
-            Response.Cookies.Append("jwtToken", result.Token, cookieOptions);
-
+            HttpContext.Session.SetString("Token", result.Token);
             if (!string.IsNullOrEmpty(loginViewModel.ReturnUrl))
             {
                 return Redirect(loginViewModel.ReturnUrl);
@@ -92,7 +82,6 @@ namespace DeSchakel.Client.Mvc.Areas.User.Controllers
 
         public async Task<IActionResult> Logout()
         {
-            // HttpContext.Response.Cookies.Delete(CookieAuthenticationDefaults.AuthenticationScheme);
 
             if (HttpContext.Session.Keys.Contains("SessionCartList"))
             {
@@ -103,6 +92,7 @@ namespace DeSchakel.Client.Mvc.Areas.User.Controllers
                 HttpContext.Session.SetInt32("NumberOfItems", 0);
             }
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            HttpContext.Session.Remove("Token");
             return RedirectToAction("Index", "Home", new { Area = "Home" });
         }
 

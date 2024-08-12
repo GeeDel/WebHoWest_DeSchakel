@@ -3,6 +3,7 @@ using DeSchakelApi.Consumer.Models.Companies;
 using DeSchakelApi.Consumer.Models.Events;
 using DeSchakelApi.Consumer.Models.Navigation;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,7 @@ namespace DeSchakelApi.Consumer.Events
             _httpClientFactory = httpClientFactory;
             _DeSchakelhttpClient = _httpClientFactory.CreateClient("DeSchakelApiClient");
             _DeSchakelhttpClient.BaseAddress = new Uri(ApiRoutes.Events);
+
         }
 
         public async Task<EventResponseApiModel[]> GetAsync()
@@ -192,6 +194,7 @@ namespace DeSchakelApi.Consumer.Events
 
         public async Task DeleteAsync(int id, string token)
         {
+         //   token = JsonConvert.DeserializeObject<string>(HttpContext.Session.GetString("Token"));
             _DeSchakelhttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
             await _DeSchakelhttpClient.DeleteAsync($"{id}");

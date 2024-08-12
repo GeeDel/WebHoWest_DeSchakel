@@ -26,6 +26,8 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
+using NuGet.Common;
 using System.Data;
 using System.Data.OleDb;
 using System.Drawing;
@@ -51,6 +53,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
         private readonly IAccountsApiService _accountsService;
         private readonly IFormBuilder _formBuilder;
         private readonly IFileService _fileService;
+
 
         public StaffController(IEventApiService eventApiService, IGenreApiService genreApiService, ILocationApiService locationApiService,
             ICompanyApiService companyApiService, IUserLoginApiService userApiService, IAccountsApiService accountsService,
@@ -140,13 +143,14 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
         [HttpGet]
         public async Task<IActionResult> CreateEvent()
         {
-
+            var token = HttpContext.Session.GetString("Token");
             StaffEventCreateViewmodel staffEventCreateViewmodel = new StaffEventCreateViewmodel
             {
+
                 EventDate = DateTime.Now.AddDays(1).AtNoon(),
                 Companies = await _formBuilder.GetCompaniesSelectListItems(),
                 Locations = await _formBuilder.GetLocationsSelectListItems(),
-                Programmators = await _formBuilder.GetProgrammatorsSelectList(Request.Cookies["jwtToken"].ToString()),
+                Programmators = await _formBuilder.GetProgrammatorsSelectList(token),
                 Genres = await _formBuilder.GetGenresCheckBoxes()
             };
             return View(staffEventCreateViewmodel);
@@ -157,6 +161,8 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateEvent(StaffEventCreateViewmodel staffEventCreateViewmodel)
         {
+            string token = HttpContext.Session.GetString("Token");
+
             var resultTitle = await _eventApiService.GetByTitleAsync(staffEventCreateViewmodel.Title);
             // exist in database
             if (resultTitle.Success)  // title exists
@@ -201,7 +207,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
             {
                 staffEventCreateViewmodel.Companies = await _formBuilder.GetCompaniesSelectListItems();
                 staffEventCreateViewmodel.Locations = await _formBuilder.GetLocationsSelectListItems();
-                staffEventCreateViewmodel.Programmators = await _formBuilder.GetProgrammatorsSelectList(Request.Cookies["jwtToken"].ToString());
+                staffEventCreateViewmodel.Programmators = await _formBuilder.GetProgrammatorsSelectList(token);
                 staffEventCreateViewmodel.Genres = await _formBuilder.GetGenresCheckBoxes();
                 return View(staffEventCreateViewmodel);
             }
@@ -214,7 +220,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
                 Id = g.Id,
                 Name = g.Name
             });
-            var allPprogrammators = _accountsService.GetByRoles("Programmator", Request.Cookies["jwtToken"].ToString()).Result
+            var allPprogrammators = _accountsService.GetByRoles("Programmator", token).Result
                 .Select(p => new AccountsResponseApiModel
                 {
                     Id = p.Id,
@@ -272,7 +278,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
             }
             //
 
-            var result = await _eventApiService.CreateMultipart(performanceMp, Request.Cookies["jwtToken"].ToString());
+            var result = await _eventApiService.CreateMultipart(performanceMp, token);
             //
             fileStream.Dispose();
             performanceMp.Dispose();
@@ -287,7 +293,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
                 ModelState.AddModelError("Create", $"Volgende fout deed zich voor bij het wegschrijven in de database: \n {result.Errors}.");
                 staffEventCreateViewmodel.Companies = await _formBuilder.GetCompaniesSelectListItems();
                 staffEventCreateViewmodel.Locations = await _formBuilder.GetLocationsSelectListItems();
-                staffEventCreateViewmodel.Programmators = await _formBuilder.GetProgrammatorsSelectList(Request.Cookies["jwtToken"].ToString());
+                staffEventCreateViewmodel.Programmators = await _formBuilder.GetProgrammatorsSelectList(token);
                 staffEventCreateViewmodel.Genres = await _formBuilder.GetGenresCheckBoxes();
 
                 return View(staffEventCreateViewmodel);
@@ -304,6 +310,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
             {
                 return BadRequest(result.Errors.First());
             }
+            string token = HttpContext.Session.GetString("Token");
             var searchedEvent = result.Data;
             StaffEventUpdateViewModel staffUserUpdateViewmodel = new StaffEventUpdateViewModel
             {
@@ -318,7 +325,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
                 Description = searchedEvent.Description,
                 Companies = await _formBuilder.GetCompaniesSelectListItems(),
                 Locations = await _formBuilder.GetLocationsSelectListItems(),
-                Programmators = await _formBuilder.GetProgrammatorsSelectList(Request.Cookies["jwtToken"].ToString()),
+                Programmators = await _formBuilder.GetProgrammatorsSelectList(token),
                 ProgrammatorIds = searchedEvent.Programmators
                     .Select(p => p.Id).ToList(),
                 Genres = await _formBuilder.GetGenresCheckBoxes()
@@ -339,6 +346,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateEvent(StaffEventUpdateViewModel staffEventUpdateViewModel)
         {
+            string token = HttpContext.Session.GetString("Token");
             var result = await _eventApiService.GetByIdAsync(staffEventUpdateViewModel.Id);
             if (!result.Success)
             {
@@ -387,7 +395,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
             {
                 staffEventUpdateViewModel.Companies = await _formBuilder.GetCompaniesSelectListItems();
                 staffEventUpdateViewModel.Locations = await _formBuilder.GetLocationsSelectListItems();
-                staffEventUpdateViewModel.Programmators = await _formBuilder.GetProgrammatorsSelectList(Request.Cookies["jwtToken"].ToString());
+                staffEventUpdateViewModel.Programmators = await _formBuilder.GetProgrammatorsSelectList(token); // (Request.Cookies["jwtToken"].ToString());
                 staffEventUpdateViewModel.Genres = await _formBuilder.GetGenresCheckBoxes();
                 // set genres
                 foreach (var checkBox in staffEventUpdateViewModel.Genres)
@@ -409,7 +417,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
                 Id = g.Id,
                 Name = g.Name
             });
-            var allPprogrammators = _accountsService.GetByRoles("Programmator", Request.Cookies["jwtToken"].ToString()).Result
+            var allPprogrammators = _accountsService.GetByRoles("Programmator", token).Result
                 .Select(p => new AccountsResponseApiModel
                 {
                     Id = p.Id,
@@ -467,7 +475,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
                 }
             }
             //
-            result = await _eventApiService.Update(performanceToUpdateMp, Request.Cookies["jwtToken"].ToString());
+            result = await _eventApiService.Update(performanceToUpdateMp, token);
             fileStream.Dispose();
             performanceToUpdateMp.Dispose();
             foreach(var tmp in temporyFiles)
@@ -480,7 +488,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
                 ModelState.AddModelError("", $"Volgende fout deed zich voor bij het wegschrijven in de database: \n {result.Errors.First()}.");
                 staffEventUpdateViewModel.Companies = await _formBuilder.GetCompaniesSelectListItems();
                 staffEventUpdateViewModel.Locations = await _formBuilder.GetLocationsSelectListItems();
-                staffEventUpdateViewModel.Programmators = await _formBuilder.GetProgrammatorsSelectList(Request.Cookies["jwtToken"].ToString());
+                staffEventUpdateViewModel.Programmators = await _formBuilder.GetProgrammatorsSelectList(token);
                 staffEventUpdateViewModel.Genres = await _formBuilder.GetGenresCheckBoxes();
                 return View(staffEventUpdateViewModel);
             }
@@ -515,10 +523,10 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
             {
                 return NotFound();
             }
-
+            string token = HttpContext.Session.GetString("Token");
             try
             {
-                _eventApiService.DeleteAsync(id, Request.Cookies["jwtToken"].ToString());
+                await _eventApiService.DeleteAsync(id, token);
             }
             catch (Exception ex)
             {
@@ -570,12 +578,14 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
             {
                 return View(staffCompanyCreateViewModel);
             }
+            var token = HttpContext.Session.GetString("Token");
+
             var companyToCreate = new CompanyCreateRequestApiModel
             {
                 Name = staffCompanyCreateViewModel.Name,
             };
 
-            await _companyApiService.CreateAsyn(companyToCreate, Request.Cookies["jwtToken"].ToString());
+            await _companyApiService.CreateAsyn(companyToCreate, token);
             return RedirectToAction("Companies", "Staff", new { Area = "Staff" });
         }
 
@@ -583,7 +593,8 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateCompany(int id)
         {
-            var result = await _companyApiService.GetByIdAsync(id, Request.Cookies["jwtToken"].ToString());
+            string token = HttpContext.Session.GetString("Token");
+            var result = await _companyApiService.GetByIdAsync(id, token);
             StaffCompanyUpdateViewModel companyViewModel = new StaffCompanyUpdateViewModel
             {
                 Id = result.Id,
@@ -600,7 +611,8 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
             {
                 return View(staffCompanyUpdateViewModel);
             }
-            var result = _companyApiService.GetByIdAsync(staffCompanyUpdateViewModel.Id, Request.Cookies["jwtToken"].ToString());
+            string token = HttpContext.Session.GetString("Token");
+            var result = _companyApiService.GetByIdAsync(staffCompanyUpdateViewModel.Id, token);
             if (result == null)
             {
                 ModelState.AddModelError("", $"Het gezelschap {result.Result.Name} is niet gevonden in ons bestand.");
@@ -611,14 +623,15 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
                 Id = staffCompanyUpdateViewModel.Id,
                 Name = staffCompanyUpdateViewModel.Name
             };
-            await _companyApiService.UpdateAsyn(companyToUpdate, Request.Cookies["jwtToken"].ToString());
+            await _companyApiService.UpdateAsyn(companyToUpdate, token);
             return RedirectToAction("Companies", "Staff", new { Area = "Staff" });
         }
 
         [HttpGet]
         public async Task<IActionResult> ConfirmDeleteCompany(int id)
         {
-            var result = await _companyApiService.GetByIdAsync(id, Request.Cookies["jwtToken"].ToString());
+            string token = HttpContext.Session.GetString("Token");
+            var result = await _companyApiService.GetByIdAsync(id, token);
             if (result == null)
             {
                 return NotFound($"Onverwachte fout: gezelschap met id {id} is niet gevonden");
@@ -637,7 +650,9 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteCompany(int id)
         {
-            var result = await _companyApiService.GetByIdAsync(id, Request.Cookies["jwtToken"].ToString());
+            string token = HttpContext.Session.GetString("Token");
+
+            var result = await _companyApiService.GetByIdAsync(id, token);
 
             if (result == null)
             {
@@ -651,7 +666,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
             }
             try
             {
-                await _companyApiService.DeleteAsyn(id, Request.Cookies["jwtToken"].ToString());
+                await _companyApiService.DeleteAsyn(id, token);
             }
             catch (Exception ex)
             {
@@ -694,15 +709,15 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
         [HttpGet]
         public async Task<IActionResult> CreateAccount()
         {
+            string token = HttpContext.Session.GetString("Token");
 
             StaffAccountCreateViewmodel staffAccountCreateViewmodel = new StaffAccountCreateViewmodel
             {
-                Roles = _formBuilder.GetRolesSelectList(Request.Cookies["jwtToken"].ToString()).Result,
+                Roles = _formBuilder.GetRolesSelectList(token).Result,
 
             };
             return View(staffAccountCreateViewmodel);
         }
-
 
 
         [Authorize(Roles ="Admin")]
@@ -710,24 +725,22 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateAccount(StaffAccountCreateViewmodel staffAccountCreateViewmodel)
         {
-            //  var user = await _userApiService.GetByEmailAsync(staffAccountCreateViewmodel.Username);
+            string token = HttpContext.Session.GetString("Token");
             var result = await _accountsService.GetByEmailAsync(staffAccountCreateViewmodel.Username);
-
-         //   if (user != null)
          if (result.Success)
             {
                 ModelState.AddModelError("", "Gebruikerprofiel is al aangemaakt.");
             }
             if (!ModelState.IsValid)
             {
-                staffAccountCreateViewmodel.Roles = _formBuilder.GetRolesSelectList(Request.Cookies["jwtToken"].ToString()).Result;
+                staffAccountCreateViewmodel.Roles = _formBuilder.GetRolesSelectList(token).Result;
                 return View(staffAccountCreateViewmodel);
             }
-            var resultRoles = await _roleApiService.GetAsync(Request.Cookies["jwtToken"].ToString());
+            var resultRoles = await _roleApiService.GetAsync(token);
             if (!resultRoles.Success)
             {
                 ModelState.AddModelError("", resultRoles.Errors.First());
-                staffAccountCreateViewmodel.Roles = _formBuilder.GetRolesSelectList(Request.Cookies["jwtToken"].ToString()).Result;
+                staffAccountCreateViewmodel.Roles = _formBuilder.GetRolesSelectList(token).Result;
                 return View(staffAccountCreateViewmodel);
             }
             var rolesOfAccountToUpdate = resultRoles.Data
@@ -765,9 +778,10 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
             {
                 return NotFound(result.Errors.First());
             }
+            string token = HttpContext.Session.GetString("Token");
             var searchedUser = result.Data;
             //
-            var resultRoles = await _roleApiService.GetAsync(Request.Cookies["jwtToken"].ToString());
+            var resultRoles = await _roleApiService.GetAsync(token);
             if (! resultRoles.Success)
             {
                 return BadRequest(resultRoles.Errors.First());
@@ -793,7 +807,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
                 Zipcode = searchedUser.Zipcode,
                 City = searchedUser.City,
                 Email = searchedUser.Email,
-                Roles = _formBuilder.GetRolesSelectList(Request.Cookies["jwtToken"].ToString()).Result,
+                Roles = _formBuilder.GetRolesSelectList(token).Result,
                RoleIds = roleIds
             };
 
@@ -805,6 +819,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateAccount(StaffAccountUpdateViewmodel staffAccountUpdateViewmodel)
         {
+            string token = HttpContext.Session.GetString("Token");
             var resultAccount = await _accountsService.GetByIdAsync(staffAccountUpdateViewmodel.Id);
             if (!resultAccount.Success)
             {
@@ -812,15 +827,15 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
             }
             if (!ModelState.IsValid)
             {
-                staffAccountUpdateViewmodel.Roles = _formBuilder.GetRolesSelectList(Request.Cookies["jwtToken"].ToString()).Result;
+                staffAccountUpdateViewmodel.Roles = _formBuilder.GetRolesSelectList(token).Result;
                 return View(staffAccountUpdateViewmodel);
             }
             var searchedAccount = resultAccount.Data;
-            var resultRoles = await _roleApiService.GetAsync(Request.Cookies["jwtToken"].ToString());
+            var resultRoles = await _roleApiService.GetAsync(token);
             if (!resultRoles.Success)
             {
                 ModelState.AddModelError("", resultRoles.Errors.First());
-                staffAccountUpdateViewmodel.Roles = _formBuilder.GetRolesSelectList(Request.Cookies["jwtToken"].ToString()).Result;
+                staffAccountUpdateViewmodel.Roles = _formBuilder.GetRolesSelectList(token).Result;
                 return View(staffAccountUpdateViewmodel);
             }
             var rolesOfAccountToUpdate = resultRoles.Data
@@ -838,12 +853,12 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
                 City = staffAccountUpdateViewmodel.City,
                 Roles = rolesOfAccountToUpdate
             };
-            var result = await _accountsService.Update(accountToUpdate, Request.Cookies["jwtToken"].ToString());
+            var result = await _accountsService.Update(accountToUpdate, token);
             if (!result.Success)
             {
                 ModelState.AddModelError("", $"Volgende fout deed zich voor bij het wegschrijven in de database:" +
                     $" \n {result.Errors}.");
-                staffAccountUpdateViewmodel.Roles = _formBuilder.GetRolesSelectList(Request.Cookies["jwtToken"].ToString()).Result;
+                staffAccountUpdateViewmodel.Roles = _formBuilder.GetRolesSelectList(token).Result;
                 return View(staffAccountUpdateViewmodel);
             }
             return RedirectToAction("Accounts", "Staff", new { Area = "Staff" });
@@ -860,8 +875,9 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
             {
                 return NotFound(result.Errors.First());
             }
+            string token = HttpContext.Session.GetString("Token");
             var searchedUser = result.Data;
-            var resultDelete = await _accountsService.Delete(id, Request.Cookies["jwtToken"].ToString());
+            var resultDelete = await _accountsService.Delete(id, token);
                 
                 //, Request.Cookies["jwtToken"].ToString());
             if (resultDelete == null)   // temporary
