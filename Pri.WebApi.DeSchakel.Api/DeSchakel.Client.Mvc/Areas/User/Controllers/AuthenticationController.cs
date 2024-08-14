@@ -70,7 +70,9 @@ namespace DeSchakel.Client.Mvc.Areas.User.Controllers
                 IsPersistent = true,
             };
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, identity, authProperties);
-            HttpContext.Session.SetString("Token", result.Token);
+            //           HttpContext.Session.SetString("Token", result.Token);
+            //string identityBasedToken = User.Claims.FirstOrDefault(t => t.Type.Equals("Token")).Value;
+
             if (!string.IsNullOrEmpty(loginViewModel.ReturnUrl))
             {
                 return Redirect(loginViewModel.ReturnUrl);
@@ -92,7 +94,7 @@ namespace DeSchakel.Client.Mvc.Areas.User.Controllers
                 HttpContext.Session.SetInt32("NumberOfItems", 0);
             }
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            HttpContext.Session.Clear();
+       //     HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home", new { Area = "Home" });
         }
 

@@ -347,7 +347,8 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateEvent(StaffEventUpdateViewModel staffEventUpdateViewModel)
         {
-            string token = HttpContext.Session.GetString("Token");
+            //string token = HttpContext.Session.GetString("Token");
+            string identityBasedToken = User.Claims.FirstOrDefault(t => t.Type.Equals("Token")).Value;
             var result = await _eventApiService.GetByIdAsync(staffEventUpdateViewModel.Id);
             if (!result.Success)
             {
@@ -396,7 +397,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
             {
                 staffEventUpdateViewModel.Companies = await _formBuilder.GetCompaniesSelectListItems();
                 staffEventUpdateViewModel.Locations = await _formBuilder.GetLocationsSelectListItems();
-                staffEventUpdateViewModel.Programmators = await _formBuilder.GetProgrammatorsSelectList(token); // (Request.Cookies["jwtToken"].ToString());
+                staffEventUpdateViewModel.Programmators = await _formBuilder.GetProgrammatorsSelectList(identityBasedToken); // (Request.Cookies["jwtToken"].ToString());
                 staffEventUpdateViewModel.Genres = await _formBuilder.GetGenresCheckBoxes();
                 // set genres
                 foreach (var checkBox in staffEventUpdateViewModel.Genres)
@@ -418,7 +419,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
                 Id = g.Id,
                 Name = g.Name
             });
-            var allPprogrammators = _accountsService.GetByRoles("Programmator", token).Result
+            var allPprogrammators = _accountsService.GetByRoles("Programmator", identityBasedToken).Result
                 .Select(p => new AccountsResponseApiModel
                 {
                     Id = p.Id,
@@ -476,7 +477,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
                 }
             }
             //
-            result = await _eventApiService.Update(performanceToUpdateMp, token);
+            result = await _eventApiService.Update(performanceToUpdateMp, identityBasedToken);
             fileStream.Dispose();
             performanceToUpdateMp.Dispose();
             foreach(var tmp in temporyFiles)
@@ -489,7 +490,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
                 ModelState.AddModelError("", $"Volgende fout deed zich voor bij het wegschrijven in de database: \n {result.Errors.First()}.");
                 staffEventUpdateViewModel.Companies = await _formBuilder.GetCompaniesSelectListItems();
                 staffEventUpdateViewModel.Locations = await _formBuilder.GetLocationsSelectListItems();
-                staffEventUpdateViewModel.Programmators = await _formBuilder.GetProgrammatorsSelectList(token);
+                staffEventUpdateViewModel.Programmators = await _formBuilder.GetProgrammatorsSelectList(identityBasedToken);
                 staffEventUpdateViewModel.Genres = await _formBuilder.GetGenresCheckBoxes();
                 return View(staffEventUpdateViewModel);
             }
@@ -876,9 +877,11 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
             {
                 return NotFound(result.Errors.First());
             }
-            string token = HttpContext.Session.GetString("Token");
+            //           string token = HttpContext.Session.GetString("Token");
+            string identityBasedToken = User.Claims.FirstOrDefault(t => t.Type.Equals("Token")).Value;
+
             var searchedUser = result.Data;
-            var resultDelete = await _accountsService.Delete(id, token);
+            var resultDelete = await _accountsService.Delete(id, identityBasedToken);
                 
                 //, Request.Cookies["jwtToken"].ToString());
             if (resultDelete == null)   // temporary
