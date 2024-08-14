@@ -311,7 +311,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
                 return BadRequest(result.Errors.First());
             }
             string identityToken = User.Claims.FirstOrDefault(t => t.Type.Equals("Token")).Value;
-            string token = HttpContext.Session.GetString("Token");
+     //       string token = HttpContext.Session.GetString("Token");
             var searchedEvent = result.Data;
             StaffEventUpdateViewModel staffUserUpdateViewmodel = new StaffEventUpdateViewModel
             {
@@ -326,7 +326,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
                 Description = searchedEvent.Description,
                 Companies = await _formBuilder.GetCompaniesSelectListItems(),
                 Locations = await _formBuilder.GetLocationsSelectListItems(),
-                Programmators = await _formBuilder.GetProgrammatorsSelectList(token),
+                Programmators = await _formBuilder.GetProgrammatorsSelectList(identityToken),
                 ProgrammatorIds = searchedEvent.Programmators
                     .Select(p => p.Id).ToList(),
                 Genres = await _formBuilder.GetGenresCheckBoxes()

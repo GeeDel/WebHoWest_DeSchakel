@@ -191,28 +191,28 @@ namespace Pri.WebApi.DeSchakel.Core.Migrations
                         new
                         {
                             Id = "00000000-0000-0000-0000-000000000001",
-                            ConcurrencyStamp = "f68bc41c-1905-42a4-bf15-49c2a1cf70fd",
+                            ConcurrencyStamp = "392f3fea-2539-4270-9b8c-02bc453b76b4",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "00000000-0000-0000-0000-000000000002",
-                            ConcurrencyStamp = "fe3fcb23-4159-444d-816f-3c644c4e1f24",
+                            ConcurrencyStamp = "0c004517-e779-4338-8c07-aec700fba8c2",
                             Name = "Programmator",
                             NormalizedName = "PROGRAMMATOR"
                         },
                         new
                         {
                             Id = "00000000-0000-0000-0000-000000000003",
-                            ConcurrencyStamp = "6346d62a-c6e9-4742-8746-50e7df638fb1",
+                            ConcurrencyStamp = "7945dd17-1eff-47a2-94f7-c017ac7953a3",
                             Name = "Onthaal",
                             NormalizedName = "ONTHAAL"
                         },
                         new
                         {
                             Id = "00000000-0000-0000-0000-000000000004",
-                            ConcurrencyStamp = "70bb34e2-1aa0-4a56-9998-a7459cea399a",
+                            ConcurrencyStamp = "24c7e9f3-bf75-45d2-b5d1-63bc5a22f401",
                             Name = "Bezoeker",
                             NormalizedName = "BEZOEKER"
                         });
@@ -550,7 +550,7 @@ namespace Pri.WebApi.DeSchakel.Core.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@CC.BE",
                             NormalizedUserName = "ADMIN@CC.BE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAsae1IyM2/MtvnkvVQCeBvIw9XvAPUdcw4QaRwCgZ5+igKtoh2GYhAhhinUMA+L/Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHtMJGkHDUfb+koRYPK83Tp3H4dThTKNLWYdjrRR8rok2Bq20EhU0OZFfpyIXgLHmQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "VVPCRDAS3MJWQD5CSW2GWPRADBXEZINA",
                             TwoFactorEnabled = false,
@@ -571,7 +571,7 @@ namespace Pri.WebApi.DeSchakel.Core.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "MAAIKE@CC.BE",
                             NormalizedUserName = "MAAIKE@CC.BE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIthZ144ZUjEm5GGOYxLnFjwsPp6MriEmey9f7LYZa6T5j61Bqt+Huq/Mg35dVpnZA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIGFCYWIG7BqPpqhFJdceLPcBJdxPwcyXvgN/4UW/wfo/xRdZYbn6OnQOA/AX7cZfw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "XVPCRDAS3MJWQD5CSW2GWPRADBXEZINA",
                             TwoFactorEnabled = false,
@@ -592,7 +592,7 @@ namespace Pri.WebApi.DeSchakel.Core.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "JOOST@CC.BE",
                             NormalizedUserName = "JOOST@CC.BE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPKDUjtKU6h/if9X3EK+zIaxyKtDS4k2aWmgoKE5dxPYH+UqsO78ODqdcKNkcqM0WQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAGN7KIXhNKhCYV0L5g2wtkUtOkfQ/4KzbBIsif+lykWQjxx2m7LFzzk6ofBvvEwrg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "ZVPCRDAS3MJWQD5CSW2GWPRADBXEZINA",
                             TwoFactorEnabled = false,
@@ -613,7 +613,7 @@ namespace Pri.WebApi.DeSchakel.Core.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "VEERLE@CC.BE",
                             NormalizedUserName = "VEERLE@CC.BE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEUFZLpaRDImHqEJnbfa7IpkrsqzJtyo9PwpnzNOZwW/qL1awxqSCAQD/ZzeqnueAQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEO+wzXaRFP4mAmrvOf8Ry9IvVNKH3Ozw0rE1aArdK2P2a9QYt+YFoBLzsDwTEMsx0A==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "ZVPCRDAS3MJWQD5CSW2GWPRADBXEZINA",
                             TwoFactorEnabled = false,
@@ -634,7 +634,7 @@ namespace Pri.WebApi.DeSchakel.Core.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "PAULIEN@CC.BE",
                             NormalizedUserName = "PAULIEN@CC.BE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMQLv4UmuRfHLV1Ai4ZnKVmPfiF48jSrywDJ7JnTCaxzCxq2Z9asEw5QiI1FS4jP+w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKEYlhQ12toVJEMPCI+ke702BnqfUYNqZSXkaXXO8jwOlTCkfN+tH1SZxIJLutkZzQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "XVPCRDAS3MJWQD5CSW2GWPRADBXEZINA",
                             TwoFactorEnabled = false,
@@ -655,7 +655,7 @@ namespace Pri.WebApi.DeSchakel.Core.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "F.V@TELENET.BE",
                             NormalizedUserName = "F.V@TELENET.BE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEO2Ar8EUCjRUpNYJF4JN2FfxWI83mnI/Z/qc2PIO++O6r9D3PasW+GoU2rkwGfSYmA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDhZOc6uwdfqWwld6Yg97Gfbed49LJonMMVs1i9gL/bvepfqHxrAS6OA6JXTGm8Fmg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "BVPCRDAS3MJWQD5CSW2GWPRADBXEZINA",
                             TwoFactorEnabled = false,
@@ -797,7 +797,7 @@ namespace Pri.WebApi.DeSchakel.Core.Migrations
                         new
                         {
                             Id = 3,
-                            Audiostring = "Jan De Smet En De Grote Luxe -Mr. Ghost (goes to town.mp3",
+                            Audiostring = "Jan De Smet En De Grote Luxe -Mr. Ghost.mp3",
                             CompanyId = 1,
                             Description = "Zanger, muzikant en conservator van het ontroerend muzikaal erfgoed Jan De Smet werd zeventig. In 2024 viert hij die verjaardag met ons in de Schouwburg en het is een Grote Luxe (vandaar de titel!) om hem te mogen ontvangen met een schare uitgelezen muzikanten en zangeressen die een zeer eclectisch muzikaal programma beheersen.",
                             EventDate = new DateTime(2024, 1, 20, 20, 0, 0, 0, DateTimeKind.Unspecified),
@@ -826,7 +826,7 @@ namespace Pri.WebApi.DeSchakel.Core.Migrations
                             CompanyId = 2,
                             Description = "Na hun succesvolle voorstellingen Mining Stories en Pleasant Island maken Silke Huysmans en Hannes Dereere het sluitstuk van hun trilogie over mijnbouw. Deze keer gaan ze dieper in op een compleet nieuwe industrie: diepzeemijnbouw.",
                             EventDate = new DateTime(2024, 4, 24, 20, 0, 0, 0, DateTimeKind.Unspecified),
-                            Imagestring = "sile_huysmans_out-of-the-blue.jpg",
+                            Imagestring = "silke_huysmans_out-of-the-blue.jpg",
                             LocationId = 2,
                             Price = 17.0,
                             SuccesRate = 40,

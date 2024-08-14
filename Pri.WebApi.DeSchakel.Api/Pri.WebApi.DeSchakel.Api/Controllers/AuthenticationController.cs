@@ -55,7 +55,8 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
             JwtSecurityToken token = await GenerateTokenAsync(applicationUser);
             //defined
             string serializedToken = new JwtSecurityTokenHandler().WriteToken(token); //serialize the token
-            await _userManager.AddClaimAsync(applicationUser, new Claim("Token", serializedToken));
+        //    await _userManager.AddClaimAsync(applicationUser, new Claim("Token", serializedToken));
+       //     Session.SetString("Token", serializedToken);
             return Ok(new LoginUserResponseDto()
             {
                 Token = serializedToken
