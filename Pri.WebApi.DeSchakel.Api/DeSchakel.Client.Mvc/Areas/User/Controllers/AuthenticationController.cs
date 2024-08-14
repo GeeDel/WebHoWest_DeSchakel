@@ -92,7 +92,7 @@ namespace DeSchakel.Client.Mvc.Areas.User.Controllers
                 HttpContext.Session.SetInt32("NumberOfItems", 0);
             }
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            HttpContext.Session.Remove("Token");
+            HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home", new { Area = "Home" });
         }
 

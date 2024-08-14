@@ -310,6 +310,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
             {
                 return BadRequest(result.Errors.First());
             }
+            string identityToken = User.Claims.FirstOrDefault(t => t.Type.Equals("Token")).Value;
             string token = HttpContext.Session.GetString("Token");
             var searchedEvent = result.Data;
             StaffEventUpdateViewModel staffUserUpdateViewmodel = new StaffEventUpdateViewModel

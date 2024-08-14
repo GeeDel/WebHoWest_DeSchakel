@@ -55,6 +55,7 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
             JwtSecurityToken token = await GenerateTokenAsync(applicationUser);
             //defined
             string serializedToken = new JwtSecurityTokenHandler().WriteToken(token); //serialize the token
+            await _userManager.AddClaimAsync(applicationUser, new Claim("Token", serializedToken));
             return Ok(new LoginUserResponseDto()
             {
                 Token = serializedToken
@@ -114,6 +115,7 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
             await _userManager.AddClaimAsync(applicationUser, new Claim("email", applicationUser.Email));
             await _userManager.AddClaimAsync(applicationUser, new Claim("registration-date", DateTime.UtcNow.ToString("yyyy-MM-dd")));
             await _userManager.AddClaimAsync(applicationUser, new Claim("zipcode", registerUserRequestDto.Zipcode));
+
 
             return CreatedAtAction(nameof(GetById), new { id = applicationUser.Id }, registerUserRequestDto);
         }
