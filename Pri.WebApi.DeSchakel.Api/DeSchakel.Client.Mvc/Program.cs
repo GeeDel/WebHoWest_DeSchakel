@@ -27,7 +27,7 @@ builder.Services.AddScoped<IAccountsApiService, AccountsApiService>();
 builder.Services.AddScoped<IRoleApiService, RoleApiService>();
 builder.Services.AddScoped<IFileService,FileService>();
 builder.Services.AddScoped<IFormBuilder,FormBuilder>();
-// services - increase max size for upload -  to increase the maximum request size to approximately 8.59 GB
+// services - increase max size for upload -  to increase the maximum request size
 builder.Services.Configure<KestrelServerOptions>(options =>
 {
     options.Limits.MaxRequestBodySize = int.MaxValue;

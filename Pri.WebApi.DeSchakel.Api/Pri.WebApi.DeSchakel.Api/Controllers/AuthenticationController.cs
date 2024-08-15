@@ -55,8 +55,6 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
             JwtSecurityToken token = await GenerateTokenAsync(applicationUser);
             //defined
             string serializedToken = new JwtSecurityTokenHandler().WriteToken(token); //serialize the token
-        //    await _userManager.AddClaimAsync(applicationUser, new Claim("Token", serializedToken));
-       //     Session.SetString("Token", serializedToken);
             return Ok(new LoginUserResponseDto()
             {
                 Token = serializedToken
@@ -116,8 +114,6 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
             await _userManager.AddClaimAsync(applicationUser, new Claim("email", applicationUser.Email));
             await _userManager.AddClaimAsync(applicationUser, new Claim("registration-date", DateTime.UtcNow.ToString("yyyy-MM-dd")));
             await _userManager.AddClaimAsync(applicationUser, new Claim("zipcode", registerUserRequestDto.Zipcode));
-
-
             return CreatedAtAction(nameof(GetById), new { id = applicationUser.Id }, registerUserRequestDto);
         }
 
@@ -164,7 +160,6 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
                 DateOfBirth = u.DateOfBirth,
                 ZipCode = u.Zipcode,
                 City = u.City,
-         //      Roles =  await _userManager.GetRolesAsync(u).Result
             });
             return Ok(applicationUserResponseDto);
         }
@@ -291,8 +286,6 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
             searchedUser.DateOfBirth = applicationUserResponseDto.DateOfBirth;
             searchedUser.Zipcode = applicationUserResponseDto.ZipCode;
             searchedUser.City = applicationUserResponseDto.City;
-    //        searchedUser.Email = applicationUserResponseDto.Email;
-    //        searchedUser.UserName = applicationUserResponseDto.Email;
             //
             IdentityResult identityResult = new IdentityResult();
             try

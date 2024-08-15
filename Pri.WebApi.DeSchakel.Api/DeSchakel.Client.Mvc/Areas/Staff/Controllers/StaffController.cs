@@ -310,8 +310,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
             {
                 return BadRequest(result.Errors.First());
             }
-            string identityToken = User.Claims.FirstOrDefault(t => t.Type.Equals("Token")).Value;
-     //       string token = HttpContext.Session.GetString("Token");
+            string token = HttpContext.Session.GetString("Token");
             var searchedEvent = result.Data;
             StaffEventUpdateViewModel staffUserUpdateViewmodel = new StaffEventUpdateViewModel
             {
@@ -326,7 +325,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
                 Description = searchedEvent.Description,
                 Companies = await _formBuilder.GetCompaniesSelectListItems(),
                 Locations = await _formBuilder.GetLocationsSelectListItems(),
-                Programmators = await _formBuilder.GetProgrammatorsSelectList(identityToken),
+                Programmators = await _formBuilder.GetProgrammatorsSelectList(token),
                 ProgrammatorIds = searchedEvent.Programmators
                     .Select(p => p.Id).ToList(),
                 Genres = await _formBuilder.GetGenresCheckBoxes()
@@ -347,8 +346,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateEvent(StaffEventUpdateViewModel staffEventUpdateViewModel)
         {
-            //string token = HttpContext.Session.GetString("Token");
-            string identityBasedToken = User.Claims.FirstOrDefault(t => t.Type.Equals("Token")).Value;
+            string token = HttpContext.Session.GetString("Token");
             var result = await _eventApiService.GetByIdAsync(staffEventUpdateViewModel.Id);
             if (!result.Success)
             {
@@ -397,7 +395,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
             {
                 staffEventUpdateViewModel.Companies = await _formBuilder.GetCompaniesSelectListItems();
                 staffEventUpdateViewModel.Locations = await _formBuilder.GetLocationsSelectListItems();
-                staffEventUpdateViewModel.Programmators = await _formBuilder.GetProgrammatorsSelectList(identityBasedToken); // (Request.Cookies["jwtToken"].ToString());
+                staffEventUpdateViewModel.Programmators = await _formBuilder.GetProgrammatorsSelectList(token);
                 staffEventUpdateViewModel.Genres = await _formBuilder.GetGenresCheckBoxes();
                 // set genres
                 foreach (var checkBox in staffEventUpdateViewModel.Genres)
@@ -419,7 +417,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
                 Id = g.Id,
                 Name = g.Name
             });
-            var allPprogrammators = _accountsService.GetByRoles("Programmator", identityBasedToken).Result
+            var allPprogrammators = _accountsService.GetByRoles("Programmator", token).Result
                 .Select(p => new AccountsResponseApiModel
                 {
                     Id = p.Id,
@@ -458,6 +456,11 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
             var fileFolder = await _fileService.GetPathToImages();
             foreach (IFormFile formFile in staffEventUpdateViewModel.Images)
             {
+                if(formFile.Length > int.MaxValue)
+                {
+                    resultFileModel.Errors.Add($"Het bestand {formFile.FileName} is te groot");
+                    continue;
+                }
                 string fileMediatype = formFile.ContentType.Substring(0, 6);
 
                 if (!String.IsNullOrEmpty(fileMediatype) && AcceptedMediatypes.Contains(fileMediatype))
@@ -477,7 +480,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
                 }
             }
             //
-            result = await _eventApiService.Update(performanceToUpdateMp, identityBasedToken);
+            result = await _eventApiService.Update(performanceToUpdateMp, token);
             fileStream.Dispose();
             performanceToUpdateMp.Dispose();
             foreach(var tmp in temporyFiles)
@@ -490,7 +493,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
                 ModelState.AddModelError("", $"Volgende fout deed zich voor bij het wegschrijven in de database: \n {result.Errors.First()}.");
                 staffEventUpdateViewModel.Companies = await _formBuilder.GetCompaniesSelectListItems();
                 staffEventUpdateViewModel.Locations = await _formBuilder.GetLocationsSelectListItems();
-                staffEventUpdateViewModel.Programmators = await _formBuilder.GetProgrammatorsSelectList(identityBasedToken);
+                staffEventUpdateViewModel.Programmators = await _formBuilder.GetProgrammatorsSelectList(token);
                 staffEventUpdateViewModel.Genres = await _formBuilder.GetGenresCheckBoxes();
                 return View(staffEventUpdateViewModel);
             }

@@ -70,8 +70,7 @@ namespace DeSchakel.Client.Mvc.Areas.User.Controllers
                 IsPersistent = true,
             };
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, identity, authProperties);
-               //       HttpContext.Session.SetString("Token", result.Token);
-           string identityBasedToken = User.Claims.FirstOrDefault(t => t.Type.Equals("Token")).Value;
+            HttpContext.Session.SetString("Token", result.Token);
 
             if (!string.IsNullOrEmpty(loginViewModel.ReturnUrl))
             {
