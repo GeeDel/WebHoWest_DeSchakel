@@ -80,17 +80,19 @@ namespace Pri.WebApi.DeSchakel.Core.Services
             return resultModel;
         }
 
-        public async Task<ResultModel<IEnumerable<Company>>> SearchAsync(string search)
+        public async Task<ResultModel<Company>> SearchAsync(string search)
         {
             search = search ?? string.Empty;
-            var Companies = await _applicationDbcontext.Companies
-                .Where(e => e.Name.Contains(search.Trim()))
-                        .ToListAsync();
-            if (Companies.Count() != 0)
+            var company = await _applicationDbcontext.Companies
+                .FirstOrDefaultAsync(e => e.Name.Trim().Equals(search.Trim()));
+            if (company != null)
             {
-                return new ResultModel<IEnumerable<Company>> { Data = Companies };
+                return new ResultModel<Company>
+                {
+                    Data = company
+                };
             }
-            return new ResultModel<IEnumerable<Company>> { Errors = new List<string> { $"Geen voorstellingen gevonden met ${search}" } };
+            return new ResultModel<Company> { Errors = new List<string> { $"Geen voorstellingen gevonden met ${search}" } };
         }
 
         public async Task<ResultModel<Company>> AddAsync(Company entity)

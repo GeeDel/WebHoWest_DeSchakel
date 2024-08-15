@@ -16,7 +16,7 @@ namespace Pri.WebApi.DeSchakel.Core.Services.Interfaces
         Task<ResultModel<Location>> UpdateAsync(Location entity);
         Task<ResultModel<Location>> AddAsync(Location entity);
         Task<ResultModel<Location>> DeleteAsync(Location entity);
-        Task<ResultModel<IEnumerable<Location>>> SearchAsync(string search);
+        public Task<ResultModel<Location>> SearchAsync(string search);
         Task<bool> DoesLocationIdExistAsync(int id);
         Task<bool> DoesLocationNameExistsAsync(Location entity);
     }

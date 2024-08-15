@@ -1,0 +1,30 @@
+﻿@model StaffCompaniesListViewModel
+
+<div class="row">
+    <div class="col mx-auto">
+        <table class="table table-hover table-responsive">
+            <thead>
+                <h4>Lijst van de gezelchappen</h4>
+                <div>
+                    <a asp-controller="Company" asp-action="CreateCompany" asp-area="Staff" class="btn btn-info mb-5"> Nieuw gezelschap </a>
+                </div>
+            </thead>
+            @foreach (var company in @Model.Companies)
+            {
+                <tr>
+                    <td width="250">
+                        @company.Name
+                    </td>
+                    <td>
+                        <a asp-area="Staff" asp-controller="Company" asp-action="UpdateCompany" asp-route-id="@company.Id"
+                           class="btn btn-outline-info mt-5 border border-2 border-light">Wijzig</a>
+                    </td>
+                    <td>
+                        <a asp-area="Staff" asp-controller="Company" asp-action="ConfirmDeleteCompany" asp-route-id="@company.Id"
+                           class="btn btn-outline-danger mt-5 border border-2 border-light">Verwijder</a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

@@ -63,20 +63,18 @@ namespace Pri.WebApi.DeSchakel.Api.Controllers
             return BadRequest(result.Errors);
         }
 
-        [HttpGet("ByName")]
-        public async Task<IActionResult> GetBySearch([FromQuery] string search)
+        [HttpGet("Name/{name}")]
+        public async Task<IActionResult> GetBySearch(string name)
         {
-            var result = await _locationService.SearchAsync(search);
+            var result = await _locationService.SearchAsync(name);
             if (result.Success)
             {
-                var LocationResponseDto = result.Data.Select(g =>
-                     new LocationResponseDto
-                     {
-                         Id = g.Id,
-                         Name = g.Name,
-                         Capacity= g.Capacity,
-                     });
-                return Ok(LocationResponseDto);
+                var locationResponseDto = new LocationResponseDto
+                {
+                    Id = result.Data.Id,
+                    Name = result.Data.Name,
+                };
+                return Ok(locationResponseDto);
             }
             return BadRequest(result.Errors);
         }

@@ -59,17 +59,18 @@ namespace Pri.WebApi.DeSchakel.Core.Services
             return resultModel;
         }
 
-        public async Task<ResultModel<IEnumerable<Location>>> SearchAsync(string search)
+        public async Task<ResultModel<Location>> SearchAsync(string search)
         {
+   
             search = search ?? string.Empty;
-            var locations = await _applicationDbcontext.Locations
-                .Where(e => e.Name.Contains(search.Trim()))
-                        .ToListAsync();
-            if (locations.Count() != 0)
+            var location = await _applicationDbcontext.Locations
+                 .FirstOrDefaultAsync(e => e.Name.Trim().Equals(search.Trim()));
+
+            if (location != null)
             {
-                return new ResultModel<IEnumerable<Location>> { Data = locations };
+                return new ResultModel<Location> { Data = location };
             }
-            return new ResultModel<IEnumerable<Location>> { Errors = new List<string> { $"Geen locaties gevonden met ${search}" } };
+            return new ResultModel<Location> { Errors = new List<string> { $"Geen locaties gevonden met ${search}" } };
         }
 
         public async Task<ResultModel<Location>> AddAsync(Location entity)

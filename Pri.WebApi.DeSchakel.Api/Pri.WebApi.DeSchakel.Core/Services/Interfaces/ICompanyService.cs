@@ -17,7 +17,7 @@ namespace Pri.WebApi.DeSchakel.Core.Services.Interfaces
         Task<ResultModel<Company>> AddAsync(Company entity);
         Task<ResultModel<Company>> DeleteAsync(Company entity);
         Task<ResultModel<IEnumerable<Event>>> GetEventsByIdAsync(int id);
-        Task<ResultModel<IEnumerable<Company>>> SearchAsync(string search);
+        public Task<ResultModel<Company>> SearchAsync(string search);
         Task<bool> DoesCompanyIdExistAsync(int id);
         Task<bool> DoesCompanyNameExistsAsync(Company entity);
     }

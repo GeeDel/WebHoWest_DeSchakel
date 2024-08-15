@@ -39,6 +39,38 @@ namespace DeSchakelApi.Consumer.Companies
             }
         }
 
+        public async Task<ResultModel<BaseResponseApiModel>> GetByName(string name, string token)
+        {
+            _DeSchakelhttpClient.DefaultRequestHeaders.Authorization =
+                      new AuthenticationHeaderValue("Bearer", token);
+
+            string zoekString = ($"Name/{name}");
+            ResultModel<BaseResponseApiModel> baseResponseApiModel = new ResultModel<BaseResponseApiModel>();
+            try
+            {
+                var response = await _DeSchakelhttpClient.GetFromJsonAsync<BaseResponseApiModel>(zoekString);
+                if (response != null)
+                {
+                    baseResponseApiModel.Data = response;
+                }
+                else
+                {
+                    baseResponseApiModel.Errors = new List<string> { $"Geen gezelschap gevonden met naam {name}" };
+                }
+            }
+            catch (Exception ex)
+            {
+                // inform the user
+                baseResponseApiModel.Errors = new List<string>
+                {
+                    $"Fout-code: er deed zich een fout voor bij  het opzoeken op naam." +
+                   $"{_DeSchakelhttpClient.BaseAddress } \n {_DeSchakelhttpClient.DefaultRequestVersion}"
+                   };
+            }
+            return baseResponseApiModel;
+
+        }
+
         public async Task<BaseResponseApiModel> GetByIdAsync(int id, string token)
         {
             _DeSchakelhttpClient.DefaultRequestHeaders.Authorization =
@@ -48,7 +80,7 @@ namespace DeSchakelApi.Consumer.Companies
                 var response = await _DeSchakelhttpClient.GetFromJsonAsync<BaseResponseApiModel>($"{id}");
                 return response;
             }
-           catch (Exception ex) 
+            catch (Exception ex)
             {
 
                 Console.WriteLine(ex.Message);
@@ -61,7 +93,7 @@ namespace DeSchakelApi.Consumer.Companies
         {
             _DeSchakelhttpClient.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Bearer", Token);
-            ResultModel <string> resultModel = new ResultModel<string>();
+            ResultModel<string> resultModel = new ResultModel<string>();
             var response = await _DeSchakelhttpClient.PutAsJsonAsync("", companyToUpdate);
             if (!response.IsSuccessStatusCode)
             {
@@ -76,8 +108,8 @@ namespace DeSchakelApi.Consumer.Companies
             _DeSchakelhttpClient.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Bearer", Token);
             ResultModel<string> resultModel = new ResultModel<string>();
-             var response = await _DeSchakelhttpClient.PostAsJsonAsync("", companyToCreate);
-           if (!response.IsSuccessStatusCode)
+            var response = await _DeSchakelhttpClient.PostAsJsonAsync("", companyToCreate);
+            if (!response.IsSuccessStatusCode)
             {
                 // inform the user
                 resultModel.Errors = new List<string> { $"Fout-code: {response.StatusCode}" };
@@ -89,14 +121,14 @@ namespace DeSchakelApi.Consumer.Companies
         {
             _DeSchakelhttpClient.DefaultRequestHeaders.Authorization =
                    new AuthenticationHeaderValue("Bearer", Token);
-            ResultModel<string> resultModel = new ResultModel<string>(); 
+            ResultModel<string> resultModel = new ResultModel<string>();
             var response = await _DeSchakelhttpClient.DeleteAsync($"{id}");
             if (!response.IsSuccessStatusCode)
             {
                 // inform the user
                 resultModel.Errors = new List<string> { $"Fout-code: {response.StatusCode}" };
             }
-            return resultModel ;
+            return resultModel;
         }
 
     }

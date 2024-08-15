@@ -16,6 +16,6 @@ namespace DeSchakelApi.Consumer.Companies
         public Task<ResultModel<string>> CreateAsyn(CompanyCreateRequestApiModel companyToCreate, string Token);
         public Task<ResultModel<string>> UpdateAsyn(CompanyUpdateRequestApiModel companyToUpdate, string Token);
         public Task<ResultModel<string>> DeleteAsyn(int id, string Token);
-
+        public Task<ResultModel<BaseResponseApiModel>> GetByName(string name, string token);
     }
 }

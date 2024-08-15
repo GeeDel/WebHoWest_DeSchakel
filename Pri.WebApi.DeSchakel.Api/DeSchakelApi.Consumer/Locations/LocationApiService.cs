@@ -1,8 +1,11 @@
 ﻿using DeSchakelApi.Consumer.Models;
+using DeSchakelApi.Consumer.Models.Accounts;
+using DeSchakelApi.Consumer.Models.Companies;
 using DeSchakelApi.Consumer.Models.Locations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,5 +51,100 @@ namespace DeSchakelApi.Consumer.Locations
                 return new LocationResponseApiModel();
             }
         }
+
+
+        public async Task<ResultModel<BaseResponseApiModel>> GetByName(string name, string token)
+        {
+            _DeSchakelhttpClient.DefaultRequestHeaders.Authorization =
+                      new AuthenticationHeaderValue("Bearer", token);
+
+            string zoekString = ($"Name/{name}");
+            ResultModel<BaseResponseApiModel> baseResponseApiModel = new ResultModel<BaseResponseApiModel>();
+            try
+            {
+                var response = await _DeSchakelhttpClient.GetFromJsonAsync<BaseResponseApiModel>(zoekString);
+                if (response != null)
+                {
+                    baseResponseApiModel.Data = response;
+                }
+                else
+                {
+                    baseResponseApiModel.Errors = new List<string> { $"Geen locatie gevonden met naam {name}" };
+                }
+            }
+            catch (Exception ex)
+            {
+                // inform the user
+                baseResponseApiModel.Errors = new List<string>
+                {
+                    $"Fout-code: er deed zich een fout voor bij  het opzoeken op naam." +
+                   $"{_DeSchakelhttpClient.BaseAddress } \n {_DeSchakelhttpClient.DefaultRequestVersion}"
+                   };
+            }
+            return baseResponseApiModel;
+
+        }
+
+        public async Task<BaseResponseApiModel> GetByIdAsync(int id, string token)
+        {
+            _DeSchakelhttpClient.DefaultRequestHeaders.Authorization =
+    new AuthenticationHeaderValue("Bearer", token);
+            try
+            {
+                var response = await _DeSchakelhttpClient.GetFromJsonAsync<BaseResponseApiModel>($"{id}");
+                return response;
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message);
+                return null;
+
+            }
+        }
+
+        public async Task<ResultModel<string>> UpdateAsyn(LocationRequestApiModel locationToUpdate, string Token)
+        {
+            _DeSchakelhttpClient.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", Token);
+            ResultModel<string> resultModel = new ResultModel<string>();
+            var response = await _DeSchakelhttpClient.PutAsJsonAsync("", locationToUpdate);
+            if (!response.IsSuccessStatusCode)
+            {
+                // inform the user
+                ResultModel<string> errors = new ResultModel<string> { Errors = new List<string> { $"Fout-code: {response.StatusCode}" } };
+            }
+            return resultModel;
+        }
+
+        public async Task<ResultModel<string>> CreateAsyn(LocationRequestApiModel locationToCreate, string Token)
+        {
+            _DeSchakelhttpClient.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", Token);
+            ResultModel<string> resultModel = new ResultModel<string>();
+            var response = await _DeSchakelhttpClient.PostAsJsonAsync("", locationToCreate);
+            if (!response.IsSuccessStatusCode)
+            {
+                // inform the user
+                resultModel.Errors = new List<string> { $"Fout-code: {response.StatusCode}" };
+            }
+            return resultModel;
+        }
+
+        public async Task<ResultModel<string>> DeleteAsync(int id, string Token)
+        {
+            _DeSchakelhttpClient.DefaultRequestHeaders.Authorization =
+                   new AuthenticationHeaderValue("Bearer", Token);
+            ResultModel<string> resultModel = new ResultModel<string>();
+            var response = await _DeSchakelhttpClient.DeleteAsync($"{id}");
+            if (!response.IsSuccessStatusCode)
+            {
+                // inform the user
+                resultModel.Errors = new List<string> { $"Fout-code: {response.StatusCode}" };
+            }
+            return resultModel;
+        }
+
+
     }
 }
