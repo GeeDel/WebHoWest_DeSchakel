@@ -191,28 +191,28 @@ namespace Pri.WebApi.DeSchakel.Core.Migrations
                         new
                         {
                             Id = "00000000-0000-0000-0000-000000000001",
-                            ConcurrencyStamp = "392f3fea-2539-4270-9b8c-02bc453b76b4",
+                            ConcurrencyStamp = "df1a5969-0b38-42d1-8e85-6501e5135f02",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "00000000-0000-0000-0000-000000000002",
-                            ConcurrencyStamp = "0c004517-e779-4338-8c07-aec700fba8c2",
+                            ConcurrencyStamp = "895268fc-12e5-4e92-801e-6f75d6c1b6e1",
                             Name = "Programmator",
                             NormalizedName = "PROGRAMMATOR"
                         },
                         new
                         {
                             Id = "00000000-0000-0000-0000-000000000003",
-                            ConcurrencyStamp = "7945dd17-1eff-47a2-94f7-c017ac7953a3",
+                            ConcurrencyStamp = "aebce31d-3636-46d3-adaa-cd351cb617b5",
                             Name = "Onthaal",
                             NormalizedName = "ONTHAAL"
                         },
                         new
                         {
                             Id = "00000000-0000-0000-0000-000000000004",
-                            ConcurrencyStamp = "24c7e9f3-bf75-45d2-b5d1-63bc5a22f401",
+                            ConcurrencyStamp = "ff4648ca-26f9-454e-b14a-c44c733c10b0",
                             Name = "Bezoeker",
                             NormalizedName = "BEZOEKER"
                         });
@@ -550,7 +550,7 @@ namespace Pri.WebApi.DeSchakel.Core.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@CC.BE",
                             NormalizedUserName = "ADMIN@CC.BE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHtMJGkHDUfb+koRYPK83Tp3H4dThTKNLWYdjrRR8rok2Bq20EhU0OZFfpyIXgLHmQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECEBykEfUx2QNuKIOW+J4TAPWvGhMR54IUN0zRR+JA5lF5yX3Jno61GQIs39bQLDgQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "VVPCRDAS3MJWQD5CSW2GWPRADBXEZINA",
                             TwoFactorEnabled = false,
@@ -571,7 +571,7 @@ namespace Pri.WebApi.DeSchakel.Core.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "MAAIKE@CC.BE",
                             NormalizedUserName = "MAAIKE@CC.BE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIGFCYWIG7BqPpqhFJdceLPcBJdxPwcyXvgN/4UW/wfo/xRdZYbn6OnQOA/AX7cZfw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPhv/khkRqRIEaEXnW4F2aeDs/zWAzdp4e5phNISckqNl9MA8nagKAlPhJbf3y9Ftg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "XVPCRDAS3MJWQD5CSW2GWPRADBXEZINA",
                             TwoFactorEnabled = false,
@@ -592,7 +592,7 @@ namespace Pri.WebApi.DeSchakel.Core.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "JOOST@CC.BE",
                             NormalizedUserName = "JOOST@CC.BE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAGN7KIXhNKhCYV0L5g2wtkUtOkfQ/4KzbBIsif+lykWQjxx2m7LFzzk6ofBvvEwrg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGEF8pY9md0JAOBZc685NNyDhN0oinmK4ueXhtHwCCNknmodWjgHpBwKt6e/HJ3y6w==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "ZVPCRDAS3MJWQD5CSW2GWPRADBXEZINA",
                             TwoFactorEnabled = false,
@@ -613,7 +613,7 @@ namespace Pri.WebApi.DeSchakel.Core.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "VEERLE@CC.BE",
                             NormalizedUserName = "VEERLE@CC.BE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEO+wzXaRFP4mAmrvOf8Ry9IvVNKH3Ozw0rE1aArdK2P2a9QYt+YFoBLzsDwTEMsx0A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEI5CINLtL8SH9mKgiXmTFW5V8XkWCRkPoZWHThBNbZmoa1k/wp3AN+PIk8zHm3BPmQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "ZVPCRDAS3MJWQD5CSW2GWPRADBXEZINA",
                             TwoFactorEnabled = false,
@@ -634,7 +634,7 @@ namespace Pri.WebApi.DeSchakel.Core.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "PAULIEN@CC.BE",
                             NormalizedUserName = "PAULIEN@CC.BE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKEYlhQ12toVJEMPCI+ke702BnqfUYNqZSXkaXXO8jwOlTCkfN+tH1SZxIJLutkZzQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENk4t02iiHpd4MXiaBBDoYlHyjlaRKMUtn6vwEA/XfWDpmk3WUmcyOeBZLGlhRHr8A==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "XVPCRDAS3MJWQD5CSW2GWPRADBXEZINA",
                             TwoFactorEnabled = false,
@@ -655,7 +655,7 @@ namespace Pri.WebApi.DeSchakel.Core.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "F.V@TELENET.BE",
                             NormalizedUserName = "F.V@TELENET.BE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDhZOc6uwdfqWwld6Yg97Gfbed49LJonMMVs1i9gL/bvepfqHxrAS6OA6JXTGm8Fmg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEM0Kl8l6aWOoc6YpdBuUe/iDe4GR7YTp/8meOLRvqpmK8f83sofBYr8SpuR2ADECEg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "BVPCRDAS3MJWQD5CSW2GWPRADBXEZINA",
                             TwoFactorEnabled = false,
@@ -1028,42 +1028,33 @@ namespace Pri.WebApi.DeSchakel.Core.Migrations
                         new
                         {
                             Id = 3,
-                            Action = "Companies",
+                            Action = "Index",
                             Area = "Staff",
-                            Controller = "Staff",
+                            Controller = "Company",
                             Name = "Gezelschappen",
                             Position = 2
                         },
                         new
                         {
                             Id = 4,
-                            Action = "Locations",
+                            Action = "Index",
                             Area = "Staff",
-                            Controller = "Staff",
+                            Controller = "Location",
                             Name = "Locaties",
                             Position = 3
                         },
                         new
                         {
                             Id = 5,
-                            Action = "Genres",
-                            Area = "Staff",
-                            Controller = "Staff",
-                            Name = "Genres",
-                            Position = 4
-                        },
-                        new
-                        {
-                            Id = 6,
                             Action = "NewAbo",
                             Area = "Home",
                             Controller = "Home",
-                            Name = "Nieuw",
+                            Name = "Nieuwe abonee",
                             Position = 2
                         },
                         new
                         {
-                            Id = 7,
+                            Id = 6,
                             Action = "Voucher",
                             Area = "Home",
                             Controller = "Home",
