@@ -142,26 +142,39 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
 
             if (result == null)
             {
-                return NotFound($"Het gezelschap met {id} is niet gevonden in ons bestand.");
+                ModelState.AddModelError("", $"Het gezelschap met {id} is niet gevonden in ons bestand.");
             }
             // todo  controle op voorstellingen voor het gezelschap
-            var resultPerformances = await _eventApiService.GetByCompany(id);
+            var resultPerformances = await _eventApiService.GetByCompany(id,token);
             if (!resultPerformances.Count().Equals(0))
             {
-                return NotFound($"Het gezelschap met {id} is niet worden verwijderd omdat er nog voorstellingen zijn gekoppeld.");
+                ModelState.AddModelError("", $"Het gezelschap met {id} is niet worden verwijderd omdat er nog voorstellingen zijn gekoppeld.");
             }
-            try
+            else
             {
-                await _companyApiService.DeleteAsyn(id, token);
+                try
+                {
+                    await _companyApiService.DeleteAsyn(id, token);
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", "Er liep iets mis. Probeer het later opnieuw");
+                    Console.WriteLine(ex.Message);
+                }
             }
-            catch (Exception ex)
+            if (!ModelState.IsValid)
             {
-                ModelState.AddModelError("", "Er liep iets mis. Probeer het later opnieuw");
-                Console.WriteLine(ex.Message);
+                return RedirectToAction("FoundErrorOnCompany", "Company", new { Area = "Staff" },
+                    ModelState.Root.Errors.ToString());
 
             }
             return RedirectToAction("Index", "Company", new { Area = "Staff" });
 
+        }
+
+        public IActionResult FoundErrorOnCompany()
+        {
+            return View();
         }
 
     }

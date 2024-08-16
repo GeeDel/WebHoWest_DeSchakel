@@ -200,8 +200,9 @@ namespace DeSchakelApi.Consumer.Events
             await _DeSchakelhttpClient.DeleteAsync($"{id}");
         }
 
-        public async Task<IEnumerable<EventResponseApiModel>> GetByCompany(int id)
+        public async Task<IEnumerable<EventResponseApiModel>> GetByCompany(int id, string token)
         {
+            _DeSchakelhttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             string zoekString = ($"{id}/company");
 
             try

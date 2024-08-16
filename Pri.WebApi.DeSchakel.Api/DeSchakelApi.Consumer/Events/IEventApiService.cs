@@ -13,7 +13,7 @@ namespace DeSchakelApi.Consumer.Events
         Task<ResultModel<EventResponseApiModel>> GetByIdAsync(int id);
         Task<IEnumerable<EventResponseApiModel>> GetByGenres(int id);
         Task<ResultModel<EventResponseApiModel>> GetByTitleAsync(string title);
-        Task<IEnumerable<EventResponseApiModel>> GetByCompany(int id);
+        Task<IEnumerable<EventResponseApiModel>> GetByCompany(int id, string token);
         Task<EventResponseApiModel[]> GetByLocation(int id);
         Task<ResultModel<List<string>>> Add(EventResponseApiModel performance, string token);
         Task<ResultModel<MultipartFormDataContent>> CreateMultipart(MultipartFormDataContent mpPerformance, string token);
