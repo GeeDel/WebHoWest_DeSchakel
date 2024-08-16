@@ -71,7 +71,6 @@ namespace DeSchakel.Client.Mvc.Areas.User.Controllers
             };
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, identity, authProperties);
             HttpContext.Session.SetString("Token", result.Token);
-
             if (!string.IsNullOrEmpty(loginViewModel.ReturnUrl))
             {
                 return Redirect(loginViewModel.ReturnUrl);
