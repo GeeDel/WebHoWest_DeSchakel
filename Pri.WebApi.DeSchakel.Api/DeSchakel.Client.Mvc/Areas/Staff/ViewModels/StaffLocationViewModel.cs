@@ -1,6 +1,6 @@
 ﻿namespace DeSchakel.Client.Mvc.Areas.Staff.ViewModels
 {
-    public class StaffLocationViewMmodel : StaffBaseViewModel
+    public class StaffLocationViewModel : StaffBaseViewModel
     {
         public int Capacity { get; set; }
     }

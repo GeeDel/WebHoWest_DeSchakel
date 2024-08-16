@@ -4,7 +4,7 @@
     <div class="col mx-auto">
         <table class="table table-hover table-responsive">
             <thead>
-                <h4>Lijst van de locaties voor de voorstellingen.</h4>
+                <h4>Lijst van de locaties voor de locaties.</h4>
                 <div>
                     <a asp-controller="Location" asp-action="CreateLocation" asp-area="Staff" class="btn btn-info mb-5"> Nieuwe locatie </a>
                 </div>
@@ -16,13 +16,12 @@
                         @location.Name
                     </td>
                     <td>
-            <!--            <a asp-area="Staff" asp-controller="Location" asp-action="UpdateLocation" asp-route-id="@location.Id"
+                     <a asp-area="Staff" asp-controller="Location" asp-action="UpdateLocation" asp-route-id="@location.Id"
                            class="btn btn-outline-info mt-5 border border-2 border-light" >Wijzig</a>
                     </td>
-            -->
                     <td>
-                        <a asp-area="Staff" asp-controller="Location" asp-action="Index" asp-route-id="@location.Id"
-                           class="btn btn-outline-danger mt-5 border border-2 border-light" >Je kan niet verwijderen</a>
+                        <a asp-area="Staff" asp-controller="Location" asp-action="ConfirmDeleteLocation" asp-route-id="@location.Id"
+                           class="btn btn-outline-danger mt-5 border border-2 border-light" >Verwijder</a>
                     </td>
                 </tr>
             }

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DeSchakel.Client.Mvc.Areas.Staff.ViewModels
 {
-    public class StaffAccountUpdatePasswordViewmodel
+    public class StaffAccountUpdatePasswordViewmodelToBeDeleted
     {
         [HiddenInput]
         public string Id { get; set; }

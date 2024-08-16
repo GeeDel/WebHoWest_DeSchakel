@@ -32,7 +32,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
             }
             StaffLocationsListViewmodel companiesViewModel = new StaffLocationsListViewmodel
             {
-                Locations = locationsFromApi.Select(c => new StaffLocationViewMmodel
+                Locations = locationsFromApi.Select(c => new StaffLocationViewModel
                 {
                     Id = c.Id,
                     Name = c.Name,
@@ -81,8 +81,111 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
             return RedirectToAction("Index", "Location", new { Area = "Staff" });
         }
 
+        [HttpGet]
+        public async Task<IActionResult> UpdateLocation(int id)
+        {
+            string token = HttpContext.Session.GetString("Token");
+            var result = await _locationApiService.GetByIdAsync(id, token);
+            StaffLocationUpdateViewmodel locationViewModel = new StaffLocationUpdateViewmodel
+            {
+                Id = result.Id,
+                Name = result.Name,
+                Capacity = result.Capacity
+            };
+            return View(locationViewModel);
+        }
 
- 
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public async Task<IActionResult> UpdateLocation(StaffLocationUpdateViewmodel staffLocationUpdateViewModel)
+        {
+            var token = HttpContext.Session.GetString("Token");
+            var result = _locationApiService.GetByName(staffLocationUpdateViewModel.Name, token);
+            if (result.Result.Success)
+            {
+                if (result.Result.Data.Id != staffLocationUpdateViewModel.Id)
+                {
+                    ModelState.AddModelError("", $"Het gezelschap {staffLocationUpdateViewModel.Name} bestaat al in ons bestand.");
+                }
+            }
+            if (!ModelState.IsValid)
+            {
+                return View(staffLocationUpdateViewModel);
+            }
+            var locationToUpdate = new LocationRequestApiModel
+            {
+                Id = staffLocationUpdateViewModel.Id,
+                Name = staffLocationUpdateViewModel.Name,
+                Capacity = staffLocationUpdateViewModel.Capacity
+            };
+            await _locationApiService.UpdateAsyn(locationToUpdate, token);
+            return RedirectToAction("Index", "Location", new { Area = "Staff" });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ConfirmDeleteLocation(int id)
+        {
+            string token = HttpContext.Session.GetString("Token");
+            var result = await _locationApiService.GetByIdAsync(id, token);
+            if (result == null)
+            {
+                return NotFound($"Onverwachte fout: gezelschap met id {id} is niet gevonden");
+            }
+
+            StaffLocationDeleteViewmodel staffDeleteViewModel = new StaffLocationDeleteViewmodel
+            {
+                Id = id,
+                Name = result.Name,
+            };
+            return View(staffDeleteViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteLocation(int id)
+        {
+            string token = HttpContext.Session.GetString("Token");
+
+            var result = await _locationApiService.GetByIdAsync(id, token);
+
+            if (result == null)
+            {
+                ModelState.AddModelError("", $"Het gezelschap met {id} is niet gevonden in ons bestand.");
+            }
+            // todo  controle op voorstellingen voor de locatie
+            var resultEventsOnLocation = await _eventApiService.GetByLocation(id);
+            if (resultEventsOnLocation.Length != 0)
+            {
+                ModelState.AddModelError("", ($"De locatie {result.Name} kan niet worden verwijderd omdat er nog voorstellingen zijn gekoppeld."));
+            }
+            else
+            {
+                try
+                {
+                    await _locationApiService.DeleteAsync(id, token);
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", "Er liep iets mis. Probeer het later opnieuw");
+                    Console.WriteLine(ex.Message);
+
+                }
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("FoundErrorOnLocation", "Location", new { Area = "Staff" }, 
+                    ModelState.Root.Errors.ToString());
+
+            }
+            return RedirectToAction("Index", "Location", new { Area = "Staff" });
+
+        }
+
+        public IActionResult FoundErrorOnLocation()
+        {
+            return View();
+        }
 
     }
 }

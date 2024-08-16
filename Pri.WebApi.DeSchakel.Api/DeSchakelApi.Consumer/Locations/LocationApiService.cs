@@ -39,19 +39,7 @@ namespace DeSchakelApi.Consumer.Locations
 
         }
 
-        public async Task<LocationResponseApiModel> GetByIdAsync(int id)
-        {
-            try
-            {
-                var location = await _DeSchakelhttpClient.GetFromJsonAsync<LocationResponseApiModel>($"{id}");
-                return location;
-            }
-            catch
-            {
-                return new LocationResponseApiModel();
-            }
-        }
-
+ 
 
         public async Task<ResultModel<BaseResponseApiModel>> GetByName(string name, string token)
         {
@@ -85,13 +73,13 @@ namespace DeSchakelApi.Consumer.Locations
 
         }
 
-        public async Task<BaseResponseApiModel> GetByIdAsync(int id, string token)
+        public async Task<LocationResponseApiModel> GetByIdAsync(int id, string token)
         {
             _DeSchakelhttpClient.DefaultRequestHeaders.Authorization =
     new AuthenticationHeaderValue("Bearer", token);
             try
             {
-                var response = await _DeSchakelhttpClient.GetFromJsonAsync<BaseResponseApiModel>($"{id}");
+                var response = await _DeSchakelhttpClient.GetFromJsonAsync<LocationResponseApiModel>($"{id}");
                 return response;
             }
             catch (Exception ex)
@@ -112,7 +100,7 @@ namespace DeSchakelApi.Consumer.Locations
             if (!response.IsSuccessStatusCode)
             {
                 // inform the user
-                ResultModel<string> errors = new ResultModel<string> { Errors = new List<string> { $"Fout-code: {response.StatusCode}" } };
+                resultModel.Errors = new List<string> {$"Fout-code: {response.StatusCode}" };
             }
             return resultModel;
         }

@@ -2,6 +2,6 @@
 {
     public class StaffLocationsListViewmodel
     {
-        public IEnumerable<StaffLocationViewMmodel> Locations { get; set; }
+        public IEnumerable<StaffLocationViewModel> Locations { get; set; }
     }
 }

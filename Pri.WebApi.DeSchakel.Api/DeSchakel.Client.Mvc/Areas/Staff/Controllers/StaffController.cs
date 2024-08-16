@@ -906,7 +906,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
                 return NotFound(result.Errors.First());
             }
             var searchedUser = result.Data;
-            StaffAccountUpdatePasswordViewmodel staffUpdatePasswordViewmodel = new StaffAccountUpdatePasswordViewmodel
+            StaffAccountUpdatePasswordViewmodelToBeDeleted staffUpdatePasswordViewmodel = new StaffAccountUpdatePasswordViewmodelToBeDeleted
             {
                 Firstname = searchedUser.Firstname,
                 Lastname = searchedUser.Lastname,
@@ -917,7 +917,7 @@ namespace DeSchakel.Client.Mvc.Areas.Staff.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdatePassword(StaffAccountUpdatePasswordViewmodel staffUpdatePasswordViewmodel)
+        public async Task<IActionResult> UpdatePassword(StaffAccountUpdatePasswordViewmodelToBeDeleted staffUpdatePasswordViewmodel)
         {
             var resultAccount = await _accountsService.GetByIdAsync(staffUpdatePasswordViewmodel.Id);
             if (!resultAccount.Success)

@@ -13,7 +13,7 @@ namespace DeSchakelApi.Consumer.Locations
     public interface ILocationApiService
     {
         public Task<IEnumerable<LocationResponseApiModel>> GetAsync();
-        public Task<LocationResponseApiModel> GetByIdAsync(int id);
+        public  Task<LocationResponseApiModel> GetByIdAsync(int id, string token);
         public Task<ResultModel<BaseResponseApiModel>> GetByName(string name, string token);
         public Task<ResultModel<string>> CreateAsyn(LocationRequestApiModel locationToCreate, string Token);
         public Task<ResultModel<string>> UpdateAsyn(LocationRequestApiModel locationToUpdate, string Token);
