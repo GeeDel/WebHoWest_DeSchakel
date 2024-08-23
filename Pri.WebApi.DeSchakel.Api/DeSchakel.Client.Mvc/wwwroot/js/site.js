@@ -7,7 +7,6 @@ window.addEventListener("load", setup);
 
 const updateindexview = () => {
     let sectionList = document.getElementById("performanceList");
-
     let alleFilmSections = sectionList.getElementsByClassName("performance");
     // Elementen definiëren met de attributen
     for (let film of alleFilmSections) {
